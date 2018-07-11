@@ -1,7 +1,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <!DOCTYPE html>
-<html lang="en" data-ng-app="app">
+<html lang="en" data-ng-app="app" data-ng-controller="ApplicationController as ctrl" data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
 
 <head>
     <meta charset="utf-8">

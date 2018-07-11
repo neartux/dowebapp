@@ -9,7 +9,7 @@
 <tiles:insertDefinition name="template">
     <tiles:putAttribute name="body">
 
-        <div class="content">
+        <div class="content" data-ng-app="Patient" data-ng-controller="PatientController as ctrl" data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
             <div class="container">
 
 
@@ -36,60 +36,131 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="card-box">
-                            <h4 class="m-t-0 header-title"><b>Patient List</b></h4>
-                            <p class="text-muted m-b-30 font-13 text-right">
-                                <span><i class="ti-layout-list-thumb fa-2x"></i></span>&nbsp;&nbsp;&nbsp;<span><i class="ti-layout-grid2 fa-2x"></i></span>
-                            </p>
-                            <div class="row">
 
-                                <div class="col-md-12">
+                        <div class="portlet">
+                            <div class="portlet-heading bg-primary">
+                                <h3 class="portlet-title">
+                                    Patient List
+                                </h3>
+                                <div class="portlet-widgets">
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="bg-primary" class="panel-collapse collapse in">
+                                <div class="portlet-body">
 
-                                    <div class="col-lg-3 col-md-3">
-                                        <div class="text-center card-box">
-                                            <div class="member-card">
-                                                <div class="thumb-xl member-thumb m-b-10 center-block">
-                                                    <img src="${pageContext.request.contextPath}/assets/images/users/avatar-1.jpg" class="img-circle img-thumbnail" alt="profile-image">
-                                                    <i class="mdi mdi-star-circle member-star text-success" title="verified user"></i>
+                                    <div class="row">
+                                        <div class="col-sm-6 text-left form-horizontal">
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-1 control-label">Show</label>
+                                                <div class="col-sm-3">
+                                                    <select name="" class="form-control" id="">
+                                                        <option value="">10</option>
+                                                        <option value="">15</option>
+                                                        <option value="">25</option>
+                                                    </select> Entries
                                                 </div>
-
-                                                <div class="">
-                                                    <h4 class="m-b-5">Mark A. McKnight</h4>
-                                                    <p class="text-muted">@webdesigner</p>
-                                                </div>
-
-                                                <button type="button" class="btn btn-success btn-sm w-sm waves-effect m-t-10 waves-light">  <i class="ti-pencil-alt"></i> Edit</button>
-                                                <button type="button" class="btn btn-danger btn-sm w-sm waves-effect m-t-10 waves-light"> <i class="ti-trash"></i> Delete</button>
-
-                                                <p class="text-muted font-13 m-t-20">
-                                                    Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
-                                                </p>
-
-                                                <hr/>
-
-                                                <div class="text-left">
-                                                    <p class="text-muted font-13"><strong>Full Name :</strong> <span class="m-l-15">Johnathan Deo</span></p>
-
-                                                    <p class="text-muted font-13"><strong>Phone :</strong><span class="m-l-15">(123) 123 1234</span></p>
-
-                                                    <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">(123) 123 1234</span></p>
-
-                                                    <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">coderthemes@gmail.com</span></p>
-
-                                                    <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">USA</span></p>
-                                                </div>
-
                                             </div>
+                                        </div>
+                                        <div class="col-sm-6 pull-right form-horizontal">
+                                            <div class="form-group">
+                                                <label for="inputEmail3" class="col-sm-2 control-label">Search</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                        </div> <!-- end card-box -->
+                                    <div class="row">
 
-                                    </div> <!-- end col -->
+                                        <div class="col-md-12">
+
+                                            <div class="col-lg-3 col-md-3" data-ng-repeat="patient in ctrl.patientList.data">
+                                                <div class="text-center card-box">
+                                                    <div class="member-card">
+                                                        <div class="thumb-xl member-thumb m-b-10 center-block">
+                                                            <img src="${pageContext.request.contextPath}/assets/images/users/avatar-1.jpg" class="img-circle img-thumbnail" alt="profile-image">
+                                                            <i class="mdi mdi-star-circle member-star text-success" title="verified user"></i>
+                                                        </div>
+
+                                                        <div class="">
+                                                            <h4 class="m-b-5">{{ patient.personalData.firstName }}</h4>
+                                                            <p class="text-muted">{{ patient.locationData.email }}</p>
+                                                        </div>
+
+                                                        <button type="button" class="btn btn-success btn-sm w-sm waves-effect m-t-10 waves-light">  <i class="ti-pencil-alt"></i> Edit</button>
+                                                        <button type="button" class="btn btn-danger btn-sm w-sm waves-effect m-t-10 waves-light"> <i class="ti-trash"></i> Delete</button>
+
+                                                        <p class="text-muted font-13 m-t-20">
+                                                            Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
+                                                        </p>
+
+                                                        <hr/>
+
+                                                        <div class="text-left">
+                                                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="m-l-15">{{ patient.personalData.firstName }}</span></p>
+
+                                                            <p class="text-muted font-13"><strong>Phone :</strong><span class="m-l-15">{{ patient.locationData.phone }}</span></p>
+
+                                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">{{ patient.locationData.cellPhone }}</span></p>
+
+                                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">{{ patient.locationData.email }}</span></p>
+
+                                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">{{ patient.locationData.address }}</span></p>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div> <!-- end card-box -->
+
+                                            </div> <!-- end col -->
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6 text-left">
+                                            Showing 1 to 10 of 57 entries
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <ul class="pagination">
+                                                <li>
+                                                    <a href="#" class="waves-effect"><i class="fa fa-angle-left"></i> Previous</a>
+                                                </li>
+                                                <li class="disabled">
+                                                    <a href="#"><i class="fa fa-angle-left"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">1</a>
+                                                </li>
+                                                <li class="active">
+                                                    <a href="#">2</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">3</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">4</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">5</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"><i class="fa fa-angle-right"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="waves-effect">Next <i class="fa fa-angle-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
 
                                 </div>
-
                             </div>
-
                         </div>
+
                     </div>
                 </div>
 
@@ -100,6 +171,7 @@
     </tiles:putAttribute>
 
     <tiles:putAttribute name="scripts">
+        <script src="${pageContext.request.contextPath}/assets/js/app/patient/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientProvider.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientController.js"></script>
         <script>

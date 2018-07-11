@@ -15,3 +15,5 @@
 <script src="${pageContext.request.contextPath}/assets/js/jquery.app.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/angular.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/app/common/ApplicationProvider.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/app/common/ApplicationController.js"></script>
