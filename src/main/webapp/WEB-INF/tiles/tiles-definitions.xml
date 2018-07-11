@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="template" template="/theme/theme/template.jsp">
+        <put-attribute name="title" value="DO"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="head" value=""/>
+        <put-attribute name="Lib_css" value="/theme/theme/lib_css.jsp"/>
+        <put-attribute name="Lib_js" value="/theme/theme/lib_js.jsp"/>
+        <put-attribute name="header" value="/theme/theme/header.jsp"/>
+        <put-attribute name="sidebar" value="/theme/theme/sidebar.jsp"/>
+        <put-attribute name="footer" value="/theme/theme/footer.jsp"/>
+        <put-attribute name="scripts" value=""/>
+    </definition>
+
+</tiles-definitions>
