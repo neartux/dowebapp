@@ -3,7 +3,7 @@
 
     app.controller('PatientController', function($scope, PatientService) {
         var ctrl = this;
-        ctrl.patientList = { data: [] };
+        ctrl.patientData = { data: [] };
 
         /**
          * Init patient app
@@ -22,9 +22,11 @@
          */
         ctrl.findAllPatients = function () {
             PatientService.findAllPatients().then(function (res) {
-                console.info("DATA = ", res);
+                console.info("res.data.data = ", res.data.data);
                 if(!res.data.data.error) {
-                    ctrl.patientList.data = res.data.data;
+                    ctrl.patientData.data = res.data.data;
+                    console.info("HER");
+                    console.info("ctrl.patientData.data = ", ctrl.patientData.data)
                 }
             });
         };

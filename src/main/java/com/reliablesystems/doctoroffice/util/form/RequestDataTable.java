@@ -1,0 +1,42 @@
+package com.reliablesystems.doctoroffice.util.form;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+import java.util.Map;
+
+@NoArgsConstructor
+@Getter
+@Setter
+public class RequestDataTable {
+    private int draw;
+    private int start;
+    private int length;
+    private List<Map<String, Object>> order;
+    // Global search field
+    private Map<String, Object> search;
+    // Search individual
+    private List<Map<String, Object>> columns;
+    // Data no datatable
+    private int numPages;
+    private int currentPage;
+    private int elementsByPage;
+    private String q;
+    private int pagesToDisplay;
+    private Object data;
+
+    @Override
+    public String toString() {
+        return "RequestDataTable{" +
+                "draw=" + draw +
+                ", start=" + start +
+                ", length=" + length +
+                ", order='" + order + '\'' +
+                ", search='" + search + '\'' +
+                ", columns='" + columns + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
+}

@@ -54,10 +54,10 @@
                                             <div class="form-group">
                                                 <label for="numElement" class="col-sm-1 control-label">Show</label>
                                                 <div class="col-sm-3">
-                                                    <select name="" class="form-control" id="numElement">
-                                                        <option value="">10</option>
-                                                        <option value="">15</option>
-                                                        <option value="">25</option>
+                                                    <select data-ng-model="ctrl.patientData.data.elementsByPage" class="form-control" id="numElement">
+                                                        <option value="10">10</option>
+                                                        <option value="15">15</option>
+                                                        <option value="25">25</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -66,7 +66,8 @@
                                             <div class="form-group pull-right">
                                                 <label for="searchFilter" class="col-sm-3 control-label">Search</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="searchFilter">
+                                                    <input type="text" data-ng-model="ctrl.patientData.data.q"
+                                                           class="form-control" id="searchFilter">
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +77,7 @@
 
                                         <div class="col-md-12">
 
-                                            <div class="col-lg-3 col-md-3" data-ng-repeat="patient in ctrl.patientList.data">
+                                            <div class="col-lg-3 col-md-3" data-ng-repeat="patient in ctrl.patientData.data.data">
                                                 <div class="text-center card-box">
                                                     <div class="member-card">
                                                         <div class="thumb-xl member-thumb m-b-10 center-block">
@@ -85,8 +86,8 @@
                                                         </div>
 
                                                         <div class="">
-                                                            <h4 class="m-b-5">{{ patient.personalData.firstName }}</h4>
-                                                            <p class="text-muted">{{ patient.locationData.email }}</p>
+                                                            <h4 class="m-b-5">{{ patient.firstName }}</h4>
+                                                            <p class="text-muted">{{ patient.email }}</p>
                                                         </div>
 
                                                         <button type="button" class="btn btn-success btn-sm w-sm waves-effect m-t-10 waves-light">  <i class="ti-pencil-alt"></i> Edit</button>
@@ -95,15 +96,15 @@
                                                         <hr/>
 
                                                         <div class="text-left">
-                                                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="m-l-15">{{ patient.personalData.firstName }}</span></p>
+                                                            <p class="text-muted font-13"><strong>Full Name :</strong> <span class="m-l-15">{{ patient.firstName }}</span></p>
 
-                                                            <p class="text-muted font-13"><strong>Phone :</strong><span class="m-l-15">{{ patient.locationData.phone }}</span></p>
+                                                            <p class="text-muted font-13"><strong>Phone :</strong><span class="m-l-15">{{ patient.phone }}</span></p>
 
-                                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">{{ patient.locationData.cellPhone }}</span></p>
+                                                            <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">{{ patient.cellPhone }}</span></p>
 
-                                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">{{ patient.locationData.email }}</span></p>
+                                                            <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">{{ patient.email }}</span></p>
 
-                                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">{{ patient.locationData.address }}</span></p>
+                                                            <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">{{ patient.address }}</span></p>
                                                         </div>
 
                                                     </div>
@@ -118,7 +119,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-6 text-left m-t-30">
-                                            Showing 1 to 10 of 57 entries
+                                            Showing 1 to 10 of {{ ctrl.patientData.data.length }} entries
                                         </div>
                                         <div class="col-sm-6 text-right">
                                             <ul class="pagination">
@@ -128,20 +129,9 @@
                                                 <li class="disabled">
                                                     <a href="#"><i class="fa fa-angle-left"></i></a>
                                                 </li>
-                                                <li>
+                                                <li data-ng-repeat="page in [] | range:ctrl.patientData.data.pagesToDisplay"
+                                                    class="active">
                                                     <a href="#">1</a>
-                                                </li>
-                                                <li class="active">
-                                                    <a href="#">2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">4</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">5</a>
                                                 </li>
                                                 <li>
                                                     <a href="#"><i class="fa fa-angle-right"></i></a>
