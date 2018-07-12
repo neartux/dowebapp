@@ -52,21 +52,21 @@
                                     <div class="row">
                                         <div class="col-sm-6 text-left form-horizontal">
                                             <div class="form-group">
-                                                <label for="inputEmail3" class="col-sm-1 control-label">Show</label>
+                                                <label for="numElement" class="col-sm-1 control-label">Show</label>
                                                 <div class="col-sm-3">
-                                                    <select name="" class="form-control" id="">
+                                                    <select name="" class="form-control" id="numElement">
                                                         <option value="">10</option>
                                                         <option value="">15</option>
                                                         <option value="">25</option>
-                                                    </select> Entries
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 pull-right form-horizontal">
-                                            <div class="form-group">
-                                                <label for="inputEmail3" class="col-sm-2 control-label">Search</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control">
+                                            <div class="form-group pull-right">
+                                                <label for="searchFilter" class="col-sm-3 control-label">Search</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="searchFilter">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,10 +91,6 @@
 
                                                         <button type="button" class="btn btn-success btn-sm w-sm waves-effect m-t-10 waves-light">  <i class="ti-pencil-alt"></i> Edit</button>
                                                         <button type="button" class="btn btn-danger btn-sm w-sm waves-effect m-t-10 waves-light"> <i class="ti-trash"></i> Delete</button>
-
-                                                        <p class="text-muted font-13 m-t-20">
-                                                            Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
-                                                        </p>
 
                                                         <hr/>
 
@@ -121,7 +117,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-sm-6 text-left">
+                                        <div class="col-sm-6 text-left m-t-30">
                                             Showing 1 to 10 of 57 entries
                                         </div>
                                         <div class="col-sm-6 text-right">
