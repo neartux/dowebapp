@@ -54,7 +54,8 @@
                                             <div class="form-group">
                                                 <label for="numElement" class="col-sm-1 control-label">Show</label>
                                                 <div class="col-sm-3">
-                                                    <select data-ng-model="ctrl.patientData.data.elementsByPage" class="form-control" id="numElement">
+                                                    <select data-ng-model="ctrl.patientData.data.elementsByPage" data-ng-change="ctrl.reloadDataByFilters();"
+                                                            class="form-control" id="numElement">
                                                         <option value="10">10</option>
                                                         <option value="15">15</option>
                                                         <option value="25">25</option>
@@ -119,25 +120,45 @@
 
                                     <div class="row">
                                         <div class="col-sm-6 text-left m-t-30">
-                                            Showing 1 to 10 of {{ ctrl.patientData.data.length }} entries
+                                            Showing {{ ctrl.patientData.data.start }} to {{ ctrl.patientData.data.end }} of {{ ctrl.patientData.data.length }} entries
                                         </div>
                                         <div class="col-sm-6 text-right">
+
                                             <ul class="pagination">
-                                                <li>
-                                                    <a href="#" class="waves-effect"><i class="fa fa-angle-left"></i> Previous</a>
+                                                <!-- If exist before pages to return previous page -->
+                                                <li data-ng-class="!ctrl.patientData.data.existMorePagesBefore ? 'disabled' : ''">
+                                                    <a class="waves-effect" data-ng-click="ctrl.goToPage(ctrl.patientData.data.currentPage - 1, ctrl.patientData.data.existMorePagesBefore);">
+                                                        <i class="fa fa-angle-left"></i>
+                                                        Previous
+                                                    </a>
                                                 </li>
-                                                <li class="disabled">
-                                                    <a href="#"><i class="fa fa-angle-left"></i></a>
+                                                <!-- If exist before pages to return page 1 -->
+                                                <li data-ng-class="!ctrl.patientData.data.existMorePagesBefore ? 'disabled' : ''">
+                                                    <a data-ng-click="ctrl.goToPage(1, ctrl.patientData.data.existMorePagesBefore);">
+                                                        <i class="fa fa-angle-left"></i>
+                                                    </a>
                                                 </li>
-                                                <li data-ng-repeat="page in [] | range:ctrl.patientData.data.pagesToDisplay"
-                                                    class="active">
-                                                    <a href="#">1</a>
+
+
+                                                <li data-ng-repeat="pageNumber in ctrl.getRangeOfPages() track by $index"
+                                                    data-ng-class="pageNumber == ctrl.patientData.data.currentPage ? 'active' : ''">
+                                                    <a data-ng-click="ctrl.goToPage(pageNumber);">
+                                                        {{ pageNumber }}
+                                                    </a>
                                                 </li>
-                                                <li>
-                                                    <a href="#"><i class="fa fa-angle-right"></i></a>
+
+
+                                                <!-- If exist more pages to go last page -->
+                                                <li data-ng-class="!ctrl.patientData.data.existMorePagesAfter ? 'disabled' : ''">
+                                                    <a data-ng-click="ctrl.goToPage(ctrl.patientData.data.numPages, ctrl.patientData.data.existMorePagesAfter);">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </a>
                                                 </li>
-                                                <li>
-                                                    <a href="#" class="waves-effect">Next <i class="fa fa-angle-right"></i></a>
+                                                <!-- If exist more page to go to next -->
+                                                <li data-ng-class="!ctrl.patientData.data.existMorePagesAfter ? 'disabled' : ''">
+                                                    <a class="waves-effect" data-ng-click="ctrl.goToPage(ctrl.patientData.data.currentPage + 1, ctrl.patientData.data.existMorePagesAfter);">
+                                                        Next <i class="fa fa-angle-right"></i>
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -159,7 +180,7 @@
     <tiles:putAttribute name="scripts">
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientProvider.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientController.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientController.js?1.1"></script>
         <script>
 
             $(function () {

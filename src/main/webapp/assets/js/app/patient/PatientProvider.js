@@ -10,6 +10,10 @@
             return $http.get(service.contextPath + '/patient');
         };
 
+        service.findAllPatientsByFilters = function (filters) {
+            return $http.post(service.contextPath + '/patient', filters);
+        };
+
         return service;
 
     });

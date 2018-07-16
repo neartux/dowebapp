@@ -25,6 +25,11 @@ public class RequestDataTable {
     private int elementsByPage;
     private String q;
     private int pagesToDisplay;
+    private boolean existMorePagesAfter;
+    private boolean existMorePagesBefore;
+    private int end;
+    private int countPages;
+    private int pagesLimit;
     private Object data;
 
     @Override
@@ -33,10 +38,18 @@ public class RequestDataTable {
                 "draw=" + draw +
                 ", start=" + start +
                 ", length=" + length +
-                ", order='" + order + '\'' +
-                ", search='" + search + '\'' +
-                ", columns='" + columns + '\'' +
-                ", data='" + data + '\'' +
+                ", order=" + order +
+                ", search=" + search +
+                ", columns=" + columns +
+                ", numPages=" + numPages +
+                ", currentPage=" + currentPage +
+                ", elementsByPage=" + elementsByPage +
+                ", q='" + q + '\'' +
+                ", pagesToDisplay=" + pagesToDisplay +
+                ", existMorePagesAfter=" + existMorePagesAfter +
+                ", existMorePagesBefore=" + existMorePagesBefore +
+                ", end=" + end +
+                ", data=" + data +
                 '}';
     }
 }
