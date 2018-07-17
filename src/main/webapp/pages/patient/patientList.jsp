@@ -173,6 +173,8 @@
 
             </div>
 
+            <jsp:include page="patientForm.jsp" />
+
         </div>
 
     </tiles:putAttribute>
@@ -184,6 +186,7 @@
         <script>
 
             $(function () {
+                $("#patientDataForm").modal();
             });
 
         </script>

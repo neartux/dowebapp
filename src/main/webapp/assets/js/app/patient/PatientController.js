@@ -4,6 +4,8 @@
     app.controller('PatientController', function($scope, PatientService) {
         var ctrl = this;
         ctrl.patientData = { data: [] };
+        ctrl.patientTO = {};
+        ctrl.bloodTypeList = { data: [] };
 
         /**
          * Init patient app
@@ -15,6 +17,8 @@
             PatientService.contextPath = contextPath;
             // Find all patients of the system
             ctrl.findAllPatients();
+            // Find all type of blood
+            ctrl.findBloodTypes();
         };
 
         /**
@@ -29,6 +33,13 @@
                     console.info("ctrl.patientData.data = ", ctrl.patientData.data)
                 }
             });
+        };
+
+        /**
+         * Find all types of blood
+         */
+        ctrl.findBloodTypes = function() {
+
         };
 
         /**

@@ -4,6 +4,7 @@
     }
 </style>
 <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/assets/css/common.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/core.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/components.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/icons.css" rel="stylesheet" type="text/css" />
