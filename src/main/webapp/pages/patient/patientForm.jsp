@@ -51,26 +51,34 @@
                             <div class="col-md-6">
                                 <div class="form-group" ng-class="{ 'has-error' : patientForm.sexType.$invalid && !patientForm.sexType.$pristine }">
                                     <label class="control-label">Sex *</label>
-                                    <div class="button-list">
-                                        <div class="btn-switch btn-switch-pink">
-                                            <input type="checkbox" required
-                                                   name="sexType" id="input-btn-female" value="${SEX_FEMALE}"/>
-                                            <label for="input-btn-female"
-                                                   class="btn btn-rounded btn-pink waves-effect waves-light btn-xs">
-                                                <em class="glyphicon glyphicon-ok"></em>
-                                                <strong class="font-10"> Femenino <i class="fa fa-female"></i></strong>
-                                            </label>
-                                        </div>
-                                        <div class="btn-switch btn-switch-teal">
-                                            <input type="checkbox" required
-                                                   name="sexType" id="input-btn-male" value="${SEX_MALE}"/>
-                                            <label for="input-btn-male"
-                                                   class="btn btn-rounded btn-teal waves-effect waves-light btn-xs">
-                                                <em class="glyphicon glyphicon-ok"></em>
-                                                <strong class="font-10"> Masculino <i class="fa fa-male"></i></strong>
-                                            </label>
-                                        </div>
-                                    </div>
+                                    <label>
+                                        <input type="radio" name="sexType" data-ng-model="ctrl.patient.sex" value="${SEX_FEMALE}"
+                                               class="icheck" i-check data-skin="square" data-color="pink"> Female
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="sexType" data-ng-model="ctrl.patient.sex" value="${SEX_MALE}"
+                                               class="icheck" i-check skin="square" color="pink"> Male
+                                    </label>
+                                    <%--<div class="button-list">--%>
+                                        <%--<div class="btn-switch btn-switch-pink">--%>
+                                            <%--<input type="checkbox" required--%>
+                                                   <%--name="sexType" id="input-btn-female" value="${SEX_FEMALE}"/>--%>
+                                            <%--<label for="input-btn-female"--%>
+                                                   <%--class="btn btn-rounded btn-pink waves-effect waves-light btn-xs">--%>
+                                                <%--<em class="glyphicon glyphicon-ok"></em>--%>
+                                                <%--<strong class="font-10"> Femenino <i class="fa fa-female"></i></strong>--%>
+                                            <%--</label>--%>
+                                        <%--</div>--%>
+                                        <%--<div class="btn-switch btn-switch-teal">--%>
+                                            <%--<input type="checkbox" required--%>
+                                                   <%--name="sexType" id="input-btn-male" value="${SEX_MALE}"/>--%>
+                                            <%--<label for="input-btn-male"--%>
+                                                   <%--class="btn btn-rounded btn-teal waves-effect waves-light btn-xs">--%>
+                                                <%--<em class="glyphicon glyphicon-ok"></em>--%>
+                                                <%--<strong class="font-10"> Masculino <i class="fa fa-male"></i></strong>--%>
+                                            <%--</label>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
                                     <span ng-show="patientForm.sexType.$invalid && !patientForm.sexType.$pristine"
                                           class="help-block">Sex is required.</span>
                                 </div>

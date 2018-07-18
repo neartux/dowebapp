@@ -14,6 +14,10 @@
             return $http.post(service.contextPath + '/patient', filters);
         };
 
+        service.findBloodTypes = function () {
+            return $http.get(service.contextPath + '/patient/findBloodTypes');
+        };
+
         return service;
 
     });

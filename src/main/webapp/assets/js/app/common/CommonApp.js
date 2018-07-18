@@ -1,9 +1,4 @@
 (function () {
-    angular.module('app', ['Application']).directive('myCustomer', function() {
+    angular.module('app', ['Application']);
 
-        // TODO her directive
-
-
-
-    });
 })();
