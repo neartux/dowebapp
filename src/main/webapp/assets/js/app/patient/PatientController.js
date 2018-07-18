@@ -13,6 +13,7 @@
          * @param contextPath aplication path
          */
         ctrl.init = function (contextPath) {
+            showNotification("success", "this is the mesage");
             // Asign path aplication
             PatientService.contextPath = contextPath;
             // Find all patients of the system
@@ -40,6 +41,12 @@
          */
         ctrl.findBloodTypes = function() {
 
+        };
+
+        ctrl.validatePatient = function(isValidForm) {
+            if(isValidForm) {
+                // Validate birthdate
+            }
         };
 
         /**

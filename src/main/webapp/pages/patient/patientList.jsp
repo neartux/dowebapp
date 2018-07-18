@@ -9,6 +9,8 @@
 <tiles:insertDefinition name="template">
     <tiles:putAttribute name="body">
 
+        <link href="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
         <div class="content" data-ng-app="Patient" data-ng-controller="PatientController as ctrl" data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
             <div class="container">
 
@@ -180,12 +182,18 @@
     </tiles:putAttribute>
 
     <tiles:putAttribute name="scripts">
+        <script src="${pageContext.request.contextPath}/assets/plugins/moment/moment.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientProvider.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientController.js?1.1"></script>
         <script>
 
             $(function () {
+                $('#field-birthDate').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                });
                 $("#patientDataForm").modal();
             });
 
