@@ -4,18 +4,18 @@ import com.reliablesystems.doctoroffice.core.service.bloodtype.BloodTypeService;
 import com.reliablesystems.doctoroffice.core.service.patient.PatientService;
 import com.reliablesystems.doctoroffice.core.to.common.ApiResponse;
 import com.reliablesystems.doctoroffice.core.to.patient.PatientTO;
+import com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys;
 import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StringUtil;
 import com.reliablesystems.doctoroffice.core.utils.patient.PatientUtil;
 import com.reliablesystems.doctoroffice.util.form.DataTableUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,7 +35,6 @@ public class PatientController {
      */
     @RequestMapping(value = "/display", method = RequestMethod.GET)
     public String display(Model model) {
-        System.out.println("HER IN CONTROLLER");
         return "pages/patient/patientList";
     }
 
@@ -122,5 +121,48 @@ public class PatientController {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());
         }
+    }
+
+    /**
+     * Method to update a patient
+     *
+     * @param patientTO Patient data
+     * @return ApiResponse
+     */
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @ResponseBody
+    public ApiResponse updatePatient(@RequestBody PatientTO patientTO) {
+        try {
+            patientService.updatePatient(patientTO);
+            return new ApiResponse(false, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(true, e.getMessage());
+        }
+    }
+
+    /**
+     * Method to delete a patient
+     *
+     * @param patientId Patient id
+     * @return ApiResponse
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ApiResponse deletePatient(@RequestParam("patientId") long patientId) {
+        try {
+            patientService.inactivePatient(patientId);
+            return new ApiResponse(false, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(true, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/updoadPacientProfile", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    @ResponseBody
+    public ApiResponse updoadPacientProfile(@RequestParam("file") MultipartFile file, @RequestParam("patientId") Long patientId) {
+        String directory = ApplicationKeys.PATH_SERVER_FILES;
+        return null;
     }
 }

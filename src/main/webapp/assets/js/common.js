@@ -20,3 +20,19 @@ function showNotification(type, message) {
         "hideMethod": "fadeOut"
     }
 }
+
+function getConfigurationSwalConfirm(tittle, text, type, confirmButtonText) {
+    return {
+        title: tittle,
+        text: text,
+        type: type,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: confirmButtonText,
+        cancelButtonClass: 'btn-default btn-md waves-effect',
+        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
+        cancelButtonText: "No, cancelar!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+    };
+}

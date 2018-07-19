@@ -12,6 +12,7 @@
 <script src="${pageContext.request.contextPath}/assets/plugins/switchery/switchery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/toastr/toastr.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/plugins/icheck/icheck.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/assets/js/jquery.core.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.app.js"></script>

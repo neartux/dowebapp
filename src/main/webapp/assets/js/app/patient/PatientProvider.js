@@ -18,6 +18,27 @@
             return $http.get(service.contextPath + '/patient/findBloodTypes');
         };
 
+        service.createPatient = function (patientTO) {
+            return $http.post(service.contextPath + '/patient/create', patientTO);
+        };
+
+        service.updatePatient = function (patientTO) {
+            return $http.put(service.contextPath + '/patient/update', patientTO);
+        };
+
+        service.deletePatient = function (patientId) {
+            return $http.delete(service.contextPath + '/patient/delete', {params: {patientId: patientId}});
+        };
+
+        service.updoadPacientProfile = function (formData) {
+            return $http.post(service.contextPath + "/patient/updoadPacientProfile", formData, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            });
+        };
+
         return service;
 
     });

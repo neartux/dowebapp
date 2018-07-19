@@ -1,52 +1,5 @@
 (function (){
-    var app = angular.module('Patient', ['PatientProvider']);
-
-    app.directive('iCheck', function () {
-        return {
-            require: 'ngModel',
-            link: function ($scope, element, $attrs, ngModel) {
-                var value;
-                value = $attrs['value'];
-                var color = $attrs.color;
-                var skin = $attrs.skin;
-
-                skin = skin && color ? skin + '-' + color : skin;
-
-                $scope.$watch($attrs['ngModel'], function (newValue) {
-                    $(element).iCheck('update');
-                });
-
-                $scope.$watch($attrs['ngDisabled'], function (newValue) {
-                    $(element).iCheck(newValue ? 'disable' : 'enable');
-                    $(element).iCheck('update');
-                });
-
-                return $(element).iCheck({
-                    checkboxClass: skin ? 'icheckbox_' + skin : 'icheckbox_minimal',
-                    radioClass: skin ? 'iradio_' + skin : 'iradio_minimal',
-                    increaseArea: '20%'
-                }).on('ifChanged', function (event) {
-                    if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
-                        $scope.$apply(function () {
-                            return ngModel.$setViewValue(event.target.checked);
-                        })
-                    }
-                }).on('ifClicked', function (event) {
-                    if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
-                        return $scope.$apply(function () {
-                            //set up for radio buttons to be de-selectable
-                            if (ngModel.$viewValue !== value)
-                                return ngModel.$setViewValue(value);
-                            else
-                                ngModel.$setViewValue(null);
-                            ngModel.$render();
-                            return;
-                        });
-                    }
-                });
-            }
-        }
-    });
+    var app = angular.module('Patient', ['PatientProvider', 'CommonDirectives']);
 
     app.controller('PatientController', function($scope, PatientService) {
         var ctrl = this;
@@ -118,6 +71,55 @@
                     }
                 }
             }
+        };
+
+        /**
+         * Method to create a patient
+         *
+         * @returns {PromiseLike<T> | Promise<T> | *} Response
+         */
+        ctrl.createPatient = function() {
+            return PatientService.createPatient(ctrl.patientTO).then(function (res) {
+                if(res.data.data.error) {
+                    showNotification("error", "Error: " + res.data.data.message);
+                } else {
+                    showNotification("success", "El paciente se ha creado");
+                }
+            });
+        };
+
+        /**
+         * Method to update a patient
+         *
+         * @returns {PromiseLike<T> | Promise<T> | *} Response
+         */
+        ctrl.updatePatient = function() {
+            return PatientService.updatePatient(ctrl.patientTO).then(function (res) {
+                if(res.data.data.error) {
+                    showNotification("error", "Error: " + res.data.data.message);
+                } else {
+                    showNotification("success", "El paciente se ha modificado correctament");
+                }
+            });
+        };
+
+        /**
+         * Method to delete a patient
+         *
+         * @returns {PromiseLike<T> | Promise<T> | *} Response
+         */
+        ctrl.deletePatient = function(id) {
+            swal(getConfigurationSwalConfirm("Estas seguro?","Se eliminara el paciente del sistema","warning","SI, eliminarlo!"), function (isConfirm) {
+                if (isConfirm) {
+                    return PatientService.deletePatient(id).then(function (res) {
+                        if(res.data.data.error) {
+                            showNotification("error", "Error: " + res.data.data.message);
+                        } else {
+                            showNotification("success", "El paciente se ha eliminado");
+                        }
+                    });
+                }
+            });
         };
 
         /**

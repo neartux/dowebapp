@@ -187,6 +187,7 @@
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientProvider.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientController.js?1.1"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/app/common/CommonDirectives.js"></script>
         <script>
 
             $(function () {
