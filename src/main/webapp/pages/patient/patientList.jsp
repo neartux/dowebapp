@@ -56,7 +56,7 @@
                                 <div class="row m-t-50">
                                     <div class="col-sm-6 text-left form-horizontal">
                                         <div class="form-group">
-                                            <label for="numElement" class="col-sm-1 control-label">Show</label>
+                                            <label for="numElement" class="col-sm-1 control-label">Mostrar</label>
                                             <div class="col-sm-3">
                                                 <select data-ng-model="ctrl.patientData.data.elementsByPage" data-ng-change="ctrl.reloadDataByFilters();"
                                                         class="form-control" id="numElement">
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="col-sm-6 pull-right form-horizontal">
                                         <div class="form-group pull-right">
-                                            <label for="searchFilter" class="col-sm-3 control-label">Search</label>
+                                            <label for="searchFilter" class="col-sm-3 control-label">Buscar Paciente</label>
                                             <div class="col-sm-9">
                                                 <input type="text" data-ng-model="ctrl.patientData.data.q"
                                                        class="form-control" id="searchFilter">
@@ -107,11 +107,11 @@
                                                     <hr/>
 
                                                     <div class="text-left">
-                                                        <p class="text-muted font-13"><strong>Mobile :</strong><span class="m-l-15">{{ patient.cellPhone }}</span></p>
+                                                        <p class="text-muted font-13"><strong>Celular :</strong><span class="m-l-15">{{ patient.cellPhone }}</span></p>
 
                                                         <p class="text-muted font-13"><strong>Email :</strong> <span class="m-l-15">{{ patient.email }}</span></p>
 
-                                                        <p class="text-muted font-13"><strong>Location :</strong> <span class="m-l-15">{{ patient.address }}</span></p>
+                                                        <p class="text-muted font-13"><strong>Direcci&oacute;n :</strong> <span class="m-l-15">{{ patient.address }}</span></p>
                                                     </div>
 
                                                 </div>
@@ -126,7 +126,7 @@
 
                                 <div class="row">
                                     <div class="col-sm-6 text-left m-t-30">
-                                        Showing {{ ctrl.patientData.data.start }} to {{ ctrl.patientData.data.end }} of {{ ctrl.patientData.data.length }} entries
+                                        Mostrando {{ ctrl.patientData.data.start }} a {{ ctrl.patientData.data.end }} de {{ ctrl.patientData.data.length }} elementos
                                     </div>
                                     <div class="col-sm-6 text-right">
 
@@ -135,7 +135,7 @@
                                             <li data-ng-class="!ctrl.patientData.data.existMorePagesBefore ? 'disabled' : ''">
                                                 <a class="waves-effect" data-ng-click="ctrl.goToPage(ctrl.patientData.data.currentPage - 1, ctrl.patientData.data.existMorePagesBefore);">
                                                     <i class="fa fa-angle-left"></i>
-                                                    Previous
+                                                    Anterior
                                                 </a>
                                             </li>
                                             <!-- If exist before pages to return page 1 -->
@@ -163,7 +163,7 @@
                                             <!-- If exist more page to go to next -->
                                             <li data-ng-class="!ctrl.patientData.data.existMorePagesAfter ? 'disabled' : ''">
                                                 <a class="waves-effect" data-ng-click="ctrl.goToPage(ctrl.patientData.data.currentPage + 1, ctrl.patientData.data.existMorePagesAfter);">
-                                                    Next <i class="fa fa-angle-right"></i>
+                                                    Siguiente <i class="fa fa-angle-right"></i>
                                                 </a>
                                             </li>
                                         </ul>
