@@ -103,8 +103,8 @@
                         <div class="row">
                             <div class="col-md-6" ng-class="{ 'has-error' : patientForm.address.$invalid && !patientForm.address.$pristine }">
                                 <div class="form-group">
-                                    <label for="field-address" class="control-label">Direcci&oacute;n</label>
-                                    <input type="text" data-ng-model="ctrl.patientTO.address"
+                                    <label for="field-address" class="control-label">Direcci&oacute;n *</label>
+                                    <input type="text" data-ng-model="ctrl.patientTO.address" required
                                            class="form-control" id="field-address" maxlength="150">
                                     <span ng-show="patientForm.address.$invalid && !patientForm.address.$pristine"
                                           class="help-block">La direcci&oacute;n es requerido.</span>
@@ -131,7 +131,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="field-email" class="control-label">Email</label>
-                                    <input type="text" data-ng-model="ctrl.patientTO.email"
+                                    <input type="email" data-ng-model="ctrl.patientTO.email"
                                            class="form-control" id="field-email" maxlength="50">
                                 </div>
                             </div>
@@ -139,11 +139,11 @@
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="ti-close"></i> Cerrar</button>
                         <button type="button" class="btn btn-info waves-effect waves-light"
                                 data-ng-disabled="patientForm.$invalid"
                                 data-ng-click="ctrl.validatePatient(patientForm.$valid)">
-                            Guardar Cambios
+                            <i class="ti-save"></i> Guardar Cambios
                         </button>
                     </div>
                 </div>

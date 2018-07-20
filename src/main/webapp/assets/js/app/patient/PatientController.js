@@ -45,6 +45,9 @@
             });
         };
 
+        /**
+         * Method to display form to create a new patient
+         */
         ctrl.viewToCreateNewPatient = function() {
             ctrl.isCreatePatient = true;
             ctrl.patientTO = {};
@@ -92,6 +95,10 @@
             });
         };
 
+        /**
+         * Method to display form to update a patient
+         * @param patient
+         */
         ctrl.viewToUpdatePatient = function(patient) {
             ctrl.patientTO = angular.copy(patient);
             ctrl.patientTO.bloodTypeId = patient.bloodTypeId.toString();
@@ -153,6 +160,29 @@
                 ctrl.patientTO.birthDateS = birthDate;
             }
             return isValid;
+        };
+
+        /**
+         * Method to valid and upload a profile picture of a patient
+         *
+         * @returns {PromiseLike<T> | Promise<T> | *} Response
+         */
+        ctrl.validateAndUploadProfilPicturePatient = function() {
+            // Get profile picture
+            var profilePicture = $("#profilePicturePatient")[0].files[0];
+            // Validate profile picture
+            if (profilePicture === undefined) {
+                showNotification("warning", "Selecciona una imagen de perfil");
+                return;
+            }
+            // Build request
+            var formData = new FormData();
+            formData.append("file", profilePicture);
+            formData.append("patientId", ctrl.patientTO.id);
+            // Send request
+            return PatientService.updoadProfilePicturePatient(formData).then(function (res) {
+                console.info("response data = ", res);
+            });
         };
 
 

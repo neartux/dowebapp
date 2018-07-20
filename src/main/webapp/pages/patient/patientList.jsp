@@ -80,7 +80,14 @@
 
                                 <div class="row">
 
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" data-ng-show="!ctrl.patientData.data.data.length">
+                                        <div class="alert alert-icon alert-warning alert-dismissible fade in" role="alert">
+                                            <i class="mdi mdi-alert"></i>
+                                            <strong>Alerta!</strong> No se encontro ningun registro
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" data-ng-show="ctrl.patientData.data.data.length">
 
                                         <div class="col-lg-3 col-md-3 m-t-20" data-ng-repeat="patient in ctrl.patientData.data.data">
                                             <div class="text-center card-box">

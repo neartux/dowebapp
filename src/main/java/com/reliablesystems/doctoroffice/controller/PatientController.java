@@ -1,5 +1,7 @@
 package com.reliablesystems.doctoroffice.controller;
 
+import com.reliablesystems.doctoroffice.core.domain.Patient;
+import com.reliablesystems.doctoroffice.core.exception.BackEndException;
 import com.reliablesystems.doctoroffice.core.service.bloodtype.BloodTypeService;
 import com.reliablesystems.doctoroffice.core.service.patient.PatientService;
 import com.reliablesystems.doctoroffice.core.to.common.ApiResponse;
@@ -7,6 +9,7 @@ import com.reliablesystems.doctoroffice.core.to.patient.PatientTO;
 import com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys;
 import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StringUtil;
+import com.reliablesystems.doctoroffice.core.utils.file.FileUtil;
 import com.reliablesystems.doctoroffice.core.utils.patient.PatientUtil;
 import com.reliablesystems.doctoroffice.util.form.DataTableUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
@@ -17,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -159,10 +163,50 @@ public class PatientController {
         }
     }
 
+    /**
+     * Method to upload an profil picture
+     *
+     * @param file File
+     * @param patientId Patient id
+     * @return The reponse
+     */
     @RequestMapping(value = "/updoadPacientProfile", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
     public ApiResponse updoadPacientProfile(@RequestParam("file") MultipartFile file, @RequestParam("patientId") Long patientId) {
-        String directory = ApplicationKeys.PATH_SERVER_FILES;
-        return null;
+        try {
+            // Validate profile picture
+            if (file.isEmpty()) {
+                throw new BackEndException("No se encontro archivo");
+            }
+            String fileName = file.getOriginalFilename();
+            System.out.println("fileName = " + fileName);
+            String extension = fileName.substring(fileName.lastIndexOf(StringUtil.DOT) + NumberUtil.ONE_INT);
+            // Validate if extension is valid
+            if (!Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).contains(extension)) {
+                throw new BackEndException("Invalid extension, available extension: " + Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).toString());
+            }
+            String profilePictureDirectory = ApplicationKeys.PATH_SERVER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT_PROFILE_PICTURE;
+            System.out.println("profilePictureDirectory = " + profilePictureDirectory);
+            // Create folder if it does not exist
+            FileUtil.createFolderIfNotExist(profilePictureDirectory);
+            // Build the full path image
+            String finalNameFile = StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.DOT + extension;
+            System.out.println("finalNameFile = " + finalNameFile);
+            // Find patient
+            Patient patient = patientService.findPatientById(patientId);
+            // If patient has profile picture, delete phisically the image
+            if (patient != null && !patient.getProfileImage().isEmpty()) {
+                FileUtil.deleteFileByPath(patient.getProfileImage());
+            }
+            // Upload the file
+            FileUtil.uploadFile(profilePictureDirectory + finalNameFile, file.getBytes());
+            // Update profile picture in DB
+            patientService.updateProfilePicturePath(patientId, profilePictureDirectory + finalNameFile);
+            // Return response
+            return new ApiResponse(false, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(true, e.getMessage());
+        }
     }
 }

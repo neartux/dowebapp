@@ -30,7 +30,7 @@
             return $http.delete(service.contextPath + '/patient/delete', {params: {patientId: patientId}});
         };
 
-        service.updoadPacientProfile = function (formData) {
+        service.updoadProfilePicturePatient = function (formData) {
             return $http.post(service.contextPath + "/patient/updoadPacientProfile", formData, {
                 transformRequest: angular.identity,
                 headers: {
