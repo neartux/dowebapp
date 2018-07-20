@@ -9,11 +9,11 @@
                 <div class="panel panel-color panel-primary">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                        <h3 class="panel-title">New Patient</h3>
+                        <h3 class="panel-title">Nuevo Paciente</h3>
                     </div>
                     <div class="panel-body">
-                        <h4 class="m-t-0">
-                            Personal Data
+                        <h4 class="m-t-0 text-primary bold">
+                            <i class="mdi mdi-account-location"></i> Informaci&oacute;n Personal
                         </h4>
                         <hr class="m-t-0 m-b-5">
                         <div class="row">
@@ -51,40 +51,35 @@
                             <div class="col-md-6">
                                 <div class="form-group" ng-class="{ 'has-error' : patientForm.sexType.$invalid && !patientForm.sexType.$pristine }">
                                     <label class="control-label">Sex *</label>
+                                    <br> <br>
                                     <label>
-                                        <input type="radio" name="sexType" data-ng-model="ctrl.patient.sex" value="${SEX_FEMALE}"
-                                               class="icheck" i-check data-skin="square" data-color="pink"> Female
-                                    </label>
+                                        <input type="radio" name="sexType" data-ng-model="ctrl.patientTO.sex" value="${SEX_FEMALE}"
+                                               class="icheck" i-check data-skin="square" data-color="pink" required> Female
+                                    </label> &nbsp;&nbsp;&nbsp;
                                     <label>
-                                        <input type="radio" name="sexType" data-ng-model="ctrl.patient.sex" value="${SEX_MALE}"
-                                               class="icheck" i-check skin="square" color="pink"> Male
+                                        <input type="radio" name="sexType" data-ng-model="ctrl.patientTO.sex" value="${SEX_MALE}"
+                                               class="icheck" i-check data-skin="square" data-color="blue"> Male
                                     </label>
-                                    <%--<div class="button-list">--%>
-                                        <%--<div class="btn-switch btn-switch-pink">--%>
-                                            <%--<input type="checkbox" required--%>
-                                                   <%--name="sexType" id="input-btn-female" value="${SEX_FEMALE}"/>--%>
-                                            <%--<label for="input-btn-female"--%>
-                                                   <%--class="btn btn-rounded btn-pink waves-effect waves-light btn-xs">--%>
-                                                <%--<em class="glyphicon glyphicon-ok"></em>--%>
-                                                <%--<strong class="font-10"> Femenino <i class="fa fa-female"></i></strong>--%>
-                                            <%--</label>--%>
-                                        <%--</div>--%>
-                                        <%--<div class="btn-switch btn-switch-teal">--%>
-                                            <%--<input type="checkbox" required--%>
-                                                   <%--name="sexType" id="input-btn-male" value="${SEX_MALE}"/>--%>
-                                            <%--<label for="input-btn-male"--%>
-                                                   <%--class="btn btn-rounded btn-teal waves-effect waves-light btn-xs">--%>
-                                                <%--<em class="glyphicon glyphicon-ok"></em>--%>
-                                                <%--<strong class="font-10"> Masculino <i class="fa fa-male"></i></strong>--%>
-                                            <%--</label>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
                                     <span ng-show="patientForm.sexType.$invalid && !patientForm.sexType.$pristine"
                                           class="help-block">Sex is required.</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{ 'has-error' : patientForm.bloodType.$invalid && !patientForm.bloodType.$pristine }">
+                                    <label for="field-bloodType" class="control-label">Blood Type *</label>
+                                    <select name="bloodType" data-ng-model="ctrl.patientTO.bloodTypeId"
+                                            id="field-bloodtype" class="form-control" required>
+                                        <option value="">Select Option</option>
+                                        <option value="{{ bloodType.id }}" data-ng-repeat="bloodType in ctrl.bloodTypeList.data">
+                                            {{ bloodType.description }}
+                                        </option>
+                                    </select>
+                                    <span ng-show="patientForm.bloodType.$invalid && !patientForm.bloodType.$pristine"
+                                          class="help-block">bloodType is required.</span>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="field-civilStatus" class="control-label">Civil Status</label>
@@ -99,25 +94,22 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-bloodType" class="control-label">Blood Type</label>
-                                    <select name="bloodType" data-ng-model="ctrl.patientTo.bloodTypeId"
-                                            id="field-bloodtype" class="form-control">
-                                        <option value="">Select Option</option>
-                                        <option value="{{ bloodType.id }}" data-ng-repeat="bloodType in ctrl.bloodTypeList.data">
-                                            {{ bloodType.description }}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
 
-                        <h4>
-                            Location Data
+                        <h4 class="text-primary bold">
+                            <i class="mdi mdi-map-marker-plus"></i> Informaci&oacute; de Ubicaci&oacute;n
                         </h4>
                         <hr class="m-t-0 m-b-5">
                         <div class="row">
+                            <div class="col-md-6" ng-class="{ 'has-error' : patientForm.address.$invalid && !patientForm.address.$pristine }">
+                                <div class="form-group">
+                                    <label for="field-address" class="control-label">Address</label>
+                                    <input type="text" data-ng-model="ctrl.patientTO.address"
+                                           class="form-control" id="field-address" maxlength="150">
+                                    <span ng-show="patientForm.address.$invalid && !patientForm.address.$pristine"
+                                          class="help-block">Cellphone is required.</span>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group" ng-class="{ 'has-error' : patientForm.cellPhone.$invalid && !patientForm.cellPhone.$pristine }">
                                     <label for="field-cellPhone" class="control-label">Cell Phone *</label>
@@ -127,20 +119,13 @@
                                           class="help-block">Cellphone is required.</span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="field-phone" class="control-label">Phone</label>
                                     <input type="text" data-ng-model="ctrl.patientTO.phone"
                                            class="form-control" id="field-phone" maxlength="15">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-address" class="control-label">Address</label>
-                                    <input type="text" data-ng-model="ctrl.patientTO.address"
-                                           class="form-control" id="field-address" maxlength="150">
                                 </div>
                             </div>
                             <div class="col-md-6">

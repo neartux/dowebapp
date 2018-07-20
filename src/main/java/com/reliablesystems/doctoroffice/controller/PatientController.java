@@ -64,11 +64,11 @@ public class PatientController {
     public ApiResponse findAllPatient() {
         try {
             int length = patientService.finAllPatientsCount(StringUtil.EMPTY);
+            System.out.println("length = " + length);
             RequestDataTable requestDataTable = DataTableUtil.initRequestDataTable(length, NumberUtil.TEN_INT, NumberUtil.FIVE_INT);
             requestDataTable.setQ(StringUtil.EMPTY);
             int ofset = NumberUtil.add(NumberUtil.multiply(requestDataTable.getCurrentPage(), requestDataTable.getElementsByPage()), NumberUtil.ONE_INT).intValue();
-            System.out.println("ofset = " + ofset);
-            List<PatientTO> patientTOList = patientService.findAllPatients(ofset, requestDataTable.getLength(), requestDataTable.getQ());
+            List<PatientTO> patientTOList = patientService.findAllPatients(NumberUtil.ZERO_INT, requestDataTable.getLength(), requestDataTable.getQ());
             requestDataTable.setData(patientTOList);
 
             return new ApiResponse(false, requestDataTable);

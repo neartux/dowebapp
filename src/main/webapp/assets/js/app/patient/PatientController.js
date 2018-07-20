@@ -14,7 +14,6 @@
          * @param contextPath aplication path
          */
         ctrl.init = function (contextPath) {
-            showNotification("success", "this is the mesage");
             // Asign path aplication
             PatientService.contextPath = contextPath;
             // Find all patients of the system
@@ -28,11 +27,9 @@
          */
         ctrl.findAllPatients = function () {
             return PatientService.findAllPatients().then(function (res) {
-                console.info("res.data.data = ", res.data.data);
-                if(!res.data.data.error) {
+                if(!res.data.error) {
                     ctrl.patientData.data = res.data.data;
                     ctrl.patientData.data.elementsByPage = res.data.data.elementsByPage+"";
-                    console.info("ctrl.patientData.data = ", ctrl.patientData.data)
                 }
             });
         };
@@ -42,11 +39,16 @@
          */
         ctrl.findBloodTypes = function() {
             return PatientService.findBloodTypes().then(function (res) {
-                console.info("RES = ", res.data);
                 if(!res.data.error) {
-                    ctrl.bloodTypeList.data = res.data;
+                    ctrl.bloodTypeList.data = res.data.data;
                 }
             });
+        };
+
+        ctrl.viewToCreateNewPatient = function() {
+            ctrl.isCreatePatient = true;
+            ctrl.patientTO = {};
+            $("#patientDataForm").modal();
         };
 
         /**
@@ -63,7 +65,8 @@
                 if(isValid) {
                     // Create new patient
                     if(ctrl.isCreatePatient) {
-
+                        console.info("Go to create patient");
+                        ctrl.createPatient();
                     }
                     // Is update an existing patient
                     else {
@@ -85,7 +88,15 @@
                 } else {
                     showNotification("success", "El paciente se ha creado");
                 }
+                $("#patientDataForm").modal("hide");
             });
+        };
+
+        ctrl.viewToUpdatePatient = function(patient) {
+            ctrl.patientTO = angular.copy(patient);
+            ctrl.patientTO.bloodTypeId = patient.bloodTypeId.toString();
+            $('#field-birthDate').datepicker('update', moment(ctrl.patientTO.birthDate).format('DD/MM/YYYY'));
+            $("#patientDataForm").modal();
         };
 
         /**
@@ -132,9 +143,14 @@
             // Validate birthdate
             var birthDate = $("#field-birthDate").val();
             console.info("birthDate = ", birthDate);
+            // Validate if date exist
             if (!$.trim(birthDate).length) {
                 showNotification("warning", "La fecha de nacimiento es requerido");
                 isValid = false;
+            }
+            // if exist set date in model
+            else {
+                ctrl.patientTO.birthDateS = birthDate;
             }
             return isValid;
         };

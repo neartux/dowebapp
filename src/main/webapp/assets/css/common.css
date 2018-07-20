@@ -4,3 +4,6 @@
 .width-45 {
     width: 45%;
 }
+.bold {
+    font-weight: bold !important;
+}
