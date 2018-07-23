@@ -6,25 +6,25 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <!--<global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled" />-->
+    <global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled" />
 
-    <!--<http auto-config="true" use-expressions="true">-->
-        <!--<intercept-url pattern="/login*" access="isAnonymous()" />-->
-        <!--<intercept-url pattern="/assets/**" access="permitAll" />-->
-        <!--<intercept-url pattern="/js/**" access="permitAll" />-->
-        <!--<intercept-url pattern="/css/**" access="permitAll" />-->
-        <!--<intercept-url pattern="/bootstrap/**" access="permitAll" />-->
-        <!--<intercept-url pattern="/**" access="hasRole('generico')"/>-->
-        <!--<form-login login-page="/login.jsp" always-use-default-target="true" authentication-failure-url="/login.jsp"/>-->
-        <!--<logout logout-success-url="/index.jsp"/>-->
-    <!--</http>-->
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/login*" access="isAnonymous()" />
+        <intercept-url pattern="/assets/**" access="permitAll" />
+        <intercept-url pattern="/js/**" access="permitAll" />
+        <intercept-url pattern="/css/**" access="permitAll" />
+        <intercept-url pattern="/bootstrap/**" access="permitAll" />
+        <intercept-url pattern="/**" access="hasRole('generico')"/>
+        <form-login login-page="/login.jsp" default-target-url="/patient/display" always-use-default-target="true" authentication-failure-url="/login.jsp"/>
+        <logout logout-success-url="/index.jsp"/>
+    </http>
 
-    <!--<beans:bean id="customUserDetailsService" class="com.shotsware.dia.contabilidade.auth.CustomUserDetailsService" />-->
+    <beans:bean id="customAuthUserService" class="com.reliablesystems.doctoroffice.auth.CustomAuthUserService" />
 
-    <!--<authentication-manager>-->
-        <!--<authentication-provider user-service-ref="customUserDetailsService">-->
-            <!--<password-encoder hash="md5"/>-->
-        <!--</authentication-provider>-->
-    <!--</authentication-manager>-->
+    <authentication-manager>
+        <authentication-provider user-service-ref="customAuthUserService">
+            <password-encoder hash="md5"/>
+        </authentication-provider>
+    </authentication-manager>
 
 </beans:beans>
