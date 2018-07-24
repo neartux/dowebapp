@@ -14,4 +14,4 @@
 <link href="${pageContext.request.contextPath}/assets/css/pages.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/menu.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/responsive.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/switchery/switchery.min.css">
+<link href="${pageContext.request.contextPath}/assets/plugins/switchery/switchery.min.css" rel="stylesheet">

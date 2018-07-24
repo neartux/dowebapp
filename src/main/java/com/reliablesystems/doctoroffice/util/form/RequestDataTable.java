@@ -15,22 +15,8 @@ public class RequestDataTable {
     private int start;
     private int length;
     private List<Map<String, Object>> order;
-    // Global search field
     private Map<String, Object> search;
-    // Search individual
     private List<Map<String, Object>> columns;
-    // Data no datatable
-    private int numPages;
-    private int currentPage;
-    private int elementsByPage;
-    private String q;
-    private int pagesToDisplay;
-    private boolean existMorePagesAfter;
-    private boolean existMorePagesBefore;
-    private int end;
-    private int countPages;
-    private int pagesLimit;
-    private Object data;
 
     @Override
     public String toString() {
@@ -41,15 +27,6 @@ public class RequestDataTable {
                 ", order=" + order +
                 ", search=" + search +
                 ", columns=" + columns +
-                ", numPages=" + numPages +
-                ", currentPage=" + currentPage +
-                ", elementsByPage=" + elementsByPage +
-                ", q='" + q + '\'' +
-                ", pagesToDisplay=" + pagesToDisplay +
-                ", existMorePagesAfter=" + existMorePagesAfter +
-                ", existMorePagesBefore=" + existMorePagesBefore +
-                ", end=" + end +
-                ", data=" + data +
                 '}';
     }
 }

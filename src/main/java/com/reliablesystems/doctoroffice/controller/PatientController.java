@@ -11,7 +11,6 @@ import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StringUtil;
 import com.reliablesystems.doctoroffice.core.utils.file.FileUtil;
 import com.reliablesystems.doctoroffice.core.utils.patient.PatientUtil;
-import com.reliablesystems.doctoroffice.util.form.DataTableUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/patient")
@@ -63,46 +64,21 @@ public class PatientController {
      *
      * @return ApiResponse
      */
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public ApiResponse findAllPatient() {
-        try {
-            int length = patientService.finAllPatientsCount(StringUtil.EMPTY);
-            System.out.println("length = " + length);
-            RequestDataTable requestDataTable = DataTableUtil.initRequestDataTable(length, NumberUtil.TEN_INT, NumberUtil.FIVE_INT);
-            requestDataTable.setQ(StringUtil.EMPTY);
-            int ofset = NumberUtil.add(NumberUtil.multiply(requestDataTable.getCurrentPage(), requestDataTable.getElementsByPage()), NumberUtil.ONE_INT).intValue();
-            List<PatientTO> patientTOList = patientService.findAllPatients(NumberUtil.ZERO_INT, requestDataTable.getLength(), requestDataTable.getQ());
-            requestDataTable.setData(patientTOList);
-
-            return new ApiResponse(false, requestDataTable);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ApiResponse(true, e.getMessage());
-        }
-    }
-
-    /**
-     * Method to reconfigure datatable values patient
-     *
-     * @param requestDataTable Data of datatable
-     * @return ApiResponse
-     */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public ApiResponse findAllPatient(@RequestBody RequestDataTable requestDataTable) {
         try {
-            int length = patientService.finAllPatientsCount(StringUtil.EMPTY);
-            requestDataTable.setLength(length);
-            int ofset = NumberUtil.add(NumberUtil.multiply(requestDataTable.getCurrentPage(), requestDataTable.getElementsByPage()), NumberUtil.ONE_INT).intValue();
-            System.out.println("ofset = " + ofset);
-            requestDataTable = DataTableUtil.recalculatePageNumberRequestDataTable(requestDataTable);
-            List<PatientTO> patientTOList = patientService.findAllPatients(ofset, requestDataTable.getLength(), requestDataTable.getQ());
-            requestDataTable.setData(patientTOList);
+            int length = patientService.finAllPatientsCount(requestDataTable.getSearch().get("value").toString());
+            List<PatientTO> patientTOList = patientService.findAllPatients(NumberUtil.ZERO_INT, requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString());
+            Map map = new LinkedHashMap();
+            map.put("draw", requestDataTable.getDraw());
+            map.put("recordsFiltered", length);
+            map.put("recordsTotal", length);
+            map.put("data", patientTOList);
 
-            return new ApiResponse(false, requestDataTable);
+            return new ApiResponse(false, map);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());

@@ -45,7 +45,7 @@
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>
                                     </div>
                                     <span ng-show="patientForm.birthDate.$invalid && !patientForm.birthDate.$pristine"
-                                          class="help-block">Fecha cumpleaños es requerido.</span>
+                                          class="help-block">Fecha cumplea&ntilde;os es requerido.</span>
                                 </div>
                             </div>
                             <div class="col-md-6">

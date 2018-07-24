@@ -1,12 +1,13 @@
 (function (){
-    var app = angular.module('Patient', ['PatientProvider', 'CommonDirectives']);
+    var app = angular.module('Patient', ['PatientProvider', 'CommonDirectives', 'datatables']);
 
-    app.controller('PatientController', function($scope, PatientService) {
+    app.controller('PatientController', function($scope, $http, $compile, PatientService, DTOptionsBuilder, DTColumnBuilder) {
         var ctrl = this;
         ctrl.patientData = { data: [] };
         ctrl.patientTO = {};
         ctrl.bloodTypeList = { data: [] };
         ctrl.isCreatePatient = true;
+        ctrl.dtInstance = {};
 
         /**
          * Init patient app
@@ -17,22 +18,95 @@
             // Asign path aplication
             PatientService.contextPath = contextPath;
             // Find all patients of the system
-            ctrl.findAllPatients();
+            //ctrl.findAllPatients();
             // Find all type of blood
             ctrl.findBloodTypes();
         };
 
         /**
-         * Method to find all patient of the system
+         * Crea los iconos del panel del reporte de stock
+         * @param data
+         * @param type
+         * @param full
+         * @param meta
+         * @returns {string} El string con el html de las opciones del panel
          */
-        ctrl.findAllPatients = function () {
-            return PatientService.findAllPatients().then(function (res) {
-                if(!res.data.error) {
-                    ctrl.patientData.data = res.data.data;
-                    ctrl.patientData.data.elementsByPage = res.data.data.elementsByPage+"";
+        function panelActions(data, type, full, meta) {
+            return '';
+        }
+
+        /**
+         * Sobreescribe algunos campos de la tabla de productos
+         * @param row La fila
+         * @param data El elemento
+         * @param dataIndex El index
+         */
+        function createdRow(row, data, dataIndex) {
+            $(row.getElementsByTagName("TD")[1]).html('{{ ' + data.firstName + '  }}');
+            // Recompiling so we can bind Angular directive to the DT
+            $compile(angular.element(row).contents())($scope);
+        }
+
+        ctrl.dtOptions = {
+            DOM: 'lfrtip',
+            displayLength: 10,
+            processing: true,
+            serverSide: true,
+            //source: 'http://localhost:8080/do/patient/test',
+            dataProp: 'data',
+            paginationType: 'full_numbers',
+            fnServerData: function (sSource, aoData, fnCallback, oSettings) {
+                var data = {
+                    start: aoData[3].value,
+                    length: aoData[4].value,
+                    draw: aoData[0].value,
+                    order: aoData[2].value,
+                    search: aoData[5].value,
+                    columns: aoData[1].value
+                };
+                PatientService.findAllPatients(data).then(function (res) {
+                    console.info("res = ", res);
+                    if(!res.data.error) {
+                        console.info("To process res.data.data = ", res.data.data)
+                        fnCallback(res.data.data);
+                        ctrl.patientData.data = res.data.data;
+                    }
+                });
+            },
+            fnServerParams: function (aoData) {
+            },
+            createdRow: createdRow,
+            paginate: true,
+            pagining: true,
+            paging: true,
+            language: {
+                processing: "Procesando...",
+                search: "Buscar:",
+                lengthMenu: "Mostrar _MENU_ Elementos",
+                info: "Mostrando del _START_ al _END_ de _TOTAL_ pacientes",
+                infoEmpty: "No se encontraron pacientes.",
+                infoFiltered: "(filtrado _MAX_ elementos total)",
+                infoPostFix: "",
+                loadingRecords: "Cargando pacientes...",
+                zeroRecords: "No se encontraron pacientes",
+                emptyTable: "No hay pacientes disponibles",
+                paginate: {
+                    first: "Primero",
+                    previous: "Anterior",
+                    next: "Siguiente",
+                    last: "Último"
                 }
-            });
+            }
         };
+
+        ctrl.dtColumns = [
+            DTColumnBuilder.newColumn('expedient').withTitle('Expediente').withClass('pr-xs pl-xs pb-xs pt-xs').withOption('width', '5%').notSortable(),
+            DTColumnBuilder.newColumn('firstName').withTitle('Paciente').withClass('pr-xs pl-xs pb-xs pt-xs').withOption('width', '40%').notSortable(),
+            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-right pr-xs pl-xs pb-xs pt-xs').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn('cellPhone').withTitle('Celular').withClass('text-right pr-xs pl-xs pb-xs pt-xs').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-center pr-xs pl-xs pb-xs pt-xs').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Panel').withClass('pr-xs pl-xs pb-xs pt-xs').withOption('width', '25%').renderWith(panelActions).notSortable()
+        ];
 
         /**
          * Find all types of blood
@@ -49,9 +123,13 @@
          * Method to display form to create a new patient
          */
         ctrl.viewToCreateNewPatient = function() {
+            //patientForm.setPristine();
+            $scope.patientForm.$setPristine();
             ctrl.isCreatePatient = true;
             ctrl.patientTO = {};
             $("#patientDataForm").modal();
+            PatientService.setMenuPatient();
+            console.info("END");
         };
 
         /**
@@ -73,7 +151,7 @@
                     }
                     // Is update an existing patient
                     else {
-
+                        ctrl.updatePatient();
                     }
                 }
             }
@@ -90,6 +168,8 @@
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
                     showNotification("success", "El paciente se ha creado");
+                    // Refresh data patient
+                    ctrl.dtInstance.rerender();
                 }
                 $("#patientDataForm").modal("hide");
             });
@@ -97,10 +177,14 @@
 
         /**
          * Method to display form to update a patient
-         * @param patient
+         *
+         * @param index index in the list
+         * @param patient Patient to update
          */
-        ctrl.viewToUpdatePatient = function(patient) {
+        ctrl.viewToUpdatePatient = function(index, patient) {
+            ctrl.isCreatePatient = false;
             ctrl.patientTO = angular.copy(patient);
+            ctrl.patientTO.indexElement = index;
             ctrl.patientTO.bloodTypeId = patient.bloodTypeId.toString();
             $('#field-birthDate').datepicker('update', moment(ctrl.patientTO.birthDate).format('DD/MM/YYYY'));
             $("#patientDataForm").modal();
@@ -112,12 +196,16 @@
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
         ctrl.updatePatient = function() {
+            ctrl.patientTO.birthDate = null;
             return PatientService.updatePatient(ctrl.patientTO).then(function (res) {
                 if(res.data.data.error) {
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
                     showNotification("success", "El paciente se ha modificado correctament");
+                    // Update patient information
+                    ctrl.patientData.data.data[ctrl.patientTO.indexElement] = angular.copy(ctrl.patientTO);
                 }
+                $("#patientDataForm").modal("hide");
             });
         };
 
@@ -130,10 +218,12 @@
             swal(getConfigurationSwalConfirm("Estas seguro?","Se eliminara el paciente del sistema","warning","SI, eliminarlo!"), function (isConfirm) {
                 if (isConfirm) {
                     return PatientService.deletePatient(id).then(function (res) {
-                        if(res.data.data.error) {
+                        if(res.data.error) {
                             showNotification("error", "Error: " + res.data.data.message);
                         } else {
                             showNotification("success", "El paciente se ha eliminado");
+                            // Refresh data patient
+                            ctrl.dtInstance.rerender();
                         }
                     });
                 }

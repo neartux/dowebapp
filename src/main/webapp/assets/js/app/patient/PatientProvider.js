@@ -1,13 +1,20 @@
 (function () {
-    var app = angular.module('PatientProvider', []);
+    var app = angular.module('PatientProvider', ['ApplicationProvider']);
 
-    app.factory('PatientService', function ($http, $q) {
+    app.factory('PatientService', function ($http, $q, ApplicationService) {
         var service = {};
 
         service.contextPath = '';
 
-        service.findAllPatients = function () {
-            return $http.get(service.contextPath + '/patient');
+        service.findAllPatients = function (data) {
+            return $http({
+                method: 'POST',
+                url: service.contextPath + '/patient',
+                data: data,
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            });
         };
 
         service.findAllPatientsByFilters = function (filters) {
@@ -23,7 +30,7 @@
         };
 
         service.updatePatient = function (patientTO) {
-            return $http.put(service.contextPath + '/patient/update', patientTO);
+            return $http.post(service.contextPath + '/patient/update', patientTO);
         };
 
         service.deletePatient = function (patientId) {
