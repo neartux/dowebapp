@@ -36,3 +36,11 @@ function getConfigurationSwalConfirm(tittle, text, type, confirmButtonText) {
         closeOnCancel: true
     };
 }
+
+function isValidField(field) {
+    return field !== null && field !== undefined && $.trim(field).length > NUMBER_ZERO;
+}
+
+var NUMBER_ZERO = 0;
+var NUMBER_ONE = 1;
+var ELEMENT_NOT_FOUND = undefined;

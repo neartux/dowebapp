@@ -64,7 +64,3 @@
 
 
 })();
-
-var NUMBER_ZERO = 0;
-var NUMBER_ONE = 1;
-var ELEMENT_NOT_FOUND = undefined;

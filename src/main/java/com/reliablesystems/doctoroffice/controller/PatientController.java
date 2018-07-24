@@ -19,10 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/patient")
@@ -69,12 +66,11 @@ public class PatientController {
     public ApiResponse findAllPatient(@RequestBody RequestDataTable requestDataTable) {
         try {
             int length = patientService.finAllPatientsCount(requestDataTable.getSearch().get("value").toString());
-            List<PatientTO> patientTOList = patientService.findAllPatients(NumberUtil.ZERO_INT, requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString());
-            Map map = new LinkedHashMap();
+            Map<String, Object> map = new HashMap<>();
             map.put("draw", requestDataTable.getDraw());
             map.put("recordsFiltered", length);
             map.put("recordsTotal", length);
-            map.put("data", patientTOList);
+            map.put("data", patientService.findAllPatients(requestDataTable.getStart(), requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString()));
 
             return new ApiResponse(false, map);
 

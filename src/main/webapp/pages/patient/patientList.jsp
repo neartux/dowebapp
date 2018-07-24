@@ -37,26 +37,41 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-sm-12">
 
-                        <div class="row m-t-50">
-                            <div class="col-sm-12">
-                                <table dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" dt-instance="ctrl.dtInstance" datatable=""
-                                       class="table table-striped table-colored table-info dataTable no-footer">
-                                    <thead>
-                                    <tr>
-                                        <th class="uppercase bold"></th>
-                                        <th class="uppercase bold"></th>
-                                        <th class="uppercase bold"></th>
-                                        <th class="uppercase bold"></th>
-                                        <th class="uppercase bold"></th>
-                                        <th class="uppercase bold"></th>
-                                    </tr>
-                                    </thead>
+                        <div class="panel panel-color panel-primary">
+                            <div class="panel-heading">
+                                <div class="col-sm-6 p-l-0">
+                                    <h3 class="panel-title">Pacientes</h3>
+                                </div>
+                                <div class="col-sm-6 text-right p-r-0">
+                                    <button type="button" data-ng-click="ctrl.viewToCreateNewPatient();"
+                                            class="btn btn-default btn-rounded w-md waves-effect btn-sm">
+                                        <i class="mdi mdi-account-plus"></i> Nuevo Paciente
+                                    </button>
+                                </div>
 
-                                </table>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="row m-t-50">
+                                    <div class="col-sm-12">
+                                        <table dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" dt-instance="ctrl.dtInstance" datatable=""
+                                               class="table table-striped table-colored table-info dataTable no-footer">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-uppercase bold"></th>
+                                                <th class="text-uppercase bold"></th>
+                                                <th class="text-uppercase bold"></th>
+                                                <th class="text-uppercase bold"></th>
+                                                <th class="text-uppercase bold"></th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
