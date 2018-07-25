@@ -8,7 +8,7 @@
             <form novalidate name="patientForm">
                 <div class="panel panel-color panel-primary">
                     <div class="panel-heading">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></button>
                         <h3 class="panel-title">Nuevo Paciente</h3>
                     </div>
                     <div class="panel-body">
@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group" ng-class="{ 'has-error' : patientForm.birthDate.$invalid && !patientForm.birthDate.$pristine }">
-                                    <label for="field-birthDate" class="control-label">Fecha Cumpleaños *</label>
+                                    <label for="field-birthDate" class="control-label">Fecha Cumplea&ntilde;os *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="field-birthDate" name="birthDate" required>
                                         <span class="input-group-addon bg-custom b-0"><i class="mdi mdi-calendar text-white"></i></span>

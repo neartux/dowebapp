@@ -11,7 +11,9 @@ import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.core.utils.common.StringUtil;
 import com.reliablesystems.doctoroffice.core.utils.file.FileUtil;
 import com.reliablesystems.doctoroffice.core.utils.patient.PatientUtil;
+import com.reliablesystems.doctoroffice.util.common.CommonUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.*;
 
 @Controller
@@ -150,35 +156,49 @@ public class PatientController {
             if (file.isEmpty()) {
                 throw new BackEndException("No se encontro archivo");
             }
-            String fileName = file.getOriginalFilename();
-            System.out.println("fileName = " + fileName);
-            String extension = fileName.substring(fileName.lastIndexOf(StringUtil.DOT) + NumberUtil.ONE_INT);
+            // Valid Size
+            if (file.getSize() > ApplicationKeys.MAX_SIZE_FILE) {
+                throw new BackEndException("Imagen excede el tamaño limite permitido");
+            }
+            String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(StringUtil.DOT) + NumberUtil.ONE_INT);
             // Validate if extension is valid
             if (!Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).contains(extension)) {
                 throw new BackEndException("Invalid extension, available extension: " + Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).toString());
             }
-            String profilePictureDirectory = ApplicationKeys.PATH_SERVER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT_PROFILE_PICTURE;
-            System.out.println("profilePictureDirectory = " + profilePictureDirectory);
+            String serverPath = ApplicationKeys.PATH_SERVER_FILES;
+            String profilePictureDirectory = StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT_PROFILE_PICTURE;
             // Create folder if it does not exist
-            FileUtil.createFolderIfNotExist(profilePictureDirectory);
+            FileUtil.createFolderIfNotExist(serverPath + profilePictureDirectory);
             // Build the full path image
             String finalNameFile = StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.DOT + extension;
-            System.out.println("finalNameFile = " + finalNameFile);
             // Find patient
             Patient patient = patientService.findPatientById(patientId);
             // If patient has profile picture, delete phisically the image
-            if (patient != null && !patient.getProfileImage().isEmpty()) {
-                FileUtil.deleteFileByPath(patient.getProfileImage());
+            if (patient != null && patient.getProfileImage() != null && !patient.getProfileImage().isEmpty()) {
+                FileUtil.deleteFileByPath(serverPath + patient.getProfileImage());
             }
             // Upload the file
-            FileUtil.uploadFile(profilePictureDirectory + finalNameFile, file.getBytes());
+            FileUtil.uploadFile(serverPath + profilePictureDirectory + finalNameFile, file.getBytes());
             // Update profile picture in DB
             patientService.updateProfilePicturePath(patientId, profilePictureDirectory + finalNameFile);
             // Return response
-            return new ApiResponse(false, null);
+            return new ApiResponse(false, finalNameFile + finalNameFile);
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());
         }
+    }
+
+    /**
+     * Method to display an a picture of patient
+     *
+     * @param request Request of client
+     * @param response Response generated
+     * @param path Path of image
+     */
+    @RequestMapping(value = "/getProfilePicture", method = RequestMethod.GET , produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public void getProfilePicture(HttpServletRequest request, HttpServletResponse response, @RequestParam("url") String path) {
+        CommonUtil.findFileInServe(request, response, path);
     }
 }

@@ -31,7 +31,10 @@
 
             </div>
 
+            <!-- Modal, to create or update patient data -->
             <jsp:include page="patientForm.jsp"/>
+            <!-- Modal, to upload profile picture patient -->
+            <jsp:include page="uploadProfilePicturePatient.jsp"/>
 
         </div>
 
@@ -44,6 +47,7 @@
 
         <script src="${pageContext.request.contextPath}/assets/plugins/moment/moment.js"></script>
         <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientProvider.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/patient/PatientController.js?1.1"></script>
@@ -52,13 +56,14 @@
 
             $(function () {
 
-                $('#datatable').dataTable();
-
                 $('#field-birthDate').datepicker({
                     autoclose: true,
                     todayHighlight: true,
                     format: 'dd/mm/yyyy'
                 });
+
+                $(":file").filestyle({input: false});
+
             });
 
         </script>

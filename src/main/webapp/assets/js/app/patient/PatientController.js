@@ -4,6 +4,7 @@
     app.controller('PatientController', function($scope, $http, $compile, PatientService, DTOptionsBuilder, DTColumnBuilder) {
         var ctrl = this;
         ctrl.patientData = { data: [] };
+        ctrl.patientTOPreview = {};
         ctrl.patientTO = {};
         ctrl.bloodTypeList = { data: [] };
         ctrl.dtInstance = {};
@@ -86,6 +87,28 @@
         };
 
         /**
+         * Display view to patient data
+         *
+         * @param patientIndex Patient index in list
+         */
+        ctrl.viewPadientData = function (patientIndex) {
+            ctrl.isViewDetailsPatient = true;
+            ctrl.patientTOPreview = angular.copy(ctrl.patientData.data.data[patientIndex]);
+            // // If patient has not profilepicture, set avatar not found
+            // if(!isValidField(ctrl.patientTOPreview.profileImage)) {
+            //     ctrl.patientTOPreview.profileImage = PatientService.contextPath + "/assets/images/users/no-avatar.png";
+            // }
+            console.info("ctrl.patientTOPreview.profileImage = ", ctrl.patientTOPreview.profileImage);
+            ctrl.patientTOPreview.birthDateString = moment(ctrl.patientTOPreview.birthDate).format('DD/MM/YYYY');
+            ctrl.patientTOPreview.patientIndex = patientIndex;
+            var result = calculateEdge(moment(ctrl.patientTOPreview.birthDate).format('YYYY-MM-DD'));
+            ctrl.patientTOPreview.birthDateExplain = result[0] + " años " + result[1] + " meses " + result[2] + " dias";
+            // setTimeout(function () {
+            //     $scope.$apply();
+            // },200);
+        };
+
+        /**
          * Method to display form to update a patient
          *
          * @param index index in the list
@@ -94,7 +117,7 @@
         ctrl.viewToUpdatePatient = function(index, patient) {
             ctrl.isCreatePatient = false;
             ctrl.patientTO = angular.copy(patient);
-            ctrl.patientTO.indexElement = index;
+            ctrl.patientTO.patientIndex = index;
             ctrl.patientTO.bloodTypeId = patient.bloodTypeId.toString();
             $('#field-birthDate').datepicker('update', moment(ctrl.patientTO.birthDate).format('DD/MM/YYYY'));
             $("#patientDataForm").modal();
@@ -113,7 +136,7 @@
                 } else {
                     showNotification("success", "El paciente se ha modificado correctament");
                     // Update patient information
-                    ctrl.patientData.data.data[ctrl.patientTO.indexElement] = angular.copy(ctrl.patientTO);
+                    ctrl.patientData.data.data[ctrl.patientTO.patientIndex] = angular.copy(ctrl.patientTO);
                 }
                 $("#patientDataForm").modal("hide");
             });
@@ -163,6 +186,15 @@
         };
 
         /**
+         * Method to view modal to change profile picture
+         */
+        ctrl.viewChangeProfilePicture = function() {
+            var input = $("#profilePicturePatient");
+            input.replaceWith(input.val('').clone(true));
+            $("#modalUploadImage").modal();
+        };
+
+        /**
          * Method to valid and upload a profile picture of a patient
          *
          * @returns {PromiseLike<T> | Promise<T> | *} Response
@@ -178,16 +210,18 @@
             // Build request
             var formData = new FormData();
             formData.append("file", profilePicture);
-            formData.append("patientId", ctrl.patientTO.id);
+            formData.append("patientId", ctrl.patientTOPreview.id);
             // Send request
             return PatientService.updoadProfilePicturePatient(formData).then(function (res) {
                 console.info("response data = ", res);
+                if(res.data.error) {
+                    showNotification("error", "Error: " + res.data.message);
+                } else {
+                    ctrl.patientTOPreview.profileImage = res.data.data;
+                    showNotification("success", "Se ha actualizado correctamente la foto de perfil");
+                }
+                $("#modalUploadImage").modal("hide");
             });
-        };
-
-        ctrl.viewPadientData = function (patient) {
-            console.info("HER = ", patient);
-            ctrl.isViewDetailsPatient = true;
         };
 
 
@@ -206,13 +240,13 @@
          * @param dataIndex The index
          */
         function createdRow(row, data, dataIndex) {
-            var profilePicture = PatientService.contextPath + "/assets/images/users/no-avatar.png";
+            var profilePicture = "";
             // Verify if patient has profile picture
             if (isValidField(data.profileImage)) {
                 profilePicture = data.profileImage;
             }
-            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" src="'+profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
-            $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: '+ data.expedient +'</small></p>');
+            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" data-ng-src="'+ PatientService.contextPath + '/patient/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
+            $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: #'+ data.expedient +'</small></p>');
 
             // Recompiling so we can bind Angular directive to the DT
             $compile(angular.element(row).contents())($scope);

@@ -12,7 +12,7 @@ function showNotification(type, message) {
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "1000",
-        "timeOut": "5000",
+        "timeOut": "3000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",
@@ -39,6 +39,56 @@ function getConfigurationSwalConfirm(tittle, text, type, confirmButtonText) {
 
 function isValidField(field) {
     return field !== null && field !== undefined && $.trim(field).length > NUMBER_ZERO;
+}
+
+function calculateEdge(date) {
+    // Get values date
+    var values = date.split("-");
+    var day = values[2];
+    var month = values[1];
+    var year = values[0];
+
+    // Get current date
+    var nowDate = new Date();
+    var currentYear = nowDate.getYear();
+    var currentMonth = nowDate.getMonth() + 1;
+    var currentDay = nowDate.getDate();
+
+    // Calculate the years
+    var edge = (currentYear + 1900) - year;
+    if (currentMonth < month) {
+        edge--;
+    }
+    if ((month === currentMonth) && (currentDay < day)) {
+        edge--;
+    }
+    if (edge > 1900) {
+        edge -= 1900;
+    }
+
+    // Calculate the months
+    var months = 0;
+    if (currentMonth > month)
+        months = currentMonth - month;
+    if (currentMonth < month)
+        months = 12 - (month - currentMonth);
+    if (currentMonth === month && day > currentDay)
+        months = 11;
+
+    // Calculate the days
+    var days = 0;
+    if (currentDay > day)
+        days = currentDay - day;
+    if (currentDay < day) {
+        days = new Date(currentYear, currentMonth, 0).getDate() - (day - currentDay);
+    }
+
+    var result = [];
+    result[0] = edge;
+    result[1] = months;
+    result[2] = days;
+
+    return result;
 }
 
 var NUMBER_ZERO = 0;
