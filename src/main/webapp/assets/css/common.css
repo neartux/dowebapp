@@ -7,3 +7,9 @@
 .bold {
     font-weight: bold !important;
 }
+.m-t-22 {
+    margin-top: -22px;
+}
+.font-20 {
+    font-size: 20px !important;
+}

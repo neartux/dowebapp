@@ -6,8 +6,9 @@
         ctrl.patientData = { data: [] };
         ctrl.patientTO = {};
         ctrl.bloodTypeList = { data: [] };
-        ctrl.isCreatePatient = true;
         ctrl.dtInstance = {};
+        ctrl.isCreatePatient = true;
+        ctrl.isViewDetailsPatient = false;
 
         /**
          * Init patient app
@@ -36,13 +37,10 @@
          * Method to display form to create a new patient
          */
         ctrl.viewToCreateNewPatient = function() {
-            //patientForm.setPristine();
             $scope.patientForm.$setPristine();
             ctrl.isCreatePatient = true;
             ctrl.patientTO = {};
             $("#patientDataForm").modal();
-            PatientService.setMenuPatient();
-            console.info("END");
         };
 
         /**
@@ -59,7 +57,6 @@
                 if(isValid) {
                     // Create new patient
                     if(ctrl.isCreatePatient) {
-                        console.info("Go to create patient");
                         ctrl.createPatient();
                     }
                     // Is update an existing patient
@@ -188,6 +185,11 @@
             });
         };
 
+        ctrl.viewPadientData = function (patient) {
+            console.info("HER = ", patient);
+            ctrl.isViewDetailsPatient = true;
+        };
+
 
 
         /**
@@ -209,7 +211,7 @@
             if (isValidField(data.profileImage)) {
                 profilePicture = data.profileImage;
             }
-            $(row.getElementsByTagName("TD")[0]).html('<img src="'+profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
+            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" src="'+profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
             $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: '+ data.expedient +'</small></p>');
 
             // Recompiling so we can bind Angular directive to the DT
@@ -266,9 +268,9 @@
         };
 
         ctrl.dtColumns = [
-            DTColumnBuilder.newColumn(null).withTitle('').withClass('text-center').withOption('width', '15%').notSortable(),
-            DTColumnBuilder.newColumn(null).withTitle('Paciente').withClass('text-left').withOption('width', '40%').notSortable(),
-            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('').withClass('text-center').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Paciente').withClass('text-left').withOption('width', '35%').notSortable(),
+            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '35%').notSortable(),
             DTColumnBuilder.newColumn('cellPhone').withTitle('Celular').withClass('text-right').withOption('width', '10%').notSortable(),
             DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-right').withOption('width', '10%').notSortable()
         ];

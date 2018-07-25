@@ -9,78 +9,29 @@
 <tiles:insertDefinition name="template">
     <tiles:putAttribute name="body">
 
-        <link href="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        <link href="${pageContext.request.contextPath}/assets/plugins/angular-datatable/angular-datatables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css"
+              rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/assets/plugins/datatables/jquery.dataTables.min.css"
+              rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/assets/plugins/angular-datatable/angular-datatables.min.css"
+              rel="stylesheet" type="text/css"/>
 
-        <div class="content" data-ng-app="Patient" data-ng-controller="PatientController as ctrl" data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
-            <div class="container">
+        <div class="content" data-ng-app="Patient" data-ng-controller="PatientController as ctrl"
+             data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
 
+            <div class="container" data-ng-show="!ctrl.isViewDetailsPatient">
 
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="page-title-box">
-                            <h4 class="page-title">Lista de Pacientes </h4>
-                            <ol class="breadcrumb p-0 m-0">
-                                <li>
-                                    <a href="#">Home</a>
-                                </li>
-                                <li>
-                                    <a href="#">Paciente </a>
-                                </li>
-                                <li class="active">
-                                    Lista de Pacientes
-                                </li>
-                            </ol>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-12">
-
-                        <div class="panel panel-color panel-primary">
-                            <div class="panel-heading">
-                                <div class="col-sm-6 p-l-0">
-                                    <h3 class="panel-title">Pacientes</h3>
-                                </div>
-                                <div class="col-sm-6 text-right p-r-0">
-                                    <button type="button" data-ng-click="ctrl.viewToCreateNewPatient();"
-                                            class="btn btn-default btn-rounded w-md waves-effect btn-sm">
-                                        <i class="mdi mdi-account-plus"></i> Nuevo Paciente
-                                    </button>
-                                </div>
-
-                            </div>
-                            <div class="panel-body">
-
-                                <div class="row m-t-50">
-                                    <div class="col-sm-12">
-                                        <table dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns" dt-instance="ctrl.dtInstance" datatable=""
-                                               class="table table-striped table-colored table-info dataTable no-footer">
-                                            <thead>
-                                            <tr>
-                                                <th class="text-uppercase bold"></th>
-                                                <th class="text-uppercase bold"></th>
-                                                <th class="text-uppercase bold"></th>
-                                                <th class="text-uppercase bold"></th>
-                                                <th class="text-uppercase bold"></th>
-                                            </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <jsp:include page="patientTable.jsp"/>
 
             </div>
 
-            <jsp:include page="patientForm.jsp" />
+            <div class="container" data-ng-show="ctrl.isViewDetailsPatient">
+
+                <jsp:include page="patientDetails.jsp"/>
+
+            </div>
+
+            <jsp:include page="patientForm.jsp"/>
 
         </div>
 
