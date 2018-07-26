@@ -18,7 +18,7 @@ public final class CompanySession {
      * @param request Instans request
      * @return Data of user in session.
      */
-    public static User getCurrentUser(HttpServletRequest request) {
+    private static User getCurrentUser(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(ApplicationKeys.DATA_CURRENT_USER);
         if(user == null) {
             user = BusinessSpringContextBridge.services().getUserService().findUserByUserName(request.getUserPrincipal().getName());
@@ -34,7 +34,7 @@ public final class CompanySession {
      * @param request Instans request
      * @return Data of company of user
      */
-    public static Company getCurrentCompany(HttpServletRequest request) {
+    private static Company getCurrentCompany(HttpServletRequest request) {
         Company company = (Company) request.getSession().getAttribute(ApplicationKeys.DATA_CURRENT_COMPANY);
         if(company == null) {
             User user = getCurrentUser(request);
@@ -45,6 +45,17 @@ public final class CompanySession {
             }
         }
         return company;
+    }
+
+    /**
+     * Get userId in session
+     *
+     * @param request Instans request.
+     * @return Id of user.
+     */
+    public static long getUserId(HttpServletRequest request) {
+        User user = getCurrentUser(request);
+        return user != null ? user.getId() : NumberUtil.ZERO_LONG;
     }
 
     /**

@@ -75,12 +75,12 @@ public class PatientController {
     public ApiResponse findAllPatient(@RequestBody RequestDataTable requestDataTable, HttpServletRequest request) {
         try {
             long companyId = CompanySession.getCompanyId(request);
-            int length = patientService.finAllPatientsCount(companyId, requestDataTable.getSearch().get("value").toString());
+            int length = patientService.findAllPatientsCountByCompany(companyId, requestDataTable.getSearch().get("value").toString());
             Map<String, Object> map = new HashMap<>();
             map.put("draw", requestDataTable.getDraw());
             map.put("recordsFiltered", length);
             map.put("recordsTotal", length);
-            map.put("data", patientService.findAllPatients(companyId, requestDataTable.getStart(), requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString()));
+            map.put("data", patientService.findPatientsByCompany(companyId, requestDataTable.getStart(), requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString()));
 
             return new ApiResponse(false, map);
 

@@ -7,7 +7,7 @@
         service.contextPath = '';
 
         service.findAllDoctors = function (data) {
-            return $http({ method: 'POST', url: service.contextPath + '/patient', data: data,
+            return $http({ method: 'POST', url: service.contextPath + '/doctor', data: data,
                 headers: {
                     'Content-type': 'application/json'
                 }
