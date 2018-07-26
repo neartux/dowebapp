@@ -1,161 +1,121 @@
 (function (){
-    var app = angular.module('Patient', ['PatientProvider', 'CommonDirectives', 'datatables']);
+    var app = angular.module('Doctor', ['DoctorProvider', 'CommonDirectives', 'datatables']);
 
-    app.controller('PatientController', function($scope, $http, $compile, PatientService, DTOptionsBuilder, DTColumnBuilder) {
+    app.controller('DoctorController', function($scope, $http, $compile, DoctorService, DTOptionsBuilder, DTColumnBuilder) {
         var ctrl = this;
-        ctrl.patientData = { data: [] };
-        ctrl.patientTOPreview = {};
-        ctrl.patientTO = {};
-        ctrl.bloodTypeList = { data: [] };
+        ctrl.doctorData = { data: [] };
+        ctrl.doctorTO = {};
         ctrl.dtInstance = {};
-        ctrl.isCreatePatient = true;
-        ctrl.isViewDetailsPatient = false;
+        ctrl.isCreateDoctor = true;
 
         /**
-         * Init patient app
+         * Init doctor app
          *
          * @param contextPath aplication path
          */
         ctrl.init = function (contextPath) {
             // Asign path aplication
-            PatientService.contextPath = contextPath;
-            // Find all type of blood
-            ctrl.findBloodTypes();
+            DoctorService.contextPath = contextPath;
         };
 
         /**
-         * Find all types of blood
+         * Method to display form to create a new doctor
          */
-        ctrl.findBloodTypes = function() {
-            return PatientService.findBloodTypes().then(function (res) {
-                if(!res.data.error) {
-                    ctrl.bloodTypeList.data = res.data.data;
-                }
-            });
+        ctrl.viewToCreateNewDoctor = function() {
+            $scope.doctorForm.$setPristine();
+            ctrl.isCreateDoctor = true;
+            ctrl.doctorTO = {};
+            $("#doctorDataForm").modal();
         };
 
         /**
-         * Method to display form to create a new patient
-         */
-        ctrl.viewToCreateNewPatient = function() {
-            $scope.patientForm.$setPristine();
-            ctrl.isCreatePatient = true;
-            ctrl.patientTO = {};
-            $("#patientDataForm").modal();
-        };
-
-        /**
-         * Method to validate and save a new patient or update
+         * Method to validate and save a doctor
          *
          * @param isValidForm if generic form is valid
          */
-        ctrl.validatePatient = function(isValidForm) {
+        ctrl.validateDoctor = function(isValidForm) {
             // If is valid form
             if(isValidForm) {
-                var isValid = ctrl.validatePatientForm();
-                console.info("valid values form patient = ", isValid);
+                var isValid = ctrl.validateDoctorForm();
                 // If is valid values form
                 if(isValid) {
-                    // Create new patient
-                    if(ctrl.isCreatePatient) {
-                        ctrl.createPatient();
+                    // Create new doctor
+                    if(ctrl.isCreateDoctor) {
+                        ctrl.createDoctor();
                     }
-                    // Is update an existing patient
+                    // Is update an existing doctor
                     else {
-                        ctrl.updatePatient();
+                        ctrl.updateDoctor();
                     }
                 }
             }
         };
 
         /**
-         * Method to create a patient
+         * Method to create a doctor
          *
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
-        ctrl.createPatient = function() {
-            return PatientService.createPatient(ctrl.patientTO).then(function (res) {
+        ctrl.createDoctor = function() {
+            return DoctorService.createDoctor(ctrl.doctorTO).then(function (res) {
                 if(res.data.data.error) {
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
-                    showNotification("success", "El paciente se ha creado");
-                    // Refresh data patient
+                    showNotification("success", "Se ha creado el doctor");
+                    // Refresh data doctor
                     ctrl.dtInstance.rerender();
                 }
-                $("#patientDataForm").modal("hide");
+                $("#doctorDataForm").modal("hide");
             });
         };
 
         /**
-         * Display view to patient data
+         * Method to display form to update a doctor
          *
-         * @param patientIndex Patient index in list
+         * @param index Index in the list
+         * @param doctor Doctor to update
          */
-        ctrl.viewPadientData = function (patientIndex) {
-            ctrl.isViewDetailsPatient = true;
-            ctrl.patientTOPreview = angular.copy(ctrl.patientData.data.data[patientIndex]);
-            // // If patient has not profilepicture, set avatar not found
-            // if(!isValidField(ctrl.patientTOPreview.profileImage)) {
-            //     ctrl.patientTOPreview.profileImage = PatientService.contextPath + "/assets/images/users/no-avatar.png";
-            // }
-            console.info("ctrl.patientTOPreview.profileImage = ", ctrl.patientTOPreview.profileImage);
-            ctrl.patientTOPreview.birthDateString = moment(ctrl.patientTOPreview.birthDate).format('DD/MM/YYYY');
-            ctrl.patientTOPreview.patientIndex = patientIndex;
-            var result = calculateEdge(moment(ctrl.patientTOPreview.birthDate).format('YYYY-MM-DD'));
-            ctrl.patientTOPreview.birthDateExplain = result[0] + " años " + result[1] + " meses " + result[2] + " dias";
-            // setTimeout(function () {
-            //     $scope.$apply();
-            // },200);
+        ctrl.viewToUpdateDoctor = function(index, doctor) {
+            ctrl.isCreateDoctor = false;
+            ctrl.doctorTO = angular.copy(doctor);
+            ctrl.doctorTO.doctorIndex = index;
+            $('#field-birthDate').datepicker('update', moment(ctrl.doctorTO.birthDate).format('DD/MM/YYYY'));
+            $("#doctorDataForm").modal();
         };
 
         /**
-         * Method to display form to update a patient
-         *
-         * @param index index in the list
-         * @param patient Patient to update
-         */
-        ctrl.viewToUpdatePatient = function(index, patient) {
-            ctrl.isCreatePatient = false;
-            ctrl.patientTO = angular.copy(patient);
-            ctrl.patientTO.patientIndex = index;
-            ctrl.patientTO.bloodTypeId = patient.bloodTypeId.toString();
-            $('#field-birthDate').datepicker('update', moment(ctrl.patientTO.birthDate).format('DD/MM/YYYY'));
-            $("#patientDataForm").modal();
-        };
-
-        /**
-         * Method to update a patient
+         * Method to update a doctor
          *
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
-        ctrl.updatePatient = function() {
-            ctrl.patientTO.birthDate = null;
-            return PatientService.updatePatient(ctrl.patientTO).then(function (res) {
+        ctrl.updateDoctor = function() {
+            ctrl.doctorTO.birthDate = null;
+            return DoctorService.updateDoctor(ctrl.doctorTO).then(function (res) {
                 if(res.data.data.error) {
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
-                    showNotification("success", "El paciente se ha modificado correctamente");
-                    // Update patient information
-                    ctrl.patientData.data.data[ctrl.patientTO.patientIndex] = angular.copy(ctrl.patientTO);
+                    showNotification("success", "El doctor se ha modificado correctamente");
+                    // Update doctor information
+                    ctrl.doctorData.data.data[ctrl.doctorTO.doctorIndex] = angular.copy(ctrl.doctorTO);
                 }
-                $("#patientDataForm").modal("hide");
+                $("#doctorDataForm").modal("hide");
             });
         };
 
         /**
-         * Method to delete a patient
+         * Method to delete a doctor
          *
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
-        ctrl.deletePatient = function(id) {
+        ctrl.deleteDoctor = function(id) {
             swal(getConfigurationSwalConfirm("Estas seguro?","Se eliminara el paciente del sistema","warning","SI, eliminarlo!"), function (isConfirm) {
                 if (isConfirm) {
-                    return PatientService.deletePatient(id).then(function (res) {
+                    return DoctorService.deleteDoctor(id).then(function (res) {
                         if(res.data.error) {
                             showNotification("error", "Error: " + res.data.data.message);
                         } else {
                             showNotification("success", "El paciente se ha eliminado");
-                            // Refresh data patient
+                            // Refresh data doctor
                             ctrl.dtInstance.rerender();
                         }
                     });
@@ -164,11 +124,11 @@
         };
 
         /**
-         * Method to valid form patient
+         * Method to valid form doctor
          *
          * @returns {boolean} Return true if is valid, false the other way
          */
-        ctrl.validatePatientForm = function() {
+        ctrl.validateDoctorForm = function() {
             var isValid = true;
             // Validate birthdate
             var birthDate = $("#field-birthDate").val();
@@ -180,7 +140,7 @@
             }
             // if exist set date in model
             else {
-                ctrl.patientTO.birthDateS = birthDate;
+                ctrl.doctorTO.birthDateS = birthDate;
             }
             return isValid;
         };
@@ -189,19 +149,19 @@
          * Method to view modal to change profile picture
          */
         ctrl.viewChangeProfilePicture = function() {
-            var input = $("#profilePicturePatient");
+            var input = $("#profilePictureDoctor");
             input.replaceWith(input.val('').clone(true));
             $("#modalUploadImage").modal();
         };
 
         /**
-         * Method to valid and upload a profile picture of a patient
+         * Method to valid and upload a profile picture of a doctor
          *
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
-        ctrl.validateAndUploadProfilPicturePatient = function() {
+        ctrl.validateAndUploadProfilPictureDoctor = function() {
             // Get profile picture
-            var profilePicture = $("#profilePicturePatient")[0].files[0];
+            var profilePicture = $("#profilePictureDoctor")[0].files[0];
             // Validate profile picture
             if (profilePicture === undefined) {
                 showNotification("warning", "Selecciona una imagen de perfil");
@@ -210,14 +170,14 @@
             // Build request
             var formData = new FormData();
             formData.append("file", profilePicture);
-            formData.append("patientId", ctrl.patientTOPreview.id);
+            formData.append("doctorId", ctrl.doctorTO.id);
             // Send request
-            return PatientService.updoadProfilePicturePatient(formData).then(function (res) {
+            return DoctorService.updoadProfilePictureDoctor(formData).then(function (res) {
                 console.info("response data = ", res);
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {
-                    ctrl.patientTOPreview.profileImage = res.data.data;
+                    ctrl.doctorTO.profileImage = res.data.data;
                     showNotification("success", "Se ha actualizado correctamente la foto de perfil");
                 }
                 $("#modalUploadImage").modal("hide");
@@ -234,18 +194,18 @@
 
 
         /**
-         * Override some fields of patients table
+         * Override some fields of doctors table
          * @param row The row
          * @param data The element
          * @param dataIndex The index
          */
         function createdRow(row, data, dataIndex) {
             var profilePicture = "";
-            // Verify if patient has profile picture
+            // Verify if doctor has profile picture
             if (isValidField(data.profileImage)) {
                 profilePicture = data.profileImage;
             }
-            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" data-ng-src="'+ PatientService.contextPath + '/patient/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
+            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" data-ng-src="'+ DoctorService.contextPath + '/doctor/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
             $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: #'+ data.expedient +'</small></p>');
 
             // Recompiling so we can bind Angular directive to the DT
@@ -268,10 +228,10 @@
                     search: aoData[5].value,
                     columns: aoData[1].value
                 };
-                PatientService.findAllPatients(data).then(function (res) {
+                DoctorService.findAllDoctors(data).then(function (res) {
                     if(!res.data.error) {
                         fnCallback(res.data.data);
-                        ctrl.patientData.data = res.data.data;
+                        ctrl.doctorData.data = res.data.data;
                     }
                 });
             },
@@ -286,12 +246,12 @@
                 search: "Buscar:",
                 lengthMenu: "Mostrar _MENU_ Elementos",
                 info: "Mostrando del _START_ al _END_ de _TOTAL_ pacientes",
-                infoEmpty: "No se encontraron pacientes.",
+                infoEmpty: "No se encontraron doctores.",
                 infoFiltered: "(filtrado _MAX_ elementos total)",
                 infoPostFix: "",
-                loadingRecords: "Cargando pacientes...",
-                zeroRecords: "No se encontraron pacientes",
-                emptyTable: "No hay pacientes disponibles",
+                loadingRecords: "Cargando doctores...",
+                zeroRecords: "No se encontraron doctores",
+                emptyTable: "No hay doctores disponibles",
                 paginate: {
                     first: "Primero",
                     previous: "Anterior",

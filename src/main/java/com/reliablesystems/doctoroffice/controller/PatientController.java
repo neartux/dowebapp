@@ -13,6 +13,7 @@ import com.reliablesystems.doctoroffice.core.utils.file.FileUtil;
 import com.reliablesystems.doctoroffice.core.utils.patient.PatientUtil;
 import com.reliablesystems.doctoroffice.util.common.CommonUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
+import com.reliablesystems.doctoroffice.util.session.CompanySession;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -65,18 +66,21 @@ public class PatientController {
     /**
      * Method to find all patient, inicialize datatable values
      *
-     * @return ApiResponse
+     * @param requestDataTable Datatable data
+     * @param request Client request
+     * @return List of patients
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public ApiResponse findAllPatient(@RequestBody RequestDataTable requestDataTable) {
+    public ApiResponse findAllPatient(@RequestBody RequestDataTable requestDataTable, HttpServletRequest request) {
         try {
-            int length = patientService.finAllPatientsCount(requestDataTable.getSearch().get("value").toString());
+            long companyId = CompanySession.getCompanyId(request);
+            int length = patientService.finAllPatientsCount(companyId, requestDataTable.getSearch().get("value").toString());
             Map<String, Object> map = new HashMap<>();
             map.put("draw", requestDataTable.getDraw());
             map.put("recordsFiltered", length);
             map.put("recordsTotal", length);
-            map.put("data", patientService.findAllPatients(requestDataTable.getStart(), requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString()));
+            map.put("data", patientService.findAllPatients(companyId, requestDataTable.getStart(), requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString()));
 
             return new ApiResponse(false, map);
 
@@ -91,12 +95,15 @@ public class PatientController {
      * Method to create a new patient
      *
      * @param patientTO Patient data
+     * @param request Client request
      * @return ApiResponse
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public ApiResponse createPatient(@RequestBody PatientTO patientTO) {
+    public ApiResponse createPatient(@RequestBody PatientTO patientTO, HttpServletRequest request) {
         try {
+            // Set company patient
+            patientTO.setCompanyId(CompanySession.getCompanyId(request));
             Long idPatient = patientService.createPatient(PatientUtil.getPatientToCreate(patientTO));
             return new ApiResponse(false, idPatient);
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 (function () {
-    var app = angular.module('PatientProvider', ['ApplicationProvider']);
+    var app = angular.module('PatientProvider', []);
 
-    app.factory('PatientService', function ($http, $q, ApplicationService) {
+    app.factory('PatientService', function ($http, $q) {
         var service = {};
 
         service.contextPath = '';
@@ -15,10 +15,6 @@
                     'Content-type': 'application/json'
                 }
             });
-        };
-
-        service.findAllPatientsByFilters = function (filters) {
-            return $http.post(service.contextPath + '/patient', filters);
         };
 
         service.findBloodTypes = function () {
