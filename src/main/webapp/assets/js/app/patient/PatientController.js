@@ -94,18 +94,10 @@
         ctrl.viewPadientData = function (patientIndex) {
             ctrl.isViewDetailsPatient = true;
             ctrl.patientTOPreview = angular.copy(ctrl.patientData.data.data[patientIndex]);
-            // // If patient has not profilepicture, set avatar not found
-            // if(!isValidField(ctrl.patientTOPreview.profileImage)) {
-            //     ctrl.patientTOPreview.profileImage = PatientService.contextPath + "/assets/images/users/no-avatar.png";
-            // }
-            console.info("ctrl.patientTOPreview.profileImage = ", ctrl.patientTOPreview.profileImage);
             ctrl.patientTOPreview.birthDateString = moment(ctrl.patientTOPreview.birthDate).format('DD/MM/YYYY');
             ctrl.patientTOPreview.patientIndex = patientIndex;
             var result = calculateEdge(moment(ctrl.patientTOPreview.birthDate).format('YYYY-MM-DD'));
             ctrl.patientTOPreview.birthDateExplain = result[0] + " años " + result[1] + " meses " + result[2] + " dias";
-            // setTimeout(function () {
-            //     $scope.$apply();
-            // },200);
         };
 
         /**
@@ -154,6 +146,7 @@
                         if(res.data.error) {
                             showNotification("error", "Error: " + res.data.data.message);
                         } else {
+                            ctrl.isViewDetailsPatient = false;
                             showNotification("success", "El paciente se ha eliminado");
                             // Refresh data patient
                             ctrl.dtInstance.rerender();

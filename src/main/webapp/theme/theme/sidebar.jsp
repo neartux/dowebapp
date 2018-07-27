@@ -25,19 +25,15 @@
             </div>
 
             <ul>
-                <li class="menu-title">Navigation</li>
-
-                <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-view-dashboard"></i><span class="badge badge-success pull-right">2</span> <span> Dashboard </span> </a>
-                    <ul class="list-unstyled">
-                        <li><a href="index.html">Dashboard 1</a></li>
-                        <li><a href="dashboard_2.html">Dashboard 2</a></li>
-                    </ul>
-                </li>
-
-
+                <li class="menu-title">Navegaci&oacute;n</li>
                 <li>
-                    <a href="calendar.html" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Calendar </span></a>
+                    <a href="${pageContext.request.contextPath}/patient/display" class="waves-effect"><i class="mdi mdi-account-multiple-outline"></i><span> Pacientes </span></a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/doctor/display" class="waves-effect"><i class="mdi mdi-account-multiple-outline"></i><span> Doctores </span></a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Agenda </span></a>
                 </li>
 
 

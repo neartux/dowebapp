@@ -12,26 +12,25 @@
                     <div class="panel-body">
 
                         <div class="row col-sm-12">
-                            <div class="col-sm-4">
+                            <div class="col-sm-12">
                                 <a>
                                     <img class="media-object m-r-10" alt="{{ ctrl.patientTOPreview.firstName }} {{ ctrl.patientTOPreview.lastName }}"
                                          data-ng-src="${pageContext.request.contextPath}/patient/getProfilePicture?url={{ ctrl.patientTOPreview.profileImage }}" style="width: 96px; height: 96px;"/>
                                 </a>
                             </div>
-                            <div class="col-sm-8 text-right">
+                            <div class="col-sm-12 text-right">
                                 <div class="form-group m-b-0">
                                     <label class="control-label">Selecciona imagen</label>
                                     <input type="file" class="filestyle" data-buttonname="btn-primary" id="profilePicturePatient">
                                 </div>
-                                <br>
-                                <a class="btn btn-primary" data-ng-click="ctrl.validateAndUploadProfilPicturePatient();">
-                                    <i class="mdi mdi-upload"></i> Subir Imagen
-                                </a>
                             </div>
                         </div>
 
                     </div>
                     <div class="panel-footer text-right">
+                        <a class="btn btn-primary" data-ng-click="ctrl.validateAndUploadProfilPicturePatient();">
+                            <i class="mdi mdi-upload"></i> Subir Imagen
+                        </a> &nbsp;&nbsp;
                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="ti-close"></i> Cerrar</button>
                     </div>
                 </div>

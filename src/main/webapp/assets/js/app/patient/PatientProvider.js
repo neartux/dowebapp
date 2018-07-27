@@ -26,7 +26,7 @@
         };
 
         service.updatePatient = function (patientTO) {
-            return $http.post(service.contextPath + '/patient/update', patientTO);
+            return $http.put(service.contextPath + '/patient/update', patientTO);
         };
 
         service.deletePatient = function (patientId) {

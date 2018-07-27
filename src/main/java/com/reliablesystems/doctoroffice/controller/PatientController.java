@@ -14,7 +14,6 @@ import com.reliablesystems.doctoroffice.core.utils.patient.PatientUtil;
 import com.reliablesystems.doctoroffice.util.common.CommonUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
 import com.reliablesystems.doctoroffice.util.session.CompanySession;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -22,10 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 import java.util.*;
 
 @Controller
@@ -189,7 +186,8 @@ public class PatientController {
             // Update profile picture in DB
             patientService.updateProfilePicturePath(patientId, profilePictureDirectory + finalNameFile);
             // Return response
-            return new ApiResponse(false, finalNameFile + finalNameFile);
+            Object data = profilePictureDirectory + finalNameFile;
+            return new ApiResponse(false, data);
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());

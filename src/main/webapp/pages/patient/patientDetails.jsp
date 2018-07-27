@@ -74,7 +74,7 @@
                     <a class="btn btn-xs btn-success waves-light waves-effect" data-ng-click="ctrl.viewToUpdatePatient(ctrl.patientTOPreview.patientIndex, ctrl.patientTOPreview);">
                         <i class="mdi mdi-pencil-box-outline"></i> Editar Informaci&oacute;n
                     </a>
-                    <a class="btn btn-xs btn-danger waves-light waves-effect" data-ng-click="ctrl.viewToUpdatePatient(ctrl.patientTOPreview.patientIndex, ctrl.patientTOPreview);">
+                    <a class="btn btn-xs btn-danger waves-light waves-effect" data-ng-click="ctrl.deletePatient(ctrl.patientTOPreview.id);">
                         <i class="ti-trash"></i> Eliminar Paciente
                     </a>
                 </div>
