@@ -108,13 +108,13 @@
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
         ctrl.deleteDoctor = function(id) {
-            swal(getConfigurationSwalConfirm("Estas seguro?","Se eliminara el paciente del sistema","warning","SI, eliminarlo!"), function (isConfirm) {
+            swal(getConfigurationSwalConfirm("Estas seguro?","Se eliminara el doctor del sistema","warning","SI, eliminarlo!"), function (isConfirm) {
                 if (isConfirm) {
                     return DoctorService.deleteDoctor(id).then(function (res) {
                         if(res.data.error) {
                             showNotification("error", "Error: " + res.data.data.message);
                         } else {
-                            showNotification("success", "El paciente se ha eliminado");
+                            showNotification("success", "El doctor se ha eliminado");
                             // Refresh data doctor
                             ctrl.dtInstance.rerender();
                         }
@@ -245,7 +245,7 @@
                 processing: "Procesando...",
                 search: "Buscar:",
                 lengthMenu: "Mostrar _MENU_ Elementos",
-                info: "Mostrando del _START_ al _END_ de _TOTAL_ pacientes",
+                info: "Mostrando del _START_ al _END_ de _TOTAL_ doctores",
                 infoEmpty: "No se encontraron doctores.",
                 infoFiltered: "(filtrado _MAX_ elementos total)",
                 infoPostFix: "",
