@@ -10,10 +10,10 @@
                 <div class="panel panel-color panel-success">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></button>
-                        <h3 class="panel-title">Nuevo Paciente</h3>
+                        <h3 class="panel-title">Nuevo M&eacute;dicos</h3>
                     </div>
                     <div class="panel-body">
-                        <h4 class="m-t-0 text-primary bold">
+                        <h4 class="m-t-0 text-success bold">
                             <i class="mdi mdi-account-location"></i> Informaci&oacute;n Personal
                         </h4>
                         <hr class="m-t-0 m-b-5">
@@ -22,7 +22,7 @@
                                 <div class="form-group" ng-class="{ 'has-error' : doctorForm.firstName.$invalid && !doctorForm.firstName.$pristine }">
                                     <label for="field-name" class="control-label">Nombres *</label>
                                     <input type="text" data-ng-model="ctrl.doctorTO.firstName" required name="firstName"
-                                           class="form-control" id="field-name" placeholder="John" maxlength="50">
+                                           class="form-control" id="field-name" maxlength="50">
                                     <span ng-show="doctorForm.firstName.$invalid && !doctorForm.firstName.$pristine"
                                           class="help-block">El nombre es requerido.</span>
                                 </div>
@@ -31,7 +31,7 @@
                                 <div class="form-group" ng-class="{ 'has-error' : doctorForm.lastName.$invalid && !doctorForm.lastName.$pristine }">
                                     <label for="field-lastName" class="control-label">Apellidos *</label>
                                     <input type="text" data-ng-model="ctrl.doctorTO.lastName" required name="lastName"
-                                           class="form-control" id="field-lastName" placeholder="Doe" maxlength="50">
+                                           class="form-control" id="field-lastName" maxlength="50">
                                     <span ng-show="doctorForm.lastName.$invalid && !doctorForm.lastName.$pristine"
                                           class="help-block">Los apellidos son requeridos.</span>
                                 </div>
@@ -67,7 +67,7 @@
                             </div>
                         </div>
 
-                        <h4 class="text-primary bold">
+                        <h4 class="text-success bold">
                             <i class="mdi mdi-map-marker-plus"></i> Informaci&oacute;n de Ubicaci&oacute;n
                         </h4>
                         <hr class="m-t-0 m-b-5">
@@ -75,7 +75,7 @@
                             <div class="col-md-6" ng-class="{ 'has-error' : doctorForm.address.$invalid && !doctorForm.address.$pristine }">
                                 <div class="form-group">
                                     <label for="field-address" class="control-label">Direcci&oacute;n *</label>
-                                    <input type="text" data-ng-model="ctrl.doctorTO.address" required
+                                    <input type="text" data-ng-model="ctrl.doctorTO.address" required name="address"
                                            class="form-control" id="field-address" maxlength="150">
                                     <span ng-show="doctorForm.address.$invalid && !doctorForm.address.$pristine"
                                           class="help-block">La direcci&oacute;n es requerido.</span>
@@ -91,19 +91,34 @@
                                 </div>
                             </div>
                         </div>
+
+                        <h4 class="text-success bold">
+                            <i class="mdi mdi-account-settings-variant"></i> Cuenta Usuario
+                        </h4>
+                        <hr class="m-t-0 m-b-5">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="field-phone" class="control-label">Tel&eacute;fono</label>
-                                    <input type="text" data-ng-model="ctrl.doctorTO.phone"
-                                           class="form-control" id="field-phone" maxlength="15">
+                                    <label for="field-userName" class="control-label">Nombre usuario *</label>
+                                    <input type="text" data-ng-model="ctrl.doctorTO.userName" name="userName"
+                                           class="form-control" id="field-userName" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-password" class="control-label">Contrase&ntilde;a *</label>
+                                    <input type="password" data-ng-model="ctrl.doctorTO.password" name="contrasena"
+                                           class="form-control" id="field-password" maxlength="50">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="field-email" class="control-label">Email</label>
-                                    <input type="email" data-ng-model="ctrl.doctorTO.email"
-                                           class="form-control" id="field-email" maxlength="50">
+                                    <label for="field-repeatPassword" class="control-label">Repetir contrase&ntilde;a *</label>
+                                    <input type="password" data-ng-model="ctrl.doctorTO.repeatPassword" name="repeatPassword"
+                                           class="form-control" id="field-repeatPassword" maxlength="50">
                                 </div>
                             </div>
                         </div>

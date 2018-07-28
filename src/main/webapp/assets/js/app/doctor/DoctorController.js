@@ -34,9 +34,11 @@
          * @param isValidForm if generic form is valid
          */
         ctrl.validateDoctor = function(isValidForm) {
+            console.info("DOCTOR = ", ctrl.doctorTO);
             // If is valid form
             if(isValidForm) {
                 var isValid = ctrl.validateDoctorForm();
+                console.info("id valid = ", isValid);
                 // If is valid values form
                 if(isValid) {
                     // Create new doctor
@@ -58,10 +60,10 @@
          */
         ctrl.createDoctor = function() {
             return DoctorService.createDoctor(ctrl.doctorTO).then(function (res) {
-                if(res.data.data.error) {
+                if(res.data.error) {
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
-                    showNotification("success", "Se ha creado el doctor");
+                    showNotification("success", "Se ha creado el medico correctamente");
                     // Refresh data doctor
                     ctrl.dtInstance.rerender();
                 }
@@ -130,6 +132,7 @@
          */
         ctrl.validateDoctorForm = function() {
             var isValid = true;
+
             // Validate birthdate
             var birthDate = $("#field-birthDate").val();
             console.info("birthDate = ", birthDate);
@@ -142,13 +145,43 @@
             else {
                 ctrl.doctorTO.birthDateS = birthDate;
             }
+
+            // If is create process
+            if(ctrl.isCreateDoctor) {
+                // Validate username fiel
+                if($.trim(ctrl.doctorTO.userName).length < 6 || $.trim(ctrl.doctorTO.password).length < 6 || $.trim(ctrl.doctorTO.repeatPassword).length < 6) {
+                    showNotification("warning", "Los datos de usuario deben tener por lo menos 6 caracteres");
+                    isValid = false;
+                }
+                // Validate password
+                if (ctrl.doctorTO.password !== ctrl.doctorTO.repeatPassword) {
+                    showNotification("warning", "Las contraseñas no coinciden, verifique por favor.");
+                    isValid = false;
+                } else {
+                    // Validate username
+                    DoctorService.existUserByUserName(ctrl.doctorTO.userName).then(function (res) {
+                        if (!res.data.error){
+                            if (res.data.data) {
+                                showNotification("warning", "El nombre de usuario existe en el sistema");
+                                isValid = false;
+                            }
+                        } else {
+                            showNotification("error", "Error: " + res.data.data.message);
+                            isValid = false;
+                        }
+                    });
+                }
+            }
+
             return isValid;
         };
 
         /**
          * Method to view modal to change profile picture
          */
-        ctrl.viewChangeProfilePicture = function() {
+        ctrl.viewChangeProfilePicture = function(indexElement) {
+            console.info("ctrl.doctorData.data.data[indexElement] = ", ctrl.doctorData.data.data[indexElement]);
+            ctrl.doctorTO = angular.copy(ctrl.doctorData.data.data[indexElement]);
             var input = $("#profilePictureDoctor");
             input.replaceWith(input.val('').clone(true));
             $("#modalUploadImage").modal();
@@ -205,8 +238,8 @@
             if (isValidField(data.profileImage)) {
                 profilePicture = data.profileImage;
             }
-            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" data-ng-src="'+ DoctorService.contextPath + '/doctor/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
-            $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: #'+ data.expedient +'</small></p>');
+            $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewChangeProfilePicture('+dataIndex+');" data-ng-src="'+ DoctorService.contextPath + '/doctor/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
+            $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5>');
 
             // Recompiling so we can bind Angular directive to the DT
             $compile(angular.element(row).contents())($scope);
@@ -245,13 +278,13 @@
                 processing: "Procesando...",
                 search: "Buscar:",
                 lengthMenu: "Mostrar _MENU_ Elementos",
-                info: "Mostrando del _START_ al _END_ de _TOTAL_ doctores",
-                infoEmpty: "No se encontraron doctores.",
+                info: "Mostrando del _START_ al _END_ de _TOTAL_ m&eacute;dicos",
+                infoEmpty: "No se encontraron m&eacute;dicos.",
                 infoFiltered: "(filtrado _MAX_ elementos total)",
                 infoPostFix: "",
-                loadingRecords: "Cargando doctores...",
-                zeroRecords: "No se encontraron doctores",
-                emptyTable: "No hay doctores disponibles",
+                loadingRecords: "Cargando m&eacute;dicos...",
+                zeroRecords: "No se encontraron m&eacute;dicos",
+                emptyTable: "No hay m&eacute;dicos disponibles",
                 paginate: {
                     first: "Primero",
                     previous: "Anterior",
@@ -263,11 +296,28 @@
 
         ctrl.dtColumns = [
             DTColumnBuilder.newColumn(null).withTitle('').withClass('text-center').withOption('width', '10%').notSortable(),
-            DTColumnBuilder.newColumn(null).withTitle('Paciente').withClass('text-left').withOption('width', '35%').notSortable(),
-            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '35%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Médico').withClass('text-left').withOption('width', '30%').notSortable(),
+            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '30%').notSortable(),
             DTColumnBuilder.newColumn('cellPhone').withTitle('Celular').withClass('text-right').withOption('width', '10%').notSortable(),
-            DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-right').withOption('width', '10%').notSortable()
+            DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-right').withOption('width', '20%').renderWith(panelActions).notSortable()
         ];
+
+        /**
+         * Create icons to panel actions
+         * @param data Row
+         * @param type type
+         * @param full
+         * @param meta
+         * @returns {string} Html string to panel actions
+         */
+        function panelActions(data, type, full, meta) {
+            return '<button class="btn btn-icon waves-effect btn-default" title="Ver" data-ng-click="ctrl.viewDoctorData(' + meta.row + ')"> ' +
+                '<i class="mdi mdi-account-search"></i> </button>' +
+                '<button class="btn btn-icon waves-effect btn-primary" title="Editar" data-ng-click="ctrl.viewToUpdateDoctor(' + meta.row + ')"> ' +
+                '<i class="mdi mdi-pencil-box-outline"></i> </button>' +
+                '<button class="btn btn-icon waves-effect btn-danger" title="Eliminar" data-ng-click="ctrl.deleteDoctor(' + meta.row.id + ')"> ' +
+                '<i class="ti-trash"></i> </button>';;
+        }
 
     });
 

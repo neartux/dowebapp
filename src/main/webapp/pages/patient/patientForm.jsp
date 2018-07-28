@@ -21,7 +21,7 @@
                                 <div class="form-group" ng-class="{ 'has-error' : patientForm.firstName.$invalid && !patientForm.firstName.$pristine }">
                                     <label for="field-name" class="control-label">Nombres *</label>
                                     <input type="text" data-ng-model="ctrl.patientTO.firstName" required name="firstName"
-                                           class="form-control" id="field-name" placeholder="John" maxlength="50">
+                                           class="form-control" id="field-name" maxlength="50">
                                     <span ng-show="patientForm.firstName.$invalid && !patientForm.firstName.$pristine"
                                           class="help-block">El nombre es requerido.</span>
                                 </div>
@@ -30,7 +30,7 @@
                                 <div class="form-group" ng-class="{ 'has-error' : patientForm.lastName.$invalid && !patientForm.lastName.$pristine }">
                                     <label for="field-lastName" class="control-label">Apellidos *</label>
                                     <input type="text" data-ng-model="ctrl.patientTO.lastName" required name="lastName"
-                                           class="form-control" id="field-lastName" placeholder="Doe" maxlength="50">
+                                           class="form-control" id="field-lastName" maxlength="50">
                                     <span ng-show="patientForm.lastName.$invalid && !patientForm.lastName.$pristine"
                                           class="help-block">Los apellidos son requeridos.</span>
                                 </div>
@@ -104,7 +104,7 @@
                             <div class="col-md-6" ng-class="{ 'has-error' : patientForm.address.$invalid && !patientForm.address.$pristine }">
                                 <div class="form-group">
                                     <label for="field-address" class="control-label">Direcci&oacute;n *</label>
-                                    <input type="text" data-ng-model="ctrl.patientTO.address" required
+                                    <input type="text" data-ng-model="ctrl.patientTO.address" required name="address"
                                            class="form-control" id="field-address" maxlength="150">
                                     <span ng-show="patientForm.address.$invalid && !patientForm.address.$pristine"
                                           class="help-block">La direcci&oacute;n es requerido.</span>

@@ -24,13 +24,13 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="page-title-box">
-                            <h4 class="page-title">Lista de Pacientes </h4>
+                            <h4 class="page-title">Lista de M&eacute;dicos </h4>
                             <ol class="breadcrumb p-0 m-0">
                                 <li>
                                     <a href="#">Home</a>
                                 </li>
                                 <li class="active">
-                                    Lista de Doctores
+                                    Lista de M&eacute;dicos
                                 </li>
                             </ol>
                             <div class="clearfix"></div>
@@ -42,10 +42,10 @@
                     <div class="col-sm-12">
                         <div class="panel panel-color panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="mdi mdi-hospital-marker"></i> Doctores</h3>
+                                <h3 class="panel-title"><i class="mdi mdi-hospital-marker"></i> M&eacute;dicos</h3>
                                 <button type="button" data-ng-click="ctrl.viewToCreateNewDoctor();"
                                         class="btn btn-default btn-rounded w-md waves-effect btn-sm pull-right m-t-22">
-                                    <i class="mdi mdi-account-plus"></i> Nuevo Doctor
+                                    <i class="mdi mdi-account-plus"></i> Nuevo M&eacute;dico
                                 </button>
                             </div>
                             <div class="panel-body">
@@ -91,6 +91,7 @@
 
         <script src="${pageContext.request.contextPath}/assets/plugins/moment/moment.js"></script>
         <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/doctor/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/doctor/DoctorProvider.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/doctor/DoctorController.js?1.1"></script>
@@ -98,6 +99,14 @@
         <script>
 
             $(function () {
+
+                $('#field-birthDate').datepicker({
+                    autoclose: true,
+                    todayHighlight: true,
+                    format: 'dd/mm/yyyy'
+                });
+
+                $(":file").filestyle({input: false});
 
             });
 

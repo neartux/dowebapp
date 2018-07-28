@@ -3,6 +3,7 @@ package com.reliablesystems.doctoroffice.controller;
 import com.reliablesystems.doctoroffice.core.domain.Doctor;
 import com.reliablesystems.doctoroffice.core.exception.BackEndException;
 import com.reliablesystems.doctoroffice.core.service.doctor.DoctorService;
+import com.reliablesystems.doctoroffice.core.service.user.UserService;
 import com.reliablesystems.doctoroffice.core.to.common.ApiResponse;
 import com.reliablesystems.doctoroffice.core.to.doctor.DoctorTO;
 import com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys;
@@ -30,6 +31,8 @@ import java.util.Map;
 public class DoctorController {
     @Autowired
     private DoctorService doctorService;
+    @Autowired
+    private UserService userService;
 
     /**
      * Display the view of list of doctors
@@ -77,6 +80,7 @@ public class DoctorController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public ApiResponse createDoctor(@RequestBody DoctorTO doctorTO, HttpServletRequest request) {
+        System.out.println("doctorTO.toString() = " + doctorTO.toString());
         try {
             // Set company
             doctorTO.setCompanyId(CompanySession.getCompanyId(request));
@@ -84,6 +88,23 @@ public class DoctorController {
             doctorTO.setUserId(CompanySession.getUserId(request));
             Long doctorId = doctorService.createDoctor(DoctorUtil.getDoctorToCreate(doctorTO), doctorTO.getUserName(), doctorTO.getPassword());
             return new ApiResponse(false, doctorId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(true, e.getMessage());
+        }
+    }
+
+    /**
+     * Method to verify if username is valid
+     *
+     * @param username User name to valid
+     * @return Response
+     */
+    @RequestMapping(value = "/existusername/{username}", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResponse existUserName(@PathVariable String username) {
+        try {
+            return new ApiResponse(false, userService.existUserByUserName(username));
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());

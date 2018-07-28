@@ -53,7 +53,6 @@
             // If is valid form
             if(isValidForm) {
                 var isValid = ctrl.validatePatientForm();
-                console.info("valid values form patient = ", isValid);
                 // If is valid values form
                 if(isValid) {
                     // Create new patient
@@ -123,12 +122,13 @@
         ctrl.updatePatient = function() {
             ctrl.patientTO.birthDate = null;
             return PatientService.updatePatient(ctrl.patientTO).then(function (res) {
-                if(res.data.data.error) {
+                if(res.data.error) {
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
                     showNotification("success", "El paciente se ha modificado correctamente");
                     // Update patient information
                     ctrl.patientData.data.data[ctrl.patientTO.patientIndex] = angular.copy(ctrl.patientTO);
+                    ctrl.patientTOPreview = angular.copy(ctrl.patientTO);
                 }
                 $("#patientDataForm").modal("hide");
             });
@@ -165,7 +165,6 @@
             var isValid = true;
             // Validate birthdate
             var birthDate = $("#field-birthDate").val();
-            console.info("birthDate = ", birthDate);
             // Validate if date exist
             if (!$.trim(birthDate).length) {
                 showNotification("warning", "La fecha de nacimiento es requerido");
@@ -183,7 +182,8 @@
          */
         ctrl.viewChangeProfilePicture = function() {
             var input = $("#profilePicturePatient");
-            input.replaceWith(input.val('').clone(true));
+            input.val('');
+            //input.replaceWith(input.val('').clone(true));
             $("#modalUploadImage").modal();
         };
 
@@ -206,7 +206,6 @@
             formData.append("patientId", ctrl.patientTOPreview.id);
             // Send request
             return PatientService.updoadProfilePicturePatient(formData).then(function (res) {
-                console.info("response data = ", res);
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {

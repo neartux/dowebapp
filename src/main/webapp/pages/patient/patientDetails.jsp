@@ -7,9 +7,11 @@
     <div class="col-xs-12">
         <div class="page-title-box">
             <h4 class="page-title">
-                <a class="">
+                <button type="button" data-ng-click="ctrl.isViewDetailsPatient = false;"
+                        class="btn btn-block btn-xs btn-linkedin waves-effect waves-light">
+                    <i class="mdi mdi-backburger"></i>
                     Regresar a lista de pacientes
-                </a>
+                </button>
             </h4>
             <ol class="breadcrumb p-0 m-0">
                 <li>

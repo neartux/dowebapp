@@ -167,7 +167,7 @@ public class PatientController {
             String extension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(StringUtil.DOT) + NumberUtil.ONE_INT);
             // Validate if extension is valid
             if (!Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).contains(extension)) {
-                throw new BackEndException("Invalid extension, available extension: " + Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).toString());
+                throw new BackEndException("Imagen invalida, extensiones permitidas: " + Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).toString());
             }
             String serverPath = ApplicationKeys.PATH_SERVER_FILES;
             String profilePictureDirectory = StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT_PROFILE_PICTURE;

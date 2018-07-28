@@ -14,6 +14,10 @@
             });
         };
 
+        service.existUserByUserName = function (userName) {
+            return $http.get(service.contextPath + '/doctor/existusername/' + userName);
+        };
+
         service.createDoctor = function (doctorTO) {
             return $http.post(service.contextPath + '/doctor/create', doctorTO);
         };
