@@ -4,6 +4,7 @@
     app.controller('DoctorsOfficeController', function($scope, $http, $compile, DoctorsOfficeService, DTOptionsBuilder, DTColumnBuilder) {
         var ctrl = this;
         ctrl.doctorsOfficeData = { data: [] };
+        ctrl.doctorData = { data: [] };
         ctrl.doctorsOfficeTO = {};
         ctrl.dtInstance = {};
         ctrl.isCreateDoctorsOffice = true;
@@ -16,6 +17,20 @@
         ctrl.init = function (contextPath) {
             // Asign path aplication
             DoctorsOfficeService.contextPath = contextPath;
+            // Find doctors
+            ctrl.findDoctors();
+        };
+
+        /**
+         * Find all doctors
+         */
+        ctrl.findDoctors = function() {
+            return DoctorsOfficeService.findDoctors().then(function (res) {
+                console.info("res.data = ", res.data);
+                if(!res.data.error) {
+                    ctrl.doctorData.data = res.data.data;
+                }
+            });
         };
 
         /**
@@ -54,8 +69,8 @@
          */
         ctrl.createDoctorsOffice = function() {
             return DoctorsOfficeService.createDoctorsOffice(ctrl.doctorsOfficeTO).then(function (res) {
-                if(res.data.data.error) {
-                    showNotification("error", "Error: " + res.data.data.message);
+                if(res.data.error) {
+                    showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "Se ha creado el consultorio correctamente");
                     // Refresh data doctorsoffice list
@@ -69,11 +84,10 @@
          * Method to display form to update a doctorsOffice
          *
          * @param index Index in the list
-         * @param doctorsOffice DoctorsOffice to update
          */
-        ctrl.viewToUpdateDoctorsOffice = function(index, doctorsOffice) {
+        ctrl.viewToUpdateDoctorsOffice = function(index) {
             ctrl.isCreateDoctorsOffice = false;
-            ctrl.doctorsOfficeTO = angular.copy(doctorsOffice);
+            ctrl.doctorsOfficeTO = angular.copy(ctrl.doctorData.data[index]);
             ctrl.doctorsOfficeTO.doctorsOfficeIndex = index;
             $("#doctorsOfficeDataForm").modal();
         };
@@ -85,8 +99,8 @@
          */
         ctrl.updateDoctorsOffice = function() {
             return DoctorsOfficeService.updateDoctorsOffice(ctrl.doctorsOfficeTO).then(function (res) {
-                if(res.data.data.error) {
-                    showNotification("error", "Error: " + res.data.data.message);
+                if(res.data.error) {
+                    showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "El consultorio se ha modificado correctamente");
                     // Update doctor information
@@ -132,8 +146,8 @@
          * @param dataIndex The index
          */
         function createdRow(row, data, dataIndex) {
-            // $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" data-ng-src="'+ DoctorsOfficeService.contextPath + '/doctor/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
-            // $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: #'+ data.expedient +'</small></p>');
+            $(row.getElementsByTagName("TD")[0]).html(dataIndex + 1);
+            $(row.getElementsByTagName("TD")[2]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5>');
 
             // Recompiling so we can bind Angular directive to the DT
             $compile(angular.element(row).contents())($scope);
@@ -189,12 +203,26 @@
         };
 
         ctrl.dtColumns = [
-            DTColumnBuilder.newColumn(null).withTitle('').withClass('text-center').withOption('width', '10%').notSortable(),
-            DTColumnBuilder.newColumn(null).withTitle('Paciente').withClass('text-left').withOption('width', '35%').notSortable(),
-            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '35%').notSortable(),
-            DTColumnBuilder.newColumn('cellPhone').withTitle('Celular').withClass('text-right').withOption('width', '10%').notSortable(),
-            DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-right').withOption('width', '10%').notSortable()
+            DTColumnBuilder.newColumn(null).withTitle('#').withClass('text-center').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn('description').withTitle('Descripción').withClass('text-left').withOption('width', '30%').notSortable(),
+            DTColumnBuilder.newColumn('doctor').withTitle('Médico').withClass('text-left').withOption('width', '30%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Panel').withClass('text-right').withOption('width', '30%').renderWith(panelActions).notSortable()
         ];
+
+        /**
+         * Create icons to panel actions
+         * @param data Row
+         * @param type type
+         * @param full
+         * @param meta
+         * @returns {string} Html string to panel actions
+         */
+        function panelActions(data, type, full, meta) {
+            return '<button class="btn btn-icon waves-effect btn-primary" title="Editar" data-ng-click="ctrl.viewToUpdateDoctorsOffice(' + meta.row + ')"> ' +
+                '<i class="mdi mdi-pencil-box-outline"></i> </button>' +
+                '<button class="btn btn-icon waves-effect btn-danger" title="Eliminar" data-ng-click="ctrl.deleteDoctorsOffice(' + full.id+ ')"> ' +
+                '<i class="ti-trash"></i> </button>';
+        }
 
     });
 

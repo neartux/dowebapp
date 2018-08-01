@@ -88,9 +88,16 @@
                             <h5>Hi, John</h5>
                         </li>
                         <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
-                        <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
-                        <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
-                        <li><a href="${pageContext.request.contextPath}/home/logout"><i class="ti-power-off m-r-5"></i> Logout :P</a></li>
+                        <li>
+                            <form id="logout" action="${logoutUrl}" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <button type="submit" name="logout" value="logout"
+                                        style="color: #333;text-decoration: none;margin-left: 15px;"
+                                        class="btn-link hover-orange">
+                                    <i class="fa fa-sign-out"></i> &nbsp;Log Out
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </li>
 

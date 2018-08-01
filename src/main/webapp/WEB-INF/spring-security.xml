@@ -16,7 +16,7 @@
         <intercept-url pattern="/bootstrap/**" access="permitAll" />
         <intercept-url pattern="/**" access="hasRole('generico')"/>
         <form-login login-page="/login.jsp" default-target-url="/patient/display" always-use-default-target="true" authentication-failure-url="/login.jsp"/>
-        <logout logout-success-url="/index.jsp"/>
+        <logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/index.jsp"/>
     </http>
 
     <beans:bean id="customAuthUserService" class="com.reliablesystems.doctoroffice.auth.CustomAuthUserService" />

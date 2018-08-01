@@ -42,7 +42,7 @@
                     <div class="col-sm-12">
                         <div class="panel panel-color panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="mdi mdi-hospital-marker"></i> M&eacute;dicos</h3>
+                                <h3 class="panel-title"><i class="fa fa-user-md"></i> M&eacute;dicos</h3>
                                 <button type="button" data-ng-click="ctrl.viewToCreateNewDoctor();"
                                         class="btn btn-default btn-rounded w-md waves-effect btn-sm pull-right m-t-22">
                                     <i class="mdi mdi-account-plus"></i> Nuevo M&eacute;dico

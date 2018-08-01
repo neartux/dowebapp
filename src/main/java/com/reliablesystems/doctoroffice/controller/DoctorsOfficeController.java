@@ -1,5 +1,6 @@
 package com.reliablesystems.doctoroffice.controller;
 
+import com.reliablesystems.doctoroffice.core.service.doctor.DoctorService;
 import com.reliablesystems.doctoroffice.core.service.doctorsoffice.DoctorsOfficeService;
 import com.reliablesystems.doctoroffice.core.to.common.ApiResponse;
 import com.reliablesystems.doctoroffice.core.to.doctorsoffice.DoctorsOfficeTO;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class DoctorsOfficeController {
     @Autowired
     private DoctorsOfficeService doctorsOfficeService;
+    @Autowired
+    private DoctorService doctorService;
 
     /**
      * Display the view of list of doctors
@@ -50,6 +53,23 @@ public class DoctorsOfficeController {
             map.put("data", doctorsOfficeService.findDoctorsByCompany(companyId, requestDataTable.getStart(), requestDataTable.getLength(), requestDataTable.getSearch().get("value").toString()));
 
             return new ApiResponse(false, map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(true, e.getMessage());
+        }
+    }
+
+    /**
+     * Method to find doctors by company to asociate with a doctorsoffice
+     *
+     * @param request Client request
+     * @return List of doctors
+     */
+    @RequestMapping(value = "/findDoctors", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResponse findDoctorsByCompany(HttpServletRequest request) {
+        try {
+            return new ApiResponse(false, doctorService.findDoctorsByCompany(CompanySession.getCompanyId(request)));
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());

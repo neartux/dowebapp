@@ -14,6 +14,10 @@
             });
         };
 
+        service.findDoctors = function () {
+            return $http.get(service.contextPath + 'doctorsoffice/findDoctors')
+        };
+
         service.createDoctorsOffice = function (doctorsOfficeTO) {
             return $http.post(service.contextPath + '/doctorsoffice/create', doctorsOfficeTO);
         };

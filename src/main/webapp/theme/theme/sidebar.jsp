@@ -1,7 +1,6 @@
 <div class="left side-menu">
     <div class="sidebar-inner slimscrollleft">
 
-        <!--- Sidemenu -->
         <div id="sidebar-menu">
             <div class="user-details">
                 <div class="overlay"></div>
@@ -10,7 +9,8 @@
                 </div>
                 <div class="user-info">
                     <div>
-                        <a href="#setting-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Daniel Syme <span class="mdi mdi-menu-down"></span></a>
+                        <a href="#setting-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            ${pageContext.request.userPrincipal.name} <span class="mdi mdi-menu-down"></span></a>
                     </div>
                 </div>
             </div>
@@ -27,19 +27,30 @@
             <ul>
                 <li class="menu-title">Navegaci&oacute;n</li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/patient/display" class="waves-effect"><i class="mdi mdi-account-multiple-outline"></i><span> Pacientes </span></a>
+                    <a href="${pageContext.request.contextPath}/patient/display" class="waves-effect">
+                        <i class="mdi mdi-account-multiple-outline"></i><span> Pacientes </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/doctor/display" class="waves-effect"><i class="mdi mdi-account-multiple-outline"></i><span> Doctores </span></a>
+                    <a href="${pageContext.request.contextPath}/doctor/display" class="waves-effect">
+                        <i class="fa fa-user-md"></i><span> Doctores </span>
+                    </a>
                 </li>
                 <li>
-                    <a href="calendar.html" class="waves-effect"><i class="mdi mdi-calendar"></i><span> Agenda </span></a>
+                    <a href="${pageContext.request.contextPath}/doctorsoffice/display" class="waves-effect">
+                        <i class="fa fa-hospital-o"></i><span> Consultorios </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/diary/display" class="waves-effect">
+                        <i class="fa fa-calendar-check-o"></i><span> Agenda </span>
+                    </a>
                 </li>
 
 
             </ul>
         </div>
-        <!-- Sidebar -->
+
         <div class="clearfix"></div>
 
         <div class="help-box">
@@ -49,6 +60,5 @@
         </div>
 
     </div>
-    <!-- Sidebar -left -->
 
 </div>
