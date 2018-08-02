@@ -54,11 +54,12 @@
                                         <jsp:include page="itineraryControls.jsp"/>
 
                                         <mwl-calendar
-                                                events="ctrlDiary.activitiesUser.data"
-                                                view="ctrlDiary.calendarView"
-                                                view-title="ctrlDiary.calendarTitle"
-                                                view-date="ctrlDiary.viewDate"
-                                                on-event-click="ctrlDiary.vieDetailsEvent(calendarEvent)"
+                                                events="ctrl.events"
+                                                view="ctrl.calendarView"
+                                                view-title="Itinerario"
+                                                view-date="ctrl.viewDate"
+                                                cell-is-open="ctrl.isCellOpen"
+                                                on-event-click="ctrl.vieDetailsEvent(calendarEvent)"
                                                 on-event-times-changed="ctrlDiary.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                                                 data-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
                                                 delete-event-html="'<i class=\'glyphicon glyphicon-remove text-danger\'></i>'"
@@ -67,8 +68,8 @@
                                                 day-view-start="00:00"
                                                 day-view-end="23:59"
                                                 day-view-split="30"
-                                                on-timespan-click="ctrlDiary.addNewActivityToDateSpecific(calendarDate);ctrlDiary.isOptionCreateActivity = true;"
-                                                cell-is-open="ctrlDiary.isCellOpen">
+                                                on-timespan-click="ctrlDiary.clickInDateToViewDay(calendarDate);"
+                                                on-date-range-select="ctrlDiary.selectRangeInDayView(calendarRangeStartDate, calendarRangeEndDate)">
                                         </mwl-calendar>
 
                                     </div>
