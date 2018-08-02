@@ -9,8 +9,6 @@
 <tiles:insertDefinition name="template">
     <tiles:putAttribute name="body">
 
-        <link href="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css"
-              rel="stylesheet">
         <link href="${pageContext.request.contextPath}/assets/plugins/datatables/jquery.dataTables.min.css"
               rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/assets/plugins/angular-datatable/angular-datatables.min.css"
@@ -87,12 +85,9 @@
         <script src="${pageContext.request.contextPath}/assets/plugins/datatables/dataTables.bootstrap.js"></script>
         <script src="${pageContext.request.contextPath}/assets/plugins/angular-datatable/angular-datatables.min.js"></script>
 
-        <script src="${pageContext.request.contextPath}/assets/plugins/moment/moment.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/plugins/bootstrap-filestyle/js/bootstrap-filestyle.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/doctorsoffice/App.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/doctorsoffice/DoctorsOfficeProvider.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/app/doctorsoffice/DoctorsOfficeController.js?<%=System.currentTimeMillis()%>"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/app/doctorsoffice/DoctorsOfficeController.js?1.2"></script>
         <script src="${pageContext.request.contextPath}/assets/js/app/common/CommonDirectives.js"></script>
         <script>
 

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/diary")
-public class DiaryController {
+@RequestMapping(value = "/itinerary")
+public class ItineraryController {
 
     /**
      * Display the view of diary
@@ -17,6 +17,6 @@ public class DiaryController {
      */
     @RequestMapping(value = "/display", method = RequestMethod.GET)
     public String display(Model model) {
-        return "pages/diary/diary";
+        return "pages/itinerary/itinerary";
     }
 }
