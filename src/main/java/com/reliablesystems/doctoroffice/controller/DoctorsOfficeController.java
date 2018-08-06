@@ -24,7 +24,7 @@ public class DoctorsOfficeController {
     private DoctorService doctorService;
 
     /**
-     * Display the view of list of doctors
+     * Display the view of list of doctorsoffices
      *
      * @return The view
      */

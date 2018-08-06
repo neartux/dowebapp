@@ -8,6 +8,7 @@
         ctrl.calendarView = 'month'; // View calendar in month
         ctrl.viewDate = moment().startOf('month').toDate(); // Date focus
         ctrl.cellIsOpen = true; // If date has events open
+        ctrl.doctorOfficesData = { data: [] };
 
         /**
          * Init Itinerary app
@@ -18,6 +19,20 @@
         ctrl.init = function (contextPath, pattern) {
             // Asign path aplication
             ItineraryService.contextPath = contextPath;
+            // Find all doctors by company to select one.
+            ctrl.findDoctorsOffices();
+        };
+
+        /**
+         * Find all doctors
+         */
+        ctrl.findDoctorsOffices = function() {
+            return ItineraryService.findDoctorsOfficces().then(function (res) {
+                console.info("res.data = ", res.data);
+                if(!res.data.error) {
+                    ctrl.doctorOfficesData.data = res.data.data;
+                }
+            });
         };
 
         var actions = [{
