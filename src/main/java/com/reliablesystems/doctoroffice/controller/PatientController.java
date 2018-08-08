@@ -170,7 +170,7 @@ public class PatientController {
                 throw new BackEndException("Imagen invalida, extensiones permitidas: " + Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).toString());
             }
             String serverPath = ApplicationKeys.PATH_SERVER_FILES;
-            String profilePictureDirectory = StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT_PROFILE_PICTURE;
+            String profilePictureDirectory = StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENTS + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT + patientId + StringUtil.SLASH + ApplicationKeys.FOLDER_PATIENT_PROFILE_PICTURE;
             // Create folder if it does not exist
             FileUtil.createFolderIfNotExist(serverPath + profilePictureDirectory);
             // Build the full path image

@@ -75,11 +75,10 @@
          * Method to display form to update a doctor
          *
          * @param index Index in the list
-         * @param doctor Doctor to update
          */
-        ctrl.viewToUpdateDoctor = function(index, doctor) {
+        ctrl.viewToUpdateDoctor = function(index) {
             ctrl.isCreateDoctor = false;
-            ctrl.doctorTO = angular.copy(doctor);
+            ctrl.doctorTO = angular.copy(ctrl.doctorData.data.data[index]);
             ctrl.doctorTO.doctorIndex = index;
             $('#field-birthDate').datepicker('update', moment(ctrl.doctorTO.birthDate).format('DD/MM/YYYY'));
             $("#doctorDataForm").modal();
@@ -93,12 +92,12 @@
         ctrl.updateDoctor = function() {
             ctrl.doctorTO.birthDate = null;
             return DoctorService.updateDoctor(ctrl.doctorTO).then(function (res) {
-                if(res.data.data.error) {
+                if(res.data.error) {
                     showNotification("error", "Error: " + res.data.data.message);
                 } else {
                     showNotification("success", "El doctor se ha modificado correctamente");
                     // Update doctor information
-                    ctrl.doctorData.data.data[ctrl.doctorTO.doctorIndex] = angular.copy(ctrl.doctorTO);
+                    ctrl.dtInstance.rerender();
                 }
                 $("#doctorDataForm").modal("hide");
             });
@@ -182,8 +181,10 @@
         ctrl.viewChangeProfilePicture = function(indexElement) {
             console.info("ctrl.doctorData.data.data[indexElement] = ", ctrl.doctorData.data.data[indexElement]);
             ctrl.doctorTO = angular.copy(ctrl.doctorData.data.data[indexElement]);
+            ctrl.doctorTO.indexElement = indexElement;
             var input = $("#profilePictureDoctor");
-            input.replaceWith(input.val('').clone(true));
+            input.val('');
+            //input.replaceWith(input.val('').clone(true));
             $("#modalUploadImage").modal();
         };
 
@@ -206,15 +207,29 @@
             formData.append("doctorId", ctrl.doctorTO.id);
             // Send request
             return DoctorService.updoadProfilePictureDoctor(formData).then(function (res) {
-                console.info("response data = ", res);
+                console.info("response data = ", res.data.data);
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {
-                    ctrl.doctorTO.profileImage = res.data.data;
+                    ctrl.dtInstance.rerender();
                     showNotification("success", "Se ha actualizado correctamente la foto de perfil");
                 }
                 $("#modalUploadImage").modal("hide");
             });
+        };
+
+        /**
+         * Method to view data doctor
+         *
+         * @param indexDoctor Index doctor
+         */
+        ctrl.viewDoctorData = function (indexDoctor) {
+            ctrl.doctorTO = ctrl.doctorData.data.data[indexDoctor];
+            ctrl.doctorTO.birthDateString = moment(ctrl.doctorTO.birthDate).format('DD/MM/YYYY');
+            var result = calculateEdge(moment(ctrl.doctorTO.birthDate).format('YYYY-MM-DD'));
+            ctrl.doctorTO.birthDateExplain = result[0] + " años " + result[1] + " meses " + result[2] + " dias";
+            console.info("Doctor = ", ctrl.doctorTO);
+            $("#doctorDataView").modal();
         };
 
 
@@ -296,10 +311,11 @@
 
         ctrl.dtColumns = [
             DTColumnBuilder.newColumn(null).withTitle('').withClass('text-center').withOption('width', '10%').notSortable(),
-            DTColumnBuilder.newColumn(null).withTitle('Médico').withClass('text-left').withOption('width', '30%').notSortable(),
-            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '30%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Médico').withClass('text-left').withOption('width', '25%').notSortable(),
+            DTColumnBuilder.newColumn('address').withTitle('Direccion').withClass('text-left').withOption('width', '25%').notSortable(),
             DTColumnBuilder.newColumn('cellPhone').withTitle('Celular').withClass('text-right').withOption('width', '10%').notSortable(),
-            DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-right').withOption('width', '20%').renderWith(panelActions).notSortable()
+            DTColumnBuilder.newColumn('userName').withTitle('Usuario').withClass('text-right').withOption('width', '10%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Panel').withClass('text-right').withOption('width', '30%').renderWith(panelActions).notSortable()
         ];
 
         /**
@@ -312,11 +328,11 @@
          */
         function panelActions(data, type, full, meta) {
             return '<button class="btn btn-icon waves-effect btn-default" title="Ver" data-ng-click="ctrl.viewDoctorData(' + meta.row + ')"> ' +
-                '<i class="mdi mdi-account-search"></i> </button>' +
+                '<i class="mdi mdi-account-search"></i> </button>&nbsp;' +
                 '<button class="btn btn-icon waves-effect btn-primary" title="Editar" data-ng-click="ctrl.viewToUpdateDoctor(' + meta.row + ')"> ' +
-                '<i class="mdi mdi-pencil-box-outline"></i> </button>' +
-                '<button class="btn btn-icon waves-effect btn-danger" title="Eliminar" data-ng-click="ctrl.deleteDoctor(' + meta.row.id + ')"> ' +
-                '<i class="ti-trash"></i> </button>';;
+                '<i class="mdi mdi-pencil-box-outline"></i> </button>&nbsp;' +
+                '<button class="btn btn-icon waves-effect btn-danger" title="Eliminar" data-ng-click="ctrl.deleteDoctor(' + full.id + ')"> ' +
+                '<i class="ti-trash"></i> </button>';
         }
 
     });

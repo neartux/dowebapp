@@ -172,7 +172,7 @@ public class DoctorController {
                 throw new BackEndException("Invalid extension, available extension: " + Arrays.asList(ApplicationKeys.ARRAY_AVAILABLE_IMAGES_PROFILE).toString());
             }
             String serverPath = ApplicationKeys.PATH_SERVER_FILES;
-            String profilePictureDirectory = StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_DOCTOR + doctorId + StringUtil.SLASH + ApplicationKeys.FOLDER_DOCTOR_PROFILE_PICTURE;
+            String profilePictureDirectory = StringUtil.SLASH + ApplicationKeys.FOLDER_FILES + StringUtil.SLASH + ApplicationKeys.FOLDER_DOCTORS + StringUtil.SLASH + ApplicationKeys.FOLDER_DOCTOR + doctorId + StringUtil.SLASH + ApplicationKeys.FOLDER_DOCTOR_PROFILE_PICTURE;
             // Create folder if it does not exist
             FileUtil.createFolderIfNotExist(serverPath + profilePictureDirectory);
             // Build the full path image
@@ -188,7 +188,8 @@ public class DoctorController {
             // Update profile picture in DB
             doctorService.updateProfilePicturePath(doctorId, profilePictureDirectory + finalNameFile);
             // Return response
-            return new ApiResponse(false, finalNameFile + finalNameFile);
+            Object data = profilePictureDirectory + finalNameFile;
+            return new ApiResponse(false, data);
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());

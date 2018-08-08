@@ -209,7 +209,7 @@
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {
-                    ctrl.patientTOPreview.profileImage = res.data.data;
+                    ctrl.patientTOPreview.profileImage = res.data.data + '?' + new Date().getTime();
                     showNotification("success", "Se ha actualizado correctamente la foto de perfil");
                 }
                 $("#modalUploadImage").modal("hide");

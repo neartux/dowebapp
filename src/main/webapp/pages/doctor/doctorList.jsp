@@ -62,6 +62,7 @@
                                                 <th class="text-uppercase bold"></th>
                                                 <th class="text-uppercase bold"></th>
                                                 <th class="text-uppercase bold"></th>
+                                                <th class="text-uppercase bold"></th>
                                             </tr>
                                             </thead>
                                         </table>
@@ -77,6 +78,8 @@
 
             <!-- Modal, to create or update doctor data -->
             <jsp:include page="doctorForm.jsp"/>
+            <!-- Information of doctor -->
+            <jsp:include page="doctorView.jsp"/>
             <!-- Modal, to upload profile picture doctor -->
             <jsp:include page="uploadProfilePictureDoctor.jsp"/>
 

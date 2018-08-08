@@ -28,10 +28,11 @@
 
                     </div>
                     <div class="panel-footer text-right">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="ti-close"></i> Cerrar</button>
+                        &nbsp;&nbsp;
                         <a class="btn btn-primary" data-ng-click="ctrl.validateAndUploadProfilPictureDoctor();">
                             <i class="mdi mdi-upload"></i> Subir Imagen
-                        </a> &nbsp;&nbsp;
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="ti-close"></i> Cerrar</button>
+                        </a>
                     </div>
                 </div>
             </form>

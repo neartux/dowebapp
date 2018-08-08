@@ -92,35 +92,39 @@
                             </div>
                         </div>
 
-                        <h4 class="text-success bold">
-                            <i class="mdi mdi-account-settings-variant"></i> Cuenta Usuario
-                        </h4>
-                        <hr class="m-t-0 m-b-5">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-userName" class="control-label">Nombre usuario *</label>
-                                    <input type="text" data-ng-model="ctrl.doctorTO.userName" name="userName"
-                                           class="form-control" id="field-userName" maxlength="50">
-                                </div>
-                            </div>
-                        </div>
+                        <div data-ng-show="ctrl.isCreateDoctor">
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-password" class="control-label">Contrase&ntilde;a *</label>
-                                    <input type="password" data-ng-model="ctrl.doctorTO.password" name="contrasena"
-                                           class="form-control" id="field-password" maxlength="50">
+                            <h4 class="text-success bold">
+                                <i class="mdi mdi-account-settings-variant"></i> Cuenta Usuario
+                            </h4>
+                            <hr class="m-t-0 m-b-5">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="field-userName" class="control-label">Nombre usuario *</label>
+                                        <input type="text" data-ng-model="ctrl.doctorTO.userName" name="userName"
+                                               class="form-control" id="field-userName" maxlength="50">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-repeatPassword" class="control-label">Repetir contrase&ntilde;a *</label>
-                                    <input type="password" data-ng-model="ctrl.doctorTO.repeatPassword" name="repeatPassword"
-                                           class="form-control" id="field-repeatPassword" maxlength="50">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="field-password" class="control-label">Contrase&ntilde;a *</label>
+                                        <input type="password" data-ng-model="ctrl.doctorTO.password" name="contrasena"
+                                               class="form-control" id="field-password" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="field-repeatPassword" class="control-label">Repetir contrase&ntilde;a *</label>
+                                        <input type="password" data-ng-model="ctrl.doctorTO.repeatPassword" name="repeatPassword"
+                                               class="form-control" id="field-repeatPassword" maxlength="50">
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
                     </div>

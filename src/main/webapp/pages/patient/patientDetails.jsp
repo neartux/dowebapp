@@ -69,7 +69,7 @@
                     </div>
                     <div class="row col-sm-12">
                             <span>
-                                <i class="mdi mdi-eyedropper font-20 text-danger"></i> O+
+                                <i class="mdi mdi-eyedropper font-20 text-danger"></i> {{ ctrl.patientTOPreview.bloodType }}
                             </span>
                     </div>
 
