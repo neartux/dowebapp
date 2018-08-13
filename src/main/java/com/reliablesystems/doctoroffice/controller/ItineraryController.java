@@ -3,7 +3,9 @@ package com.reliablesystems.doctoroffice.controller;
 import com.reliablesystems.doctoroffice.core.service.doctorsoffice.DoctorsOfficeService;
 import com.reliablesystems.doctoroffice.core.service.itinerary.ItineraryService;
 import com.reliablesystems.doctoroffice.core.to.common.ApiResponse;
+import com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys;
 import com.reliablesystems.doctoroffice.core.utils.common.DateUtil;
+import com.reliablesystems.doctoroffice.core.utils.common.NumberUtil;
 import com.reliablesystems.doctoroffice.util.session.CompanySession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,7 @@ public class ItineraryController {
      */
     @RequestMapping(value = "/display", method = RequestMethod.GET)
     public String display(Model model) {
+        model.addAttribute("MINUTS_DATE", ApplicationKeys.RANGE_BEETWEN_DATE);
         return "pages/itinerary/itinerary";
     }
 
@@ -59,14 +62,14 @@ public class ItineraryController {
      */
     @RequestMapping(value = "/findItineraryByOffice/{doctorOfficeId}", method = RequestMethod.GET)
     @ResponseBody
-    public ApiResponse findItineraryByOffice(@PathVariable long doctorOfficeId, @RequestParam String startDate, @RequestParam String endDate) {
-        System.out.println("doctorOfficeId = [" + doctorOfficeId + "], startDate = [" + startDate + "], endDate = [" + endDate + "]");
+    public ApiResponse findItineraryByOffice(@PathVariable long doctorOfficeId, @RequestParam(required = false) Integer month, @RequestParam(required = false) Integer year) {
+        System.out.println("doctorOfficeId = [" + doctorOfficeId + "], month = [" + month + "], year = [" + year + "]");
         try {
-            Date startDateP = DateUtil.getDate(startDate, "");
-            System.out.println("startDateP = " + startDateP);
-            Date endDateP = DateUtil.getDate(startDate, "");
-            System.out.println("endDateP = " + endDateP);
-            return new ApiResponse(false, itineraryService.findItineraryByOfficeAndDate(doctorOfficeId, startDateP, endDateP));
+            Date startDate = DateUtil.getFechaInicioMes(month, year);
+            System.out.println("startDate = " + startDate);
+            Date endDate = DateUtil.getFechaFinMes(month, year);
+            System.out.println("endDate = " + endDate);
+            return new ApiResponse(false, itineraryService.findItineraryByOfficeAndDate(doctorOfficeId, startDate, endDate));
         } catch (Exception e) {
             e.printStackTrace();
             return new ApiResponse(true, e.getMessage());

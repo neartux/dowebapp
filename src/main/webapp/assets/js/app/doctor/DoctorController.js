@@ -34,11 +34,9 @@
          * @param isValidForm if generic form is valid
          */
         ctrl.validateDoctor = function(isValidForm) {
-            console.info("DOCTOR = ", ctrl.doctorTO);
             // If is valid form
             if(isValidForm) {
                 var isValid = ctrl.validateDoctorForm();
-                console.info("id valid = ", isValid);
                 // If is valid values form
                 if(isValid) {
                     // Create new doctor
@@ -61,7 +59,7 @@
         ctrl.createDoctor = function() {
             return DoctorService.createDoctor(ctrl.doctorTO).then(function (res) {
                 if(res.data.error) {
-                    showNotification("error", "Error: " + res.data.data.message);
+                    showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "Se ha creado el medico correctamente");
                     // Refresh data doctor
@@ -93,7 +91,7 @@
             ctrl.doctorTO.birthDate = null;
             return DoctorService.updateDoctor(ctrl.doctorTO).then(function (res) {
                 if(res.data.error) {
-                    showNotification("error", "Error: " + res.data.data.message);
+                    showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "El doctor se ha modificado correctamente");
                     // Update doctor information
@@ -113,7 +111,7 @@
                 if (isConfirm) {
                     return DoctorService.deleteDoctor(id).then(function (res) {
                         if(res.data.error) {
-                            showNotification("error", "Error: " + res.data.data.message);
+                            showNotification("error", "Error: " + res.data.message);
                         } else {
                             showNotification("success", "El doctor se ha eliminado");
                             // Refresh data doctor
@@ -134,11 +132,10 @@
 
             // Validate birthdate
             var birthDate = $("#field-birthDate").val();
-            console.info("birthDate = ", birthDate);
             // Validate if date exist
             if (!$.trim(birthDate).length) {
                 showNotification("warning", "La fecha de nacimiento es requerido");
-                isValid = false;
+                return false;
             }
             // if exist set date in model
             else {
@@ -165,7 +162,7 @@
                                 isValid = false;
                             }
                         } else {
-                            showNotification("error", "Error: " + res.data.data.message);
+                            showNotification("error", "Error: " + res.data.message);
                             isValid = false;
                         }
                     });
@@ -179,7 +176,6 @@
          * Method to view modal to change profile picture
          */
         ctrl.viewChangeProfilePicture = function(indexElement) {
-            console.info("ctrl.doctorData.data.data[indexElement] = ", ctrl.doctorData.data.data[indexElement]);
             ctrl.doctorTO = angular.copy(ctrl.doctorData.data.data[indexElement]);
             ctrl.doctorTO.indexElement = indexElement;
             var input = $("#profilePictureDoctor");
@@ -207,7 +203,6 @@
             formData.append("doctorId", ctrl.doctorTO.id);
             // Send request
             return DoctorService.updoadProfilePictureDoctor(formData).then(function (res) {
-                console.info("response data = ", res.data.data);
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {
@@ -228,7 +223,6 @@
             ctrl.doctorTO.birthDateString = moment(ctrl.doctorTO.birthDate).format('DD/MM/YYYY');
             var result = calculateEdge(moment(ctrl.doctorTO.birthDate).format('YYYY-MM-DD'));
             ctrl.doctorTO.birthDateExplain = result[0] + " años " + result[1] + " meses " + result[2] + " dias";
-            console.info("Doctor = ", ctrl.doctorTO);
             $("#doctorDataView").modal();
         };
 

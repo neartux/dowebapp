@@ -74,8 +74,8 @@
          */
         ctrl.createPatient = function() {
             return PatientService.createPatient(ctrl.patientTO).then(function (res) {
-                if(res.data.data.error) {
-                    showNotification("error", "Error: " + res.data.data.message);
+                if(res.data.error) {
+                    showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "El paciente se ha creado");
                     // Refresh data patient
@@ -123,7 +123,7 @@
             ctrl.patientTO.birthDate = null;
             return PatientService.updatePatient(ctrl.patientTO).then(function (res) {
                 if(res.data.error) {
-                    showNotification("error", "Error: " + res.data.data.message);
+                    showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "El paciente se ha modificado correctamente");
                     // Update patient information
@@ -144,7 +144,7 @@
                 if (isConfirm) {
                     return PatientService.deletePatient(id).then(function (res) {
                         if(res.data.error) {
-                            showNotification("error", "Error: " + res.data.data.message);
+                            showNotification("error", "Error: " + res.data.message);
                         } else {
                             ctrl.isViewDetailsPatient = false;
                             showNotification("success", "El paciente se ha eliminado");

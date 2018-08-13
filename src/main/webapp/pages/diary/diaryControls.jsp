@@ -4,27 +4,27 @@
         <div class="btn-group">
 
             <button
-                    ng-click="ctrlDiary.findActivitiesByYear(ctrlDiary.calendarView)"
+                    ng-click="ctrl.findActivitiesByYear(ctrl.calendarView)"
                     class="btn btn-primary"
                     mwl-date-modifier
-                    date="ctrlDiary.viewDate"
-                    decrement="ctrlDiary.calendarView">
+                    date="ctrl.viewDate"
+                    decrement="ctrl.calendarView">
                 ANTERIOR
             </button>
             <button
-                    ng-click="ctrlDiary.findActivitiesByYear(ctrlDiary.calendarView)"
+                    ng-click="ctrl.findActivitiesByYear(ctrl.calendarView)"
                     class="btn btn-default"
                     mwl-date-modifier
-                    date="ctrlDiary.viewDate"
+                    date="ctrl.viewDate"
                     set-to-today>
                 HOY
             </button>
             <button
-                    ng-click="ctrlDiary.findActivitiesByYear(ctrlDiary.calendarView)"
+                    ng-click="ctrl.findActivitiesByYear(ctrl.calendarView)"
                     class="btn btn-primary"
                     mwl-date-modifier
-                    date="ctrlDiary.viewDate"
-                    increment="ctrlDiary.calendarView">
+                    date="ctrl.viewDate"
+                    increment="ctrl.calendarView">
                 SIGUIENTE
             </button>
         </div>
@@ -34,16 +34,16 @@
 
     <div class="col-md-6 text-center">
         <div class="btn-group">
-            <label class="btn btn-primary" ng-model="ctrlDiary.calendarView" uib-btn-radio="'year'">
+            <label class="btn btn-primary" ng-model="ctrl.calendarView" uib-btn-radio="'year'">
                 AÑO
             </label>
-            <label class="btn btn-primary" ng-model="ctrlDiary.calendarView" uib-btn-radio="'month'">
+            <label class="btn btn-primary" ng-model="ctrl.calendarView" uib-btn-radio="'month'">
                 MES
             </label>
-            <label class="btn btn-primary" ng-model="ctrlDiary.calendarView" uib-btn-radio="'week'">
+            <label class="btn btn-primary" ng-model="ctrl.calendarView" uib-btn-radio="'week'">
                 SEMANA
             </label>
-            <label class="btn btn-primary" ng-model="ctrlDiary.calendarView" uib-btn-radio="'day'">
+            <label class="btn btn-primary" ng-model="ctrl.calendarView" uib-btn-radio="'day'">
                 DIA
             </label>
         </div>

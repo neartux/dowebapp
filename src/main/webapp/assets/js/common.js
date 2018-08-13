@@ -91,6 +91,38 @@ function calculateEdge(date) {
     return result;
 }
 
+function getArrayMonths() {
+    return [
+        { key: '01', value: 'Enero'},
+        { key: '02', value: 'Febrero'},
+        { key: '03', value: 'Marzo'},
+        { key: '04', value: 'Abril'},
+        { key: '05', value: 'Mayo'},
+        { key: '06', value: 'Junio'},
+        { key: '07', value: 'Julio'},
+        { key: '08', value: 'Agosto'},
+        { key: '09', value: 'Septiempre'},
+        { key: '10', value: 'Octubre'},
+        { key: '11', value: 'Noviembre'},
+        { key: '12', value: 'Diciembre'}
+    ];
+}
+
+function getArrayYears() {
+    var today = new Date();
+    var currentYear = today.getFullYear();
+    var startYear = 2015;
+    var arrayYears =[];
+
+    for (var i = startYear; i ++; i <= currentYear) {
+        arrayYears.push({
+            key: startYear,
+            value: startYear
+        });
+    }
+    return arrayYears;
+}
+
 var NUMBER_ZERO = 0;
 var NUMBER_ONE = 1;
 var ELEMENT_NOT_FOUND = undefined;

@@ -10,8 +10,8 @@
             return $http.get(service.contextPath + '/itinerary/findDoctorsOfficces');
         };
 
-        service.findItineraryByOffice = function (doctorOfficeId, startDate, endDate) {
-            return $http.get(service.contextPath + '/itinerary/findItineraryByOffice/' + doctorOfficeId + '?startDate=' + startDate + '&endDate=' +endDate);
+        service.findItineraryByOffice = function (doctorOfficeId, month, year) {
+            return $http.get(service.contextPath + '/itinerary/findItineraryByOffice/' + doctorOfficeId + '?month=' + month + '&year=' +year);
         };
 
         return service;

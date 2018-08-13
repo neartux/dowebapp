@@ -5,7 +5,7 @@
             <div class="user-details">
                 <div class="overlay"></div>
                 <div class="text-center">
-                    <img src="${pageContext.request.contextPath}/assets/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle">
+                    <img src="${pageContext.request.contextPath}/assets/images/users/no-avatar.png" alt="" class="thumb-md img-circle">
                 </div>
                 <div class="user-info">
                     <div>
@@ -18,9 +18,7 @@
             <div class="dropdown" id="setting-dropdown">
                 <ul class="dropdown-menu">
                     <li><a href="javascript:void(0)"><i class="mdi mdi-face-profile m-r-5"></i> Profile</a></li>
-                    <li><a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant m-r-5"></i> Settings</a></li>
-                    <li><a href="javascript:void(0)"><i class="mdi mdi-lock m-r-5"></i> Lock screen</a></li>
-                    <li><a href="javascript:void(0)"><i class="mdi mdi-logout m-r-5"></i> Logout</a></li>
+                    <li><a><i class="mdi mdi-logout m-r-5"></i> Logout</a></li>
                 </ul>
             </div>
 
@@ -33,12 +31,17 @@
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/doctor/display" class="waves-effect">
-                        <i class="fa fa-user-md"></i><span> Doctores </span>
+                        <i class="fa fa-user-md"></i><span> M&eacute;dicos </span>
                     </a>
                 </li>
                 <li>
                     <a href="${pageContext.request.contextPath}/doctorsoffice/display" class="waves-effect">
                         <i class="fa fa-hospital-o"></i><span> Consultorios </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/itinerary/display" class="waves-effect">
+                        <i class="fa fa-calendar-check-o"></i><span> Itinerario </span>
                     </a>
                 </li>
                 <li>

@@ -87,8 +87,8 @@
          */
         ctrl.viewToUpdateDoctorsOffice = function(index) {
             ctrl.isCreateDoctorsOffice = false;
-            ctrl.doctorsOfficeTO = angular.copy(ctrl.doctorData.data[index]);
-            ctrl.doctorsOfficeTO.doctorsOfficeIndex = index;
+            ctrl.doctorsOfficeTO = angular.copy(ctrl.doctorsOfficeData.data.data[index]);
+            ctrl.doctorsOfficeTO.doctorId = ctrl.doctorsOfficeTO.doctorId.toString();
             $("#doctorsOfficeDataForm").modal();
         };
 
@@ -103,8 +103,7 @@
                     showNotification("error", "Error: " + res.data.message);
                 } else {
                     showNotification("success", "El consultorio se ha modificado correctamente");
-                    // Update doctor information
-                    ctrl.doctorsOfficeData.data.data[ctrl.doctorsOfficeTO.doctorsOfficeIndex] = angular.copy(ctrl.doctorsOfficeTO);
+                    ctrl.dtInstance.rerender();
                 }
                 $("#doctorsOfficeDataForm").modal("hide");
             });
@@ -120,10 +119,9 @@
                 if (isConfirm) {
                     return DoctorsOfficeService.deleteDoctorsOffice(id).then(function (res) {
                         if(res.data.error) {
-                            showNotification("error", "Error: " + res.data.data.message);
+                            showNotification("error", "Error: " + res.data.message);
                         } else {
                             showNotification("success", "El consultorio se ha eliminado");
-                            // Refresh data doctor
                             ctrl.dtInstance.rerender();
                         }
                     });
@@ -205,7 +203,7 @@
         ctrl.dtColumns = [
             DTColumnBuilder.newColumn(null).withTitle('#').withClass('text-center').withOption('width', '10%').notSortable(),
             DTColumnBuilder.newColumn('description').withTitle('Descripción').withClass('text-left').withOption('width', '30%').notSortable(),
-            DTColumnBuilder.newColumn('doctor').withTitle('Médico').withClass('text-left').withOption('width', '30%').notSortable(),
+            DTColumnBuilder.newColumn(null).withTitle('Medico').withClass('text-left').withOption('width', '30%').notSortable(),
             DTColumnBuilder.newColumn(null).withTitle('Panel').withClass('text-right').withOption('width', '30%').renderWith(panelActions).notSortable()
         ];
 

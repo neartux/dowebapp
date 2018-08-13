@@ -15,7 +15,7 @@
         };
 
         service.findDoctors = function () {
-            return $http.get(service.contextPath + 'doctorsoffice/findDoctors')
+            return $http.get(service.contextPath + '/doctorsoffice/findDoctors')
         };
 
         service.createDoctorsOffice = function (doctorsOfficeTO) {

@@ -5,22 +5,32 @@
 
     app.controller('ItineraryController', function($scope, $timeout, moment, ItineraryService, calendarConfig) {
         var ctrl = this;
+        console.info("moment().startOf('month').toDate(); = ", moment().startOf('month').toDate());
         ctrl.calendarView = 'month'; // View calendar in month
-        ctrl.viewDate = moment().startOf('month').toDate(); // Date focus
+        ctrl.viewDate = new Date(); // Date focus
         ctrl.cellIsOpen = true; // If date has events open
         ctrl.doctorOfficesData = { data: [] };
+        ctrl.minutsDate = { data: NUMBER_ZERO };
+        ctrl.years = { data: getArrayYears() };
+        ctrl.months = { data: getArrayMonths() };
+        ctrl.itineraryData = { data: {} };
 
         /**
          * Init Itinerary app
          *
          * @param contextPath aplication path
          * @param pattern Pattern app
+         * @param minutsDate
          */
-        ctrl.init = function (contextPath, pattern) {
+        ctrl.init = function (contextPath, pattern, minutsDate) {
             // Asign path aplication
             ItineraryService.contextPath = contextPath;
             // Find all doctors by company to select one.
             ctrl.findDoctorsOffices();
+            // Tiempo entre consultas
+            ctrl.minutsDate.data3 = minutsDate;
+            console.info("ctrl.years = ", ctrl.years);
+            console.info("ctrl.months = ", ctrl.months);
         };
 
         /**
@@ -32,6 +42,13 @@
                 if(!res.data.error) {
                     ctrl.doctorOfficesData.data = res.data.data;
                 }
+            });
+        };
+
+        ctrl.findItineraryByOffice = function () {
+            console.info("ctrl.itineraryData.data = ", ctrl.itineraryData.data);
+            return ItineraryService.findItineraryByOffice(ctrl.itineraryData.data.officeId, ctrl.itineraryData.data.year, ctrl.itineraryData.data.month).then(function (res) {
+                console.info("RES :P = ", res.data);
             });
         };
 

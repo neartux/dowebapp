@@ -48,9 +48,9 @@
                                     <div class="col-sm-12">
 
                                         <h2 class="text-center" style="margin-top: 5px;">
-                                            {{ ctrlDiary.calendarTitle }}
+                                            {{ ctrl.calendarTitle }}
                                             <button class="btn btn-primary btn-label pull-right"
-                                                    data-ng-click="ctrlDiary.showCreateNewActivity();ctrlDiary.isOptionCreateActivity = true;">
+                                                    data-ng-click="ctrl.showCreateNewActivity();ctrl.isOptionCreateActivity = true;">
                                                 <i class="ti ti-pencil-alt"></i>
                                                 Nueva Consulta
                                             </button>
@@ -59,21 +59,21 @@
                                         <jsp:include page="diaryControls.jsp"/>
 
                                         <mwl-calendar
-                                                events="ctrlDiary.activitiesUser.data"
-                                                view="ctrlDiary.calendarView"
-                                                view-title="ctrlDiary.calendarTitle"
-                                                view-date="ctrlDiary.viewDate"
-                                                on-event-click="ctrlDiary.vieDetailsEvent(calendarEvent)"
-                                                on-event-times-changed="ctrlDiary.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                                                events="ctrl.activitiesUser.data"
+                                                view="ctrl.calendarView"
+                                                view-title="ctrl.calendarTitle"
+                                                view-date="ctrl.viewDate"
+                                                on-event-click="ctrl.vieDetailsEvent(calendarEvent)"
+                                                on-event-times-changed="ctrl.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                                                 data-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
                                                 delete-event-html="'<i class=\'glyphicon glyphicon-remove text-danger\'></i>'"
-                                                on-edit-event-click="ctrlDiary.showUpdateActivity(calendarEvent, false);ctrlDiary.isOptionCreateActivity = false;"
-                                                on-delete-event-click="ctrlDiary.deleteActivityById(calendarEvent)"
+                                                on-edit-event-click="ctrl.showUpdateActivity(calendarEvent, false);ctrl.isOptionCreateActivity = false;"
+                                                on-delete-event-click="ctrl.deleteActivityById(calendarEvent)"
                                                 day-view-start="00:00"
                                                 day-view-end="23:59"
                                                 day-view-split="30"
-                                                on-timespan-click="ctrlDiary.addNewActivityToDateSpecific(calendarDate);ctrlDiary.isOptionCreateActivity = true;"
-                                                cell-is-open="ctrlDiary.isCellOpen">
+                                                on-timespan-click="ctrl.addNewActivityToDateSpecific(calendarDate);ctrl.isOptionCreateActivity = true;"
+                                                cell-is-open="ctrl.isCellOpen">
                                         </mwl-calendar>
 
                                     </div>

@@ -41,7 +41,7 @@
                         <div class="panel panel-color panel-primary">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-hospital-o"></i> Consultorios</h3>
-                                <button type="button" data-ng-click="ctrl.viewToCreateNewDoctor();"
+                                <button type="button" data-ng-click="ctrl.viewToCreateNewDoctorsOffice();"
                                         class="btn btn-default btn-rounded w-md waves-effect btn-sm pull-right m-t-22">
                                     <i class="mdi mdi-account-plus"></i> Nuevo Consultorio
                                 </button>
@@ -55,7 +55,6 @@
                                                class="table table-striped table-colored table-info dataTable no-footer">
                                             <thead>
                                             <tr>
-                                                <th class="text-uppercase bold"></th>
                                                 <th class="text-uppercase bold"></th>
                                                 <th class="text-uppercase bold"></th>
                                                 <th class="text-uppercase bold"></th>

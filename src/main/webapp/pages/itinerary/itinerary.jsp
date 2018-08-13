@@ -15,7 +15,7 @@
         <fmt:message key="label.common.pattern.date.diary" var="patternDiary"/>
 
         <div class="content" data-ng-app="DoctorsOffice" data-ng-controller="ItineraryController as ctrl"
-             data-ng-init="ctrl.init('${pageContext.request.contextPath}', '${patternDiary}');">
+             data-ng-init="ctrl.init('${pageContext.request.contextPath}', '${patternDiary}', '${MINUTS_DATE}');">
 
             <div class="container">
 
@@ -45,10 +45,53 @@
                             <div class="panel-body">
 
                                 <div class="row">
+
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="field-doctof" class="control-label">Consultorio</label>
+                                                <select id="field-doctof" data-ng-model="ctrl.itineraryData.data.officeId">
+                                                    <option value="">Selecciona</option>
+                                                    <option value="{{ df.id }}" data-ng-repeat="df in ctrl.doctorOfficesData.data">
+                                                        {{ df.description }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="field-year" class="control-label">Año</label>
+                                                <select id="field-year" data-ng-model="ctrl.itineraryData.data.year">
+                                                    <option value="">Año</option>
+                                                    <option value="{{ year.key }}" data-ng-repeat="year in ctrl.years.data">
+                                                        {{ year.value }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="field-month" class="control-label">Mes</label>
+                                                <select id="field-month" data-ng-model="ctrl.itineraryData.data.month">
+                                                    <option value="">Mes</option>
+                                                    <option value="{{ month.key }}" data-ng-repeat="month in ctrl.months.data">
+                                                        {{ month.value }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <a class="btn btn-success" data-ng-click="ctrl.findItineraryByOffice();">
+                                                <i class="fa fa-search"></i>
+                                                Buscar
+                                            </a>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-12">
 
                                         <h2 class="text-center" style="margin-top: 5px;">
-                                            {{ ctrlDiary.calendarTitle }}
+                                            {{ ctrl.calendarTitle }}
                                         </h2>
 
                                         <jsp:include page="itineraryControls.jsp"/>
@@ -60,16 +103,16 @@
                                                 view-date="ctrl.viewDate"
                                                 cell-is-open="ctrl.isCellOpen"
                                                 on-event-click="ctrl.vieDetailsEvent(calendarEvent)"
-                                                on-event-times-changed="ctrlDiary.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                                                on-event-times-changed="ctrl.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
                                                 data-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
                                                 delete-event-html="'<i class=\'glyphicon glyphicon-remove text-danger\'></i>'"
-                                                on-edit-event-click="ctrlDiary.showUpdateActivity(calendarEvent, false);ctrlDiary.isOptionCreateActivity = false;"
-                                                on-delete-event-click="ctrlDiary.deleteActivityById(calendarEvent)"
+                                                on-edit-event-click="ctrl.showUpdateActivity(calendarEvent, false);ctrl.isOptionCreateActivity = false;"
+                                                on-delete-event-click="ctrl.deleteActivityById(calendarEvent)"
                                                 day-view-start="00:00"
                                                 day-view-end="23:59"
                                                 day-view-split="30"
-                                                on-timespan-click="ctrlDiary.clickInDateToViewDay(calendarDate);"
-                                                on-date-range-select="ctrlDiary.selectRangeInDayView(calendarRangeStartDate, calendarRangeEndDate)">
+                                                on-timespan-click="ctrl.clickInDateToViewDay(calendarDate);"
+                                                on-date-range-select="ctrl.selectRangeInDayView(calendarRangeStartDate, calendarRangeEndDate)">
                                         </mwl-calendar>
 
                                     </div>
