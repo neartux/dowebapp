@@ -15,6 +15,7 @@ import com.reliablesystems.doctoroffice.util.common.CommonUtil;
 import com.reliablesystems.doctoroffice.util.form.RequestDataTable;
 import com.reliablesystems.doctoroffice.util.session.CompanySession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,8 @@ public class PatientController {
     private PatientService patientService;
     @Autowired
     private BloodTypeService bloodTypeService;
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Display the view of list of patients
@@ -93,12 +96,14 @@ public class PatientController {
      *
      * @param patientTO Patient data
      * @param request Client request
+     * @param locale Client language
      * @return ApiResponse
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public ApiResponse createPatient(@RequestBody PatientTO patientTO, HttpServletRequest request) {
+    public ApiResponse createPatient(@RequestBody PatientTO patientTO, HttpServletRequest request, Locale locale) {
         try {
+            patientTO.setPattern(messageSource.getMessage("label.common.pattern.date", null, locale));
             // Set company patient
             patientTO.setCompanyId(CompanySession.getCompanyId(request));
             Long idPatient = patientService.createPatient(PatientUtil.getPatientToCreate(patientTO));
@@ -113,12 +118,14 @@ public class PatientController {
      * Method to update a patient
      *
      * @param patientTO Patient data
+     * @param locale Client language
      * @return ApiResponse
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     @ResponseBody
-    public ApiResponse updatePatient(@RequestBody PatientTO patientTO) {
+    public ApiResponse updatePatient(@RequestBody PatientTO patientTO, Locale locale) {
         try {
+            patientTO.setPattern(messageSource.getMessage("label.common.pattern.date", null, locale));
             patientService.updatePatient(patientTO);
             return new ApiResponse(false, null);
         } catch (Exception e) {

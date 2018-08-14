@@ -16,8 +16,9 @@
         <link href="${pageContext.request.contextPath}/assets/plugins/angular-datatable/angular-datatables.min.css"
               rel="stylesheet" type="text/css"/>
 
-        <div class="content" data-ng-app="Patient" data-ng-controller="PatientController as ctrl"
-             data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
+        <fmt:message key="label.common.pattern.datepicker" var="patternDatePicker"/>
+
+        <div class="content" data-ng-app="Patient" data-ng-controller="PatientController as ctrl" data-ng-init="ctrl.init('${pageContext.request.contextPath}');">
 
             <div class="container" data-ng-show="!ctrl.isViewDetailsPatient">
 
@@ -35,6 +36,8 @@
             <jsp:include page="patientForm.jsp"/>
             <!-- Modal, to upload profile picture patient -->
             <jsp:include page="uploadProfilePicturePatient.jsp"/>
+            <!-- Messages -->
+            <jsp:include page="messages.jsp"/>
 
         </div>
 
@@ -59,7 +62,7 @@
                 $('#field-birthDate').datepicker({
                     autoclose: true,
                     todayHighlight: true,
-                    format: 'dd/mm/yyyy'
+                    format: '${patternDatePicker}'
                 });
 
                 $(":file").filestyle({input: false});

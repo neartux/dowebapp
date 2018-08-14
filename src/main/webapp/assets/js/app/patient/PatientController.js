@@ -10,6 +10,7 @@
         ctrl.dtInstance = {};
         ctrl.isCreatePatient = true;
         ctrl.isViewDetailsPatient = false;
+        ctrl.messages = { data: {} };
 
         /**
          * Init patient app
@@ -21,6 +22,8 @@
             PatientService.contextPath = contextPath;
             // Find all type of blood
             ctrl.findBloodTypes();
+            // Fill messages
+            ctrl.initMessages();
         };
 
         /**
@@ -77,7 +80,7 @@
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {
-                    showNotification("success", "El paciente se ha creado");
+                    showNotification("success", ctrl.messages.data.patientCreatedSuccess);
                     // Refresh data patient
                     ctrl.dtInstance.rerender();
                 }
@@ -96,7 +99,7 @@
             ctrl.patientTOPreview.birthDateString = moment(ctrl.patientTOPreview.birthDate).format('DD/MM/YYYY');
             ctrl.patientTOPreview.patientIndex = patientIndex;
             var result = calculateEdge(moment(ctrl.patientTOPreview.birthDate).format('YYYY-MM-DD'));
-            ctrl.patientTOPreview.birthDateExplain = result[0] + " años " + result[1] + " meses " + result[2] + " dias";
+            ctrl.patientTOPreview.birthDateExplain = result[0] + " " + ctrl.messages.data.years + " " + result[1] + " " + ctrl.messages.data.months + " " + result[2] + " " + ctrl.messages.data.days;
         };
 
         /**
@@ -125,7 +128,7 @@
                 if(res.data.error) {
                     showNotification("error", "Error: " + res.data.message);
                 } else {
-                    showNotification("success", "El paciente se ha modificado correctamente");
+                    showNotification("success", ctrl.messages.data.patientUpdatedSuccess);
                     // Update patient information
                     ctrl.patientData.data.data[ctrl.patientTO.patientIndex] = angular.copy(ctrl.patientTO);
                     ctrl.patientTOPreview = angular.copy(ctrl.patientTO);
@@ -140,14 +143,14 @@
          * @returns {PromiseLike<T> | Promise<T> | *} Response
          */
         ctrl.deletePatient = function(id) {
-            swal(getConfigurationSwalConfirm("Estas seguro?","Se eliminara el paciente del sistema","warning","SI, eliminarlo!"), function (isConfirm) {
+            swal(getConfigurationSwalConfirm(ctrl.messages.data.labelSure,ctrl.messages.data.messageConfirm,"warning",ctrl.messages.data.buttonLabel), function (isConfirm) {
                 if (isConfirm) {
                     return PatientService.deletePatient(id).then(function (res) {
                         if(res.data.error) {
                             showNotification("error", "Error: " + res.data.message);
                         } else {
                             ctrl.isViewDetailsPatient = false;
-                            showNotification("success", "El paciente se ha eliminado");
+                            showNotification("success", ctrl.messages.data.patientDeletedSuccess);
                             // Refresh data patient
                             ctrl.dtInstance.rerender();
                         }
@@ -167,7 +170,7 @@
             var birthDate = $("#field-birthDate").val();
             // Validate if date exist
             if (!$.trim(birthDate).length) {
-                showNotification("warning", "La fecha de nacimiento es requerido");
+                showNotification("warning", ctrl.messages.data.birthDateRequired);
                 isValid = false;
             }
             // if exist set date in model
@@ -197,7 +200,7 @@
             var profilePicture = $("#profilePicturePatient")[0].files[0];
             // Validate profile picture
             if (profilePicture === undefined) {
-                showNotification("warning", "Selecciona una imagen de perfil");
+                showNotification("warning", ctrl.messages.data.profilePictureRequired);
                 return;
             }
             // Build request
@@ -210,7 +213,7 @@
                     showNotification("error", "Error: " + res.data.message);
                 } else {
                     ctrl.patientTOPreview.profileImage = res.data.data + '?' + new Date().getTime();
-                    showNotification("success", "Se ha actualizado correctamente la foto de perfil");
+                    showNotification("success", ctrl.messages.data.profilePictureUpdate);
                 }
                 $("#modalUploadImage").modal("hide");
             });
@@ -238,7 +241,7 @@
                 profilePicture = data.profileImage;
             }
             $(row.getElementsByTagName("TD")[0]).html('<img data-ng-click="ctrl.viewPadientData('+dataIndex+');" data-ng-src="'+ PatientService.contextPath + '/patient/getProfilePicture?url=' +profilePicture+'" alt="'+data.firstName+' ' + data.lastName + '" class="thumb-sm img-circle" />');
-            $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>Expediente: #'+ data.expedient +'</small></p>');
+            $(row.getElementsByTagName("TD")[1]).html('<h5 class="m-0">'+ data.firstName + ' ' + data.lastName +'</h5><p class="m-0 text-muted font-13"><i class="mdi mdi-book"></i><small>' + ctrl.messages.data.patientExpedient + ': #'+ data.expedient +'</small></p>');
 
             // Recompiling so we can bind Angular directive to the DT
             $compile(angular.element(row).contents())($scope);
@@ -300,6 +303,27 @@
             DTColumnBuilder.newColumn('cellPhone').withTitle('Celular').withClass('text-right').withOption('width', '10%').notSortable(),
             DTColumnBuilder.newColumn('phone').withTitle('Telefono').withClass('text-right').withOption('width', '10%').notSortable()
         ];
+
+        /**
+         * Fill messages to process in javascript
+         */
+        ctrl.initMessages = function () {
+            ctrl.messages.data = {
+                patientCreatedSuccess: $("#patient_created_message").val(),
+                patientUpdatedSuccess: $("#patient_updated_message").val(),
+                patientDeletedSuccess: $("#patient_deleted_message").val(),
+                patientExpedient: $("#patient_expedient").val(),
+                labelSure: $("#patient_sure").val(),
+                messageConfirm: $("#patient_confirm").val(),
+                buttonLabel: $("#patient_delete_confirm").val(),
+                birthDateRequired: $("#patient_birthdate_required").val(),
+                profilePictureRequired: $("#patient_profile_picture").val(),
+                profilePictureUpdate: $("#patient_profile_picture_update").val(),
+                years: $("#years_").val(),
+                months: $("#months_").val(),
+                days: $("#days_").val()
+            };
+        };
 
     });
 

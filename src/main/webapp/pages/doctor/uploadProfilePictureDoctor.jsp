@@ -1,7 +1,7 @@
 <div id="modalUploadImage" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog width-30">
         <div class="modal-content p-0 b-0">
-            <form novalidate name="patientForm">
+            <form novalidate name="doctorFormU">
                 <div class="panel panel-color panel-warning">
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></button>
