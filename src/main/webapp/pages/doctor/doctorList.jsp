@@ -24,13 +24,13 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="page-title-box">
-                            <h4 class="page-title">Lista de M&eacute;dicos </h4>
+                            <h4 class="page-title"><spring:message code="doctor.label.list.title"/> </h4>
                             <ol class="breadcrumb p-0 m-0">
                                 <li>
-                                    <a href="#">Home</a>
+                                    <a href="#"><spring:message code="home.label.title"/></a>
                                 </li>
                                 <li class="active">
-                                    Lista de M&eacute;dicos
+                                    <spring:message code="doctor.label.list.title"/>
                                 </li>
                             </ol>
                             <div class="clearfix"></div>
@@ -42,10 +42,10 @@
                     <div class="col-sm-12">
                         <div class="panel panel-color panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-user-md"></i> M&eacute;dicos</h3>
+                                <h3 class="panel-title"><i class="fa fa-user-md"></i> <spring:message code="doctor.label.list.doctors"/></h3>
                                 <button type="button" data-ng-click="ctrl.viewToCreateNewDoctor();"
                                         class="btn btn-default btn-rounded w-md waves-effect btn-sm pull-right m-t-22">
-                                    <i class="mdi mdi-account-plus"></i> Nuevo M&eacute;dico
+                                    <i class="mdi mdi-account-plus"></i> <spring:message code="doctor.label.list.new.doctor"/>
                                 </button>
                             </div>
                             <div class="panel-body">

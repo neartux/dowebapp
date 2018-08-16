@@ -1,3 +1,4 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="modalUploadImage" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog width-30">
         <div class="modal-content p-0 b-0">
@@ -6,7 +7,7 @@
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></button>
                         <h3 class="panel-title">
-                            Profile Picture {{ ctrl.doctorTO.firstName }} {{ ctrl.doctorTO.lastName }}
+                            <spring:message code="doctor.label.detail.profile.picture"/> {{ ctrl.doctorTO.firstName }} {{ ctrl.doctorTO.lastName }}
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -20,7 +21,7 @@
                             </div>
                             <div class="col-sm-12 text-right">
                                 <div class="form-group m-b-0">
-                                    <label class="control-label">Selecciona imagen</label>
+                                    <label class="control-label"><spring:message code="doctor.label.detail.choose.image"/></label>
                                     <input type="file" class="filestyle" data-buttonname="btn-primary" id="profilePictureDoctor">
                                 </div>
                             </div>
@@ -28,10 +29,10 @@
 
                     </div>
                     <div class="panel-footer text-right">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="ti-close"></i> Cerrar</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="ti-close"></i> <spring:message code="label.common.button.close"/> </button>
                         &nbsp;&nbsp;
                         <a class="btn btn-primary" data-ng-click="ctrl.validateAndUploadProfilPictureDoctor();">
-                            <i class="mdi mdi-upload"></i> Subir Imagen
+                            <i class="mdi mdi-upload"></i> <spring:message code="label.common.button.upload.image"/>
                         </a>
                     </div>
                 </div>

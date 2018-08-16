@@ -1,5 +1,6 @@
 <%@ page import="com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="SEX_FEMALE" value="<%=ApplicationKeys.SEX_FEMALE%>"/>
 <c:set var="SEX_MALE" value="<%=ApplicationKeys.SEX_MALE%>"/>
 
@@ -12,7 +13,7 @@
                     <div class="panel-heading">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
                                 class="ti-close"></i></button>
-                        <h3 class="panel-title">Informaci&oacute; M&eacute;dico</h3>
+                        <h3 class="panel-title"><spring:message code="doctor.label.list.new.doctor.title"/> </h3>
                     </div>
                     <div class="panel-body">
 
@@ -42,10 +43,10 @@
                                             </div>
                                             <div class="row col-sm-12">
                         <span data-ng-show="ctrl.doctorTO.sex === '${SEX_MALE}'">
-                            <i class="mdi mdi-human-male font-20 text-primary"></i> Hombre
+                            <i class="mdi mdi-human-male font-20 text-primary"></i> <spring:message code="doctor.label.detail.sex.male"/>
                         </span>
                                                 <span data-ng-show="ctrl.doctorTO.sex === '${SEX_FEMALE}'">
-                            <i class="mdi mdi-human-female font-20 text-pink"></i> Mujer
+                            <i class="mdi mdi-human-female font-20 text-pink"></i> <spring:message code="doctor.label.detail.sex.female"/>
                         </span>
                                             </div>
 
@@ -81,7 +82,7 @@
                     </div>
                     <div class="panel-footer text-right">
                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i
-                                class="ti-close"></i> Cerrar
+                                class="ti-close"></i> <spring:message code="label.common.button.close"/>
                         </button>
                     </div>
                 </div>
