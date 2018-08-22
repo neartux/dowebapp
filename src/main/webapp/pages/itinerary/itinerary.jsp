@@ -112,7 +112,8 @@
                                                 day-view-end="23:59"
                                                 day-view-split="30"
                                                 on-timespan-click="ctrl.clickInDateToViewDay(calendarDate);"
-                                                on-date-range-select="ctrl.selectRangeInDayView(calendarRangeStartDate, calendarRangeEndDate)">
+                                                on-date-range-select="ctrl.selectRangeInDayView(calendarRangeStartDate, calendarRangeEndDate)"
+                                                day-view-time-position="side">
                                         </mwl-calendar>
 
                                     </div>

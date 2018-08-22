@@ -1,6 +1,7 @@
 (function (){
     var app = angular.module('Itinerary', ['mwl.calendar', 'ngAnimate', 'ui.bootstrap', 'ItineraryProvider', 'CommonDirectives']).config(function (calendarConfig) {
         console.info("calendarConfig = ", calendarConfig);
+        calendarConfig.showTimesOnWeekView = true;
     });
 
     app.controller('ItineraryController', function($scope, $timeout, moment, ItineraryService, calendarConfig) {
