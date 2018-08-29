@@ -105,5 +105,40 @@
                 </div>
             </div>
         </div>
+
+        <!-- Dates History -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="timeline">
+                    <article class="timeline-item alt">
+                        <div class="text-right">
+                            <div class="time-show first">
+                                <a href="#" class="btn btn-danger w-lg">Today</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="timeline-item" ng-class-even="'alt'" ng-repeat="itemHistory in ctrl.historyPatient.data">
+                        <div class="timeline-desk">
+                            <div class="panel">
+                                <div class="timeline-box">
+                                    <span ng-class-odd="'arrow'" ng-class-even="'arrow-alt'"></span>
+                                    <span class="timeline-icon bg-purple"><i class="mdi mdi-checkbox-blank-circle-outline"></i></span>
+                                    <h4 class="text-purple">{{ itemHistory.startDate }}</h4>
+                                    <p class="timeline-date text-muted"><small>{{ itemHistory.startDate }}</small></p>
+                                    <p>{{ itemHistory.reason }}</p>
+
+                                    <div class="album" ng-if="itemHistory.images">
+                                        <%--<a href="#"><img alt="" src="assets/images/small/img-1.jpg"></a>--%>
+                                        <%--<a href="#"><img alt="" src="assets/images/small/img-2.jpg"></a>--%>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

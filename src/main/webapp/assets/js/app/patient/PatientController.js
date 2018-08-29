@@ -11,6 +11,7 @@
         ctrl.isCreatePatient = true;
         ctrl.isViewDetailsPatient = false;
         ctrl.messages = { data: {} };
+        ctrl.historyPatient = { data: [] };
 
         /**
          * Init patient app
@@ -100,6 +101,8 @@
             ctrl.patientTOPreview.patientIndex = patientIndex;
             var result = calculateEdge(moment(ctrl.patientTOPreview.birthDate).format('YYYY-MM-DD'));
             ctrl.patientTOPreview.birthDateExplain = result[0] + " " + ctrl.messages.data.years + " " + result[1] + " " + ctrl.messages.data.months + " " + result[2] + " " + ctrl.messages.data.days;
+            // TODO por aqui por el momento, solo para probar metodo
+            ctrl.findHistoryPatient();
         };
 
         /**
@@ -216,6 +219,15 @@
                     showNotification("success", ctrl.messages.data.profilePictureUpdate);
                 }
                 $("#modalUploadImage").modal("hide");
+            });
+        };
+
+        ctrl.findHistoryPatient = function () {
+            return PatientService.findHistoryPatient(ctrl.patientTOPreview.id).then(function (res) {
+                console.info("RES = ", res.data);
+                if(!res.data.error) {
+                    ctrl.historyPatient.data = res.data.data;
+                }
             });
         };
 

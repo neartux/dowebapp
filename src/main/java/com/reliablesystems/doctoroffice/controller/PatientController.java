@@ -3,6 +3,7 @@ package com.reliablesystems.doctoroffice.controller;
 import com.reliablesystems.doctoroffice.core.domain.Patient;
 import com.reliablesystems.doctoroffice.core.exception.BackEndException;
 import com.reliablesystems.doctoroffice.core.service.bloodtype.BloodTypeService;
+import com.reliablesystems.doctoroffice.core.service.medicalappointment.MedicalAppointmentHistoryService;
 import com.reliablesystems.doctoroffice.core.service.patient.PatientService;
 import com.reliablesystems.doctoroffice.core.to.common.ApiResponse;
 import com.reliablesystems.doctoroffice.core.to.patient.PatientTO;
@@ -35,6 +36,8 @@ public class PatientController {
     private BloodTypeService bloodTypeService;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private MedicalAppointmentHistoryService medicalAppointmentHistoryService;
 
     /**
      * Display the view of list of patients
@@ -212,5 +215,22 @@ public class PatientController {
     @ResponseBody
     public void getProfilePicture(HttpServletRequest request, HttpServletResponse response, @RequestParam("url") String path) {
         CommonUtil.findFileInServe(request, response, path);
+    }
+
+    /**
+     * Method to find history to a patient
+     *
+     * @param patientId Patient identification
+     * @return List of history
+     */
+    @RequestMapping(value = "/findHistoryDates/{patientId}", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResponse findHistoryDatesByPatient(@PathVariable Long patientId) {
+        try {
+            return new ApiResponse(false, medicalAppointmentHistoryService.findHistoryByPatientId(patientId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(true, e.getMessage());
+        }
     }
 }

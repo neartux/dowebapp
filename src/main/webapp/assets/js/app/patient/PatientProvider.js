@@ -21,6 +21,10 @@
             return $http.get(service.contextPath + '/patient/findBloodTypes');
         };
 
+        service.findHistoryPatient = function (patientId) {
+            return $http.get(service.contextPath + '/patient/findHistoryDates/' + patientId);
+        };
+
         service.createPatient = function (patientTO) {
             return $http.post(service.contextPath + '/patient/create', patientTO);
         };
