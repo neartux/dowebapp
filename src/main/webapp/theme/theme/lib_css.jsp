@@ -6,6 +6,7 @@
 <link href="${pageContext.request.contextPath}/assets/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/plugins/icheck/skins/all.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/plugins/bootstrap-sweetalert/sweet-alert.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/plugins/tooltipster/tooltipster.bundle.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/common.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/core.css" rel="stylesheet" type="text/css" />

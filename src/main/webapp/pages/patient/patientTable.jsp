@@ -33,19 +33,21 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <table dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns"
-                               dt-instance="ctrl.dtInstance" datatable=""
-                               class="table table-striped table-colored table-info dataTable no-footer">
-                            <thead>
-                            <tr>
-                                <th class="text-uppercase bold"></th>
-                                <th class="text-uppercase bold"></th>
-                                <th class="text-uppercase bold"></th>
-                                <th class="text-uppercase bold"></th>
-                                <th class="text-uppercase bold"></th>
-                            </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive">
+                            <table dt-options="ctrl.dtOptions" dt-columns="ctrl.dtColumns"
+                                   dt-instance="ctrl.dtInstance" datatable=""
+                                   class="table table-striped table-colored table-info dataTable no-footer">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase bold"></th>
+                                    <th class="text-uppercase bold"></th>
+                                    <th class="text-uppercase bold"></th>
+                                    <th class="text-uppercase bold"></th>
+                                    <th class="text-uppercase bold"></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
