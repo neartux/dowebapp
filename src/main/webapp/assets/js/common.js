@@ -111,13 +111,13 @@ function getArrayMonths() {
 function getArrayYears() {
     var today = new Date();
     var currentYear = today.getFullYear();
-    var startYear = 2015;
+    var startYear = 2017;
     var arrayYears =[];
 
-    for (var i = startYear; i ++; i <= currentYear) {
+    for (var i = startYear; i <= currentYear; i ++) {
         arrayYears.push({
-            key: startYear,
-            value: startYear
+            key: i,
+            value: i
         });
     }
     return arrayYears;

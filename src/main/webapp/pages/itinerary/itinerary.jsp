@@ -1,3 +1,4 @@
+<%@ page import="com.reliablesystems.doctoroffice.core.utils.common.ApplicationKeys" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,9 +14,10 @@
         <link type="text/css" href="${pageContext.request.contextPath}/assets/plugins/angular-calendar/angular-bootstrap-calendar.min.css" rel="stylesheet">
 
         <fmt:message key="label.common.pattern.date.diary" var="patternDiary"/>
+        <c:set value="<%=ApplicationKeys.EVENT_TYPE_DATE%>" var="event_type_date"/>
 
         <div class="content" data-ng-app="DoctorsOffice" data-ng-controller="ItineraryController as ctrl"
-             data-ng-init="ctrl.init('${pageContext.request.contextPath}', '${patternDiary}', '${MINUTS_DATE}');">
+             data-ng-init="ctrl.init('${pageContext.request.contextPath}', '${patternDiary}', '${MINUTS_DATE}', '${event_type_date}');">
 
             <div class="container">
 
@@ -50,7 +52,8 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="field-doctof" class="control-label">Consultorio</label>
-                                                <select id="field-doctof" data-ng-model="ctrl.itineraryData.data.officeId">
+                                                <select id="field-doctof" class="form-control"
+                                                        data-ng-model="ctrl.itineraryData.data.officeId">
                                                     <option value="">Selecciona</option>
                                                     <option value="{{ df.id }}" data-ng-repeat="df in ctrl.doctorOfficesData.data">
                                                         {{ df.description }}
@@ -61,8 +64,9 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="field-year" class="control-label">Año</label>
-                                                <select id="field-year" data-ng-model="ctrl.itineraryData.data.year">
-                                                    <option value="">Año</option>
+                                                <select id="field-year" class="form-control"
+                                                        data-ng-model="ctrl.itineraryData.data.year">
+                                                    <option value="">Selecciona</option>
                                                     <option value="{{ year.key }}" data-ng-repeat="year in ctrl.years.data">
                                                         {{ year.value }}
                                                     </option>
@@ -72,15 +76,16 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="field-month" class="control-label">Mes</label>
-                                                <select id="field-month" data-ng-model="ctrl.itineraryData.data.month">
-                                                    <option value="">Mes</option>
+                                                <select id="field-month" class="form-control"
+                                                        data-ng-model="ctrl.itineraryData.data.month">
+                                                    <option value="">Selecciona</option>
                                                     <option value="{{ month.key }}" data-ng-repeat="month in ctrl.months.data">
                                                         {{ month.value }}
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3 m-t-30">
                                             <a class="btn btn-success" data-ng-click="ctrl.findItineraryByOffice();">
                                                 <i class="fa fa-search"></i>
                                                 Buscar
@@ -97,7 +102,7 @@
                                         <jsp:include page="itineraryControls.jsp"/>
 
                                         <mwl-calendar
-                                                events="ctrl.events"
+                                                events="ctrl.itinerary.data.itineraryDetailTOList"
                                                 view="ctrl.calendarView"
                                                 view-title="Itinerario"
                                                 view-date="ctrl.viewDate"
