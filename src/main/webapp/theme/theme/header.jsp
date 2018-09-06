@@ -89,14 +89,9 @@
                         </li>
                         <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
                         <li>
-                            <form id="logout" action="${logoutUrl}" method="post">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <button type="submit" name="logout" value="logout"
-                                        style="color: #333;text-decoration: none;margin-left: 15px;"
-                                        class="btn-link hover-orange">
-                                    <i class="fa fa-sign-out"></i> &nbsp;Log Out
-                                </button>
-                            </form>
+                            <a href="${pageContext.request.contextPath}/auth/logout">
+                                <i class="fa fa-sign-out"></i> Log Out
+                            </a>
                         </li>
                     </ul>
                 </li>
