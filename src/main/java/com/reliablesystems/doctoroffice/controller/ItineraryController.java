@@ -77,6 +77,7 @@ public class ItineraryController {
             System.out.println("itineraryDetailTO.toString() = " + itineraryTO.toString());
             long userId = CompanySession.getUserId(request);
             System.out.println("userId = " + userId);
+            itineraryService.createItinerary(itineraryTO, userId);
             return new ApiResponse(false, null);
         } catch (Exception e) {
             e.printStackTrace();
