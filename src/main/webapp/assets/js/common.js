@@ -112,6 +112,7 @@ function getArrayYears() {
     var today = new Date();
     var currentYear = today.getFullYear();
     var startYear = 2017;
+
     var arrayYears =[];
 
     for (var i = startYear; i <= currentYear; i ++) {
